@@ -1,0 +1,106 @@
+﻿<Window x:Class="InventoryProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:InventoryProject"
+       mc:Ignorable="d" Height="800" Width="1280" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+
+   
+
+    <StackPanel Background="#FFD1D1D1">
+        <Grid x:Name="GridDrag" Height="35" Background="#FF098ED3" MouseDown="GridDrag_MouseDown" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
+                <Button Content="FAQ" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="12" FontFamily="Champagne &amp; Limousines" FontWeight="Bold" VerticalAlignment="Center" Foreground="White"/>
+                <Button Content="CONTACT" Background="{x:Null}" BorderBrush="{x:Null}"  FontSize="12" FontFamily="Champagne &amp; Limousines" FontWeight="Bold" VerticalAlignment="Center" Foreground="White"/>
+                <Button Content="MY ACCOUNT" Background="{x:Null}" BorderBrush="{x:Null}"  FontSize="12" FontFamily="Champagne &amp; Limousines" FontWeight="Bold" VerticalAlignment="Center" Foreground="White"/>
+                <Button x:Name="btn_Close" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top"  Click="btn_Close_Click">
+                    <materialDesign:PackIcon Kind="CloseCircle" Foreground="#FFF5F2F2" Width="20" Height="20" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Border BorderBrush="Black"  Margin="5,5,5,5">
+            <!--<Border.Effect>
+                <DropShadowEffect Color="#FF625050"/>
+            </Border.Effect>-->
+            <Grid Height="110" Background="#FF4585BD">
+                <!--<Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF9DAEA3"/>
+                        <GradientStop Color="#FFFDDFDF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>-->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10,10,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <Button  Uid="0"  Width="150" Height="75"  Background="{x:Null}" BorderBrush="{x:Null}"   Click="Button_Click">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="Home"  Height="50" Width="50" Foreground="Black" />
+                                <TextBlock x:Name="txt_home" Text="HOME"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+
+                        <Button Uid="1" Width="150" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines"  Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="ChartBar"  Height="50" Width="50" />
+                                <TextBlock x:Name="txt_Inventory" Text="PRODUCTS"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="2" Width="150" Height="75" Background="{x:Null}" BorderBrush="{x:Null}"  FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="PointOfSale"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_POS" Text="POS"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="3" Width="150" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="Storage"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_InventoryManagement" Text="INVENTORY"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="4" Width="150" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="ChartAreaspline"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_SalesReport" Text="SALES"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="5" Width="150" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="User"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_Client" Text="CLIENT"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="6" Width="171" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="SettingsOutline"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_UserManagement" Text="USER MANAGEMENT"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+
+                </StackPanel>
+                <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF010202" HorizontalAlignment="Left" Margin="10,80,0,0"/>
+            </Grid>
+        </Border>
+
+        <Grid x:Name="GridMain" Height="640" Background="Aquamarine" Margin="0,10,0,0">
+            <Frame x:Name="MainContent" Background="LightGray" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </StackPanel>
+</Window>

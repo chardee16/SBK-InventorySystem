@@ -1,0 +1,17 @@
+﻿SELECT [ClientID]
+      ,[TitleID]
+      ,[LastName]
+      ,[MiddleName]
+      ,[FirstName]
+      ,[DateOfBirth] as 'BirthDate'
+      ,[Age]
+      ,[SuffixID]
+      ,[GenderID]
+      ,[CivilStatusID]
+      ,[Company]
+      ,[ProvinceID]
+      ,[CityID]
+      ,[BarangayID] as 'BrgyID'
+      ,[DateAdded]
+      ,[DateTimeAdded]
+  FROM [tblClient]

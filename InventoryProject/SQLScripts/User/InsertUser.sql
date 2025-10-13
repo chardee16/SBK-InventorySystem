@@ -1,0 +1,24 @@
+﻿INSERT INTO tblUser
+(
+	 [Username]
+    ,[Password]
+    ,[Firstname]
+    ,[Middlename]
+    ,[Lastname]
+    ,[IsActive]
+    ,[IsAdmin]
+    ,[JobPositionID]
+    ,[IsReset]
+	)
+VALUES
+(
+  '@_Username'
+  ,'@_Password'
+  ,'@_Firstname'
+  ,'@_Middlename'
+  ,'@_Lastname'
+  ,0
+  ,0
+  ,1
+  ,0
+)

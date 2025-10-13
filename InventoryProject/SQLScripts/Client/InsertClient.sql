@@ -1,0 +1,36 @@
+﻿INSERT INTO tblClient
+(
+	 [TitleID]
+	,[LastName]
+	,[MiddleName]
+	,[FirstName]
+	,[SuffixID]
+	,[GenderID]
+	,[CivilStatusID]
+	,[Company]
+	,[ProvinceID]
+	,[CityID]
+	,[BarangayID]
+	,[DateAdded]
+	,[DateTimeAdded]
+	,Age
+	,DateOfBirth
+	)
+VALUES
+(
+  @_TitleID
+  ,'@_LastName'
+  ,'@_MiddleName'
+  ,'@_FirstName'
+  ,@_SuffixID
+  ,@_GenderID
+  ,@_CivilStatusID
+  ,'@_Company'
+  ,@_ProvinceID
+  ,@_CityID
+  ,@_BarangayID
+  ,'@_DateAdded'
+  ,'@_DateTimeAdded'
+  ,@_Age
+  ,'@_DateOfBirth'
+)

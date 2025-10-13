@@ -1,0 +1,354 @@
+﻿<Page x:Class="InventoryProject.Pages.ClientInformationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:InventoryProject.Pages"
+      xmlns:currency="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextbox"
+      mc:Ignorable="d" 
+      d:DesignHeight="640" d:DesignWidth="1280"
+      Title="ClientInformationPage">
+
+    <Page.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Black"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!--<Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Yellow" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+
+    </Page.Resources>
+
+    <Grid Background="#FFE4E4E4">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Width="1240" Orientation="Vertical" Height="330" Margin="0,20,0,0">
+                <Border BorderBrush="White" BorderThickness="0" Height="280" Margin="0,0,0,0" CornerRadius="5" Background="White">
+                    <!--<Border.Effect>
+                        <DropShadowEffect Color="#FFB2B2B2"/>
+                    </Border.Effect>-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="1139">
+
+                        <StackPanel Orientation="Vertical" Margin="0,0,50,0">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Title" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="93"/>
+                                <ComboBox x:Name="cmb_Title" KeyDown="cmb_Suffix_KeyDown" ItemsSource="{Binding Path=ClientTitle,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="TitleID" SelectedValue="{Binding TitleID}" DisplayMemberPath="Title" Width="236" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Title" Margin="10,0,0,0" Padding="0,10,0,5"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Last Name" VerticalContentAlignment="Top" FontWeight="Bold" Width="100"/>
+                                <TextBox Width="239" Height="27" x:Name="txt_LastName" Text="{Binding Path = LastName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Last Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="First Name" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
+                                <TextBox Width="239" Height="27" x:Name="txt_FirstName" Text="{Binding Path = FirstName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="First Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Middle Name " VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
+                                <TextBox Width="239" Height="27" x:Name="txt_MiddleName" Text="{Binding Path = MiddleName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Middle Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Suffix" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
+                                <ComboBox x:Name="cmb_Suffix" KeyDown="cmb_Suffix_KeyDown" ItemsSource="{Binding Path=ClientSuffix,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="SuffixID" SelectedValue="{Binding SuffixID}" DisplayMemberPath="Suffix" Width="239" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Suffix" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                            </StackPanel>
+
+
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Gender" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
+                                <ComboBox x:Name="cmb_Gender" KeyDown="cmb_Suffix_KeyDown" ItemsSource="{Binding Path=Genders,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="GenderID" SelectedValue="{Binding GenderID}" DisplayMemberPath="Gender" Width="239" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Gender" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Civil Status" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
+                                <ComboBox x:Name="cmb_CivilStatus" KeyDown="cmb_Suffix_KeyDown" ItemsSource="{Binding Path=CivilStatuses,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="CivilStatusID" SelectedValue="{Binding CivilStatusID}" DisplayMemberPath="CivilStatus" Width="238" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Status" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Client ID"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                <TextBox Width="209" x:Name="txt_ClientID" IsEnabled="False" Text="{Binding Path = ClientID,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="#FF949494" materialDesign:HintAssist.Hint="ClientID" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Age" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                <TextBox Width="209" x:Name="txt_Age" IsEnabled="False" Text="{Binding Path = Age,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Age" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Birth Date" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                <DatePicker Width="239" LostFocus="dtp_birthdate_GotFocus" x:Name="dtp_birthdate" SelectedDate="{Binding Path=BirthDate}" HorizontalAlignment="Left"  BorderBrush="#FF949494" materialDesign:CalendarAssist.IsHeaderVisible="True" materialDesign:HintAssist.Hint="Date of Birth" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Company" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                <TextBox Width="239" Height="27" x:Name="txt_Company" Text="{Binding Path = Company,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Company" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Client Address:" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="93"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Vertical">
+                                    <Label Content="Province" HorizontalAlignment="Left" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="93"/>
+                                    <ComboBox x:Name="cmb_Province" SelectionChanged="cmb_Province_SelectionChanged" ItemsSource="{Binding Path=ClientProvince,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="ProvinceID" SelectedValue="{Binding ProvinceID}" DisplayMemberPath="Province" Width="224" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Province" Margin="10,0,0,0" Padding="0,10,0,5"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Vertical">
+                                    <Label Content="City" HorizontalAlignment="Left" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="93"/>
+                                    <ComboBox x:Name="cmb_City" SelectionChanged="cmb_City_SelectionChanged" ItemsSource="{Binding Path=ClientCities,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="CityID" SelectedValue="{Binding CityID, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="City" Width="224" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select City" Margin="10,0,0,0" Padding="0,10,0,5"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Vertical">
+                                    <Label Content="Barangay" HorizontalAlignment="Left" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="93"/>
+                                    <ComboBox x:Name="cmb_Barangay" SelectionChanged="cmb_Barangay_SelectionChanged" ItemsSource="{Binding Path=ClientBarangays,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="BrgyID" SelectedValue="{Binding BrgyID, TargetNullValue='',ValidatesOnDataErrors=True, NotifyOnValidationError=True, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Barangay" Width="224" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Barangay" Margin="10,0,0,0" Padding="0,10,0,5"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="100,0,0,0">
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0"/>
+
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <!--<TextBox Width="200" x:Name="txt_PurchasePrice" Text="{Binding Path = PurchasePrice,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Purchase Price" BorderThickness="1" FontWeight="SemiBold" Margin="10,0,0,0" Padding="5,0,0,0"/>-->
+                                <!--<TextBox Width="150" x:Name="txt_MarkupValue" Text="{Binding Path = MarkupValue,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Markup Value" BorderThickness="1" FontWeight="SemiBold" Margin="10,0,0,0" Padding="5,0,0,0"/>-->
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <!--<TextBox Width="200" x:Name="txt_Price" Text="{Binding Path = Price,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Price" BorderThickness="1" FontWeight="SemiBold" Margin="10,0,0,0" Padding="5,0,0,0"/>-->
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0"/>
+
+
+                            <StackPanel Visibility="Hidden" Orientation="Horizontal" Margin="10,10,0,0">
+                                <Label Content="Side Effect*" VerticalContentAlignment="Top" FontWeight="Bold" Width="100"/>
+                                <TextBox Width="480"  Height="90" x:Name="txt_SideEffect" Text="{Binding Path = SideEffect,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Side Effect" AcceptsReturn="True" BorderThickness="1" FontWeight="SemiBold" />
+                            </StackPanel>
+
+
+
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,290,0">
+                        <materialDesign:PackIcon Foreground="Crimson" Kind="Magnify"  Height="25" Width="25"  VerticalAlignment="Center"/>
+                        <Border Background="White" CornerRadius="5" BorderBrush="Black" BorderThickness="1">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FFB1B1B1"/>
+                            </Border.Effect>
+                            <TextBox x:Name="txt_Search" TextWrapping="Wrap"  FontSize="14" HorizontalAlignment="Stretch" Height="30" Margin="0 0 0 0" Width="357" BorderThickness="1,1,1,1" />
+                        </Border>
+                    </StackPanel>
+
+                    <Button x:Name="btn_New" Width="120" Height="30" Margin="185,0,0,0" BorderBrush="Black" HorizontalAlignment="Right" BorderThickness="0" Padding="0" Click="btn_New_Click">
+                        <!--<Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF979494" Offset="0.058"/>
+                                <GradientStop Color="#FFE4E2E2" Offset="0.913"/>
+                            </LinearGradientBrush>
+                        </Button.Background>-->
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="AddCircle"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="NEW" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btn_Edit" Width="120" Height="30" Margin="10,0,0,0" BorderBrush="Black" HorizontalAlignment="Right" BorderThickness="0" Padding="0" Click="btn_Edit_Click">
+                        <!--<Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF979494" Offset="0.058"/>
+                                <GradientStop Color="#FFE4E2E2" Offset="0.913"/>
+                            </LinearGradientBrush>
+                        </Button.Background>-->
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="Edit"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="EDIT" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="btn_Save" Width="120" Height="30" Margin="10,0,0,0" BorderBrush="Black" HorizontalAlignment="Right" BorderThickness="0" Padding="0" Click="btn_Save_Click">
+                        <!--<Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF979494" Offset="0.058"/>
+                                <GradientStop Color="#FFE4E2E2" Offset="0.913"/>
+                            </LinearGradientBrush>
+                        </Button.Background>-->
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="ContentSave"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="SAVE" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Margin="0,5,0,0">
+                <DataGrid x:Name="DG_Clients" ItemsSource="{Binding Path=SelectClients,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" Width="1240" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="0,0,0,0" Height="270" PreviewMouseDoubleClick="DG_Client_PreviewMouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=ClientID,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="CLIENTID" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=LastName,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="LAST NAME" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding Path=FirstName,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="FIRST NAME" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=MiddleName,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="MIDDLE NAME" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+
+                        <DataGridTextColumn Binding="{Binding Path=Company,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="COMPANY" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+
+                        <DataGridTextColumn Binding="{Binding Path=Age,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="AGE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding Path=BirthDate,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="BIRTH DATE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding Path=DateTimeAdded,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="DATE AND TIME ADDED" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+
+        </StackPanel>
+    </Grid>
+</Page>
