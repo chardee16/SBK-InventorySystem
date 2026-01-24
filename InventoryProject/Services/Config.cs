@@ -23,8 +23,11 @@ namespace InventoryProject.Services
         //public static String IPAddress = "DESKTOP-EJGNBS6\\SQLEXPRESS";
         //public string SQLServerConnectionString = "Data Source=" + IPAddress + ";Database=InventorySystemDB;User ID=sa;Password=Edge@)@@";
 
-        public static String IPAddress = "LAPTOP-4DVO2GA7\\SQLDEV";
-        public string SQLServerConnectionString = "Data Source=" + IPAddress + ";Database=InventorySystemDB;User ID=sa;Password=12345678";
+        //public static String IPAddress = "LAPTOP-4DVO2GA7\\SQLDEV";
+        //public string SQLServerConnectionString = "Data Source=" + IPAddress + ";Database=InventorySystemDB;User ID=sa;Password=12345678";
+
+        public static String IPAddress = "DESKTOP-K8DMCCN\\SQLEXPRESS01";
+        public string SQLServerConnectionString = "Data Source=" + IPAddress + ";Database=InventorySystemDB;User ID=ayungon;Password=12345678";
 
         //public static String IPAddress = "00ICT2021018";
         //public string SQLServerConnectionString = "Data Source=" + IPAddress + ";Database=InventorySystemDB;User ID=sa;Password=D3f@ult!";

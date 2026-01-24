@@ -31,6 +31,29 @@ namespace InventoryProject.Models.ClientModule
             }
         }
 
+        Int64 _id;
+        public Int64 id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                NotifyPropertyChanged("id");
+            }
+        }
+
+        string _DateOfBirth;
+        public string DateOfBirth
+        {
+            get { return _DateOfBirth; }
+            set
+            {
+                _DateOfBirth = value;
+                NotifyPropertyChanged("DateOfBirth");
+            }
+
+        }
+
         string _BirthDate;
         public string BirthDate
         {

@@ -1,9 +1,13 @@
 ﻿using Dapper;
 using InventoryProject.Models.Users;
 using InventoryProject.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +17,7 @@ namespace InventoryProject.Repository
     {
         SQLFile sqlFile = new SQLFile();
         Config _config = new Config();
+        APIKey api = new APIKey();
 
         public List<UserParam> GetUserList(String username, String password)
         {
@@ -29,7 +34,55 @@ namespace InventoryProject.Repository
                 return toReturn;
             }
 
+            //var users = new List<UserParam>();
+
+            //try
+            //{
+            //    using (HttpClient client = new HttpClient())
+            //    {
+            //        var url = "https://inventory-api-railway-production.up.railway.app/api/auth/login";
+
+            //        client.DefaultRequestHeaders.Add("KEY", api.key);
+            //        client.DefaultRequestHeaders.Add("accept", api.accept);
+            //        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token); 
+
+            //        var load = new
+            //        {
+            //            username = username,
+            //            password = "123",
+            //        };
+
+            //        var content = new StringContent(
+            //            JsonConvert.SerializeObject(load),
+            //            Encoding.UTF8,
+            //            "application/json"
+            //        );
+
+            //        HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            //        if (!response.IsSuccessStatusCode)
+            //            return users;
+
+            //        var json = response.Content.ReadAsStringAsync().Result;
+
+            //        var result = JsonConvert.DeserializeObject<ApiResponse<UserParam>>(json);
+
+            //        if (result != null && result.status == "SUCCESS" && result.data != null)
+            //        {
+            //            users.Add(result.data);
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // log error if needed
+            //}
+
+            //return users;
+
         }
+
+
 
         public List<UserParam> GetAllUsers()
         {

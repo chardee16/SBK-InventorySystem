@@ -76,7 +76,7 @@ namespace InventoryProject.Pages
 
         public void LoadClient(string id, string name)
         {
-            this.dataCon.ClientID = id;
+            this.dataCon.id = id;
             this.dataCon.ClientName = name;
         }
 
@@ -309,6 +309,7 @@ namespace InventoryProject.Pages
             this.dataCon.DiscountAmount = 0;
             this.dataCon.ClientID = "";
             this.dataCon.ClientName = "";
+            this.dataCon.id = "";
         }
         
         private void ReloadPage()
@@ -429,7 +430,7 @@ namespace InventoryProject.Pages
         {
             try
             {
-                PaymentWindow payment = new PaymentWindow(new List<SalesItemClass>(this.dataCon.SaleitemList), this.dataCon.TaxAmount, this.dataCon.TotalPrice, this.dataCon.ClientID, this.dataCon.ClientName, username);
+                PaymentWindow payment = new PaymentWindow(new List<SalesItemClass>(this.dataCon.SaleitemList), this.dataCon.TaxAmount, this.dataCon.TotalPrice, this.dataCon.id, this.dataCon.ClientName, username);
                 payment.Topmost = true;
                 payment.ShowInTaskbar = false;
                 if (payment.ShowDialog() == true)
@@ -651,6 +652,24 @@ namespace InventoryProject.Pages
                 {
                     _ClientID = value;
                     NotifyPropertyChanged("ClientID");
+                }
+            }
+        }
+
+
+        String _id;
+        public String id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
                 }
             }
         }

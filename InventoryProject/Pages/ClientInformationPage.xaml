@@ -98,7 +98,7 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                 <Label Content="Client ID"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
-                                <TextBox Width="209" x:Name="txt_ClientID" IsEnabled="False" Text="{Binding Path = ClientID,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="#FF949494" materialDesign:HintAssist.Hint="ClientID" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                                <TextBox Width="209" x:Name="txt_ClientID" IsEnabled="False" Text="{Binding Path = id,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="#FF949494" materialDesign:HintAssist.Hint="ClientID" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
@@ -108,7 +108,7 @@
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                 <Label Content="Birth Date" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
-                                <DatePicker Width="239" LostFocus="dtp_birthdate_GotFocus" x:Name="dtp_birthdate" SelectedDate="{Binding Path=BirthDate}" HorizontalAlignment="Left"  BorderBrush="#FF949494" materialDesign:CalendarAssist.IsHeaderVisible="True" materialDesign:HintAssist.Hint="Date of Birth" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                                <DatePicker Width="239" LostFocus="dtp_birthdate_GotFocus" x:Name="dtp_birthdate" SelectedDate="{Binding Path=DateOfBirth}" HorizontalAlignment="Left"  BorderBrush="#FF949494" materialDesign:CalendarAssist.IsHeaderVisible="True" materialDesign:HintAssist.Hint="Date of Birth" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="0,10,0,5"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
@@ -232,7 +232,7 @@
             <StackPanel Margin="0,5,0,0">
                 <DataGrid x:Name="DG_Clients" ItemsSource="{Binding Path=SelectClients,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" Width="1240" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="0,0,0,0" Height="270" PreviewMouseDoubleClick="DG_Client_PreviewMouseDoubleClick">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=ClientID,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Path=id,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="CLIENTID" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
@@ -316,7 +316,7 @@
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Binding="{Binding Path=BirthDate,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Path=DateOfBirth,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

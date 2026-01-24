@@ -64,7 +64,7 @@ namespace InventoryProject.Windows
             {
                 InsertClient selected = (InsertClient)DG_Clients.SelectedItem;
                 fullname = selected.LastName + ", " + selected.FirstName + " " + selected.MiddleName;
-                sales.LoadClient(selected.ClientID.ToString(), fullname);
+                sales.LoadClient(selected.id.ToString(), fullname);
                 this.mv.Hide();
                 this.Close();
             }

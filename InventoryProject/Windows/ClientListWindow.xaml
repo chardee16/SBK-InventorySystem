@@ -45,7 +45,7 @@
                 </StackPanel>
                 <DataGrid x:Name="DG_Clients" ItemsSource="{Binding Path=SelectClients,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="10,10,9.4,10.4" PreviewMouseDoubleClick="DG_Client_PreviewMouseDoubleClick" Height="250" FontFamily="Bahnschrift Light">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=ClientID,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="*" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Path=id,UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="*" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="CLIENTID" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>

@@ -276,7 +276,7 @@
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Margin="10,10,0.4,0">
                             <Label Content="ClientID:" FontSize="14" FontWeight="Bold" Width="91" HorizontalContentAlignment="Left" Height="32"/>
-                            <TextBox x:Name="txt_ClientID" Text="{Binding Path = ClientID, UpdateSourceTrigger=PropertyChanged}" Template="{StaticResource TextBoxBaseControlTemplate}" Height="23" TextAlignment="Left" Width="183" IsEnabled="False" VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="1"/>
+                            <TextBox x:Name="txt_ClientID" Text="{Binding Path = id, UpdateSourceTrigger=PropertyChanged}" Template="{StaticResource TextBoxBaseControlTemplate}" Height="23" TextAlignment="Left" Width="183" IsEnabled="False" VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="1"/>
                             <Label Content="TAX" FontSize="18" FontWeight="Bold" Width="135" HorizontalContentAlignment="Right"/>
                             <TextBlock Text="{Binding TaxAmount, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="20,0,0,0" TextAlignment="Right" Width="187" Height="26"/>
                         </StackPanel>

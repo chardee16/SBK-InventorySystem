@@ -2,9 +2,13 @@
 using InventoryProject.Models;
 using InventoryProject.Models.InventoryManagementModule;
 using InventoryProject.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +18,7 @@ namespace InventoryProject.Repository
     {
         SQLFile sqlFile = new SQLFile();
         Config _config = new Config();
-
+        APIKey api = new APIKey();
 
         public List<GenericMedicineClass> GetGenericMedicine()
         {
@@ -224,37 +228,87 @@ namespace InventoryProject.Repository
         {
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertItem.sql";
-                sqlFile.setParameter("_ItemName", item.ItemName);
-                sqlFile.setParameter("_ItemDescription", item.ItemDescription);
-                sqlFile.setParameter("_GenericID", item.GenericID.ToString());
-                sqlFile.setParameter("_CategoryID", item.CategoryID.ToString());
-                sqlFile.setParameter("_ShelfID", item.ShelfID.ToString());
-                sqlFile.setParameter("_SupplierID", item.SupplierID.ToString());
-                sqlFile.setParameter("_UnitID", item.UnitID.ToString());
-                sqlFile.setParameter("_Barcode", item.Barcode);
-                sqlFile.setParameter("_PurchasePrice", item.PurchasePrice.ToString());
-                sqlFile.setParameter("_MarkupValue", item.MarkupValue.ToString());
-                sqlFile.setParameter("_Price", item.Price.ToString());
-                sqlFile.setParameter("_ExpiryDate", item.ExpiryDate);
-                sqlFile.setParameter("_Stock", item.Stock.ToString());
-                sqlFile.setParameter("_SideEffect", item.SideEffect);
-                sqlFile.setParameter("_UserID", 1.ToString());
-                sqlFile.setParameter("_BranchCode", 1.ToString());
-                sqlFile.setParameter("_TransactionCode", 1.ToString());
-                sqlFile.setParameter("_TransYear", 2021.ToString());
-                sqlFile.setParameter("_TransactionDate", DateTime.Today.ToString("yyyy-MM-dd"));
-                sqlFile.setParameter("_Value", item.Value.ToString());
+                //this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertItem.sql";
+                //sqlFile.setParameter("_ItemName", item.ItemName);
+                //sqlFile.setParameter("_ItemDescription", item.ItemDescription);
+                //sqlFile.setParameter("_GenericID", item.GenericID.ToString());
+                //sqlFile.setParameter("_CategoryID", item.CategoryID.ToString());
+                //sqlFile.setParameter("_ShelfID", item.ShelfID.ToString());
+                //sqlFile.setParameter("_SupplierID", item.SupplierID.ToString());
+                //sqlFile.setParameter("_UnitID", item.UnitID.ToString());
+                //sqlFile.setParameter("_Barcode", item.Barcode);
+                //sqlFile.setParameter("_PurchasePrice", item.PurchasePrice.ToString());
+                //sqlFile.setParameter("_MarkupValue", item.MarkupValue.ToString());
+                //sqlFile.setParameter("_Price", item.Price.ToString());
+                //sqlFile.setParameter("_ExpiryDate", item.ExpiryDate);
+                //sqlFile.setParameter("_Stock", item.Stock.ToString());
+                //sqlFile.setParameter("_SideEffect", item.SideEffect);
+                //sqlFile.setParameter("_UserID", 1.ToString());
+                //sqlFile.setParameter("_BranchCode", 1.ToString());
+                //sqlFile.setParameter("_TransactionCode", 1.ToString());
+                //sqlFile.setParameter("_TransYear", 2021.ToString());
+                //sqlFile.setParameter("_TransactionDate", DateTime.Today.ToString("yyyy-MM-dd"));
+                //sqlFile.setParameter("_Value", item.Value.ToString());
 
 
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+                //var affectedRow = Connection.Execute(sqlFile.sqlQuery);
 
 
-                if (affectedRow > 0)
+                //if (affectedRow > 0)
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+
+                try
                 {
-                    return true;
+                    using (HttpClient client = new HttpClient())
+                    {
+                        var url = "https://inventory-api-railway-production.up.railway.app/api/item/insert_item";
+
+                        client.DefaultRequestHeaders.Add("KEY", api.key);
+                        client.DefaultRequestHeaders.Add("accept", api.accept);
+                        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                        var load = new
+                        {
+                            item_name = item.ItemName,
+                            item_description = item.ItemDescription,
+                            generic_id = item.GenericID.ToString(),
+                            category_id = item.CategoryID.ToString(),
+                            unit_id = item.UnitID.ToString(),
+                            purchase_price = item.PurchasePrice.ToString(),
+                            price = item.Price.ToString(),
+                            markup_value = item.MarkupValue.ToString(),
+                            shelf_id = item.ShelfID.ToString(),
+                            supplier_id = item.SupplierID.ToString(),
+                            side_effect = item.SideEffect,
+                            barcode = item.Barcode,
+                            stock = item.Stock.ToString(),
+                            expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy/MM/dd"),
+                            user_id = 1.ToString(),
+                            value = item.Value.ToString(),
+                        };
+
+                        var json = JsonConvert.SerializeObject(load);
+
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                        var responseBody = response.Content.ReadAsStringAsync().Result;
+                        Console.WriteLine(responseBody);
+
+                        return response.IsSuccessStatusCode;
+
+
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
                     return false;
                 }

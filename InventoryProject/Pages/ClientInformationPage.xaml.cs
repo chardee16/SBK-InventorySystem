@@ -81,6 +81,8 @@ namespace InventoryProject.Pages
             try
             {
                 InsertClient selected = (InsertClient)DG_Clients.SelectedItem;
+                this.dataCon.id = selected.id;
+                this.dataCon.DateOfBirth = Convert.ToDateTime(selected.DateOfBirth).ToString("MM/dd/yyyy");
                 this.dataCon.ClientID = selected.ClientID;
                 this.dataCon.TitleID = selected.TitleID;
                 this.dataCon.LastName = selected.LastName;
@@ -108,6 +110,7 @@ namespace InventoryProject.Pages
 
         private void ClearValues()
         {
+            this.dataCon.id = 0;
             this.dataCon.ClientID = 0;
             this.dataCon.LastName = String.Empty;
             this.dataCon.FirstName = String.Empty;
@@ -122,6 +125,7 @@ namespace InventoryProject.Pages
             this.dataCon.BrgyID = 0;
             this.dataCon.Age = 0;
             this.dataCon.BirthDate = String.Empty;
+            this.dataCon.DateOfBirth = String.Empty;
         }
 
         private void Disable()
@@ -189,9 +193,9 @@ namespace InventoryProject.Pages
                 client.GenderID = (cmb_Title.Text.Equals("") ? Convert.ToByte(0) : Convert.ToByte(gen.GenderID));
                 client.CivilStatusID = (cmb_CivilStatus.Text.Equals("") ? Convert.ToByte(0) : Convert.ToByte(civil.CivilStatusID));
                 client.Company = txt_Company.Text;
-                client.ProvinceID = (cmb_CivilStatus.Text.Equals("") ? Convert.ToInt64(0) : Convert.ToInt64(province.ProvinceID));
-                client.CityID = (cmb_CivilStatus.Text.Equals("") ? Convert.ToInt64(0) : Convert.ToInt64(city.CityID));
-                client.BrgyID = (cmb_CivilStatus.Text.Equals("") ? Convert.ToInt64(0) : Convert.ToInt64(barangay.BrgyID));
+                client.ProvinceID = (cmb_Province.Text.Equals("") ? Convert.ToInt64(0) : Convert.ToInt64(province.ProvinceID));
+                client.CityID = (cmb_City.Text.Equals("") ? Convert.ToInt64(0) : Convert.ToInt64(city.CityID));
+                client.BrgyID = (cmb_Barangay.Text.Equals("") ? Convert.ToInt64(0) : Convert.ToInt64(barangay.BrgyID));
                 client.DateAdded = DateTime.Now.ToString("MM/dd/yyyy");
                 client.DateTimeAdded = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
                 client.Age = Convert.ToByte(txt_Age.Text);
@@ -282,7 +286,28 @@ namespace InventoryProject.Pages
 
         public class ItemDataContext : INotifyPropertyChanged
         {
+            Int64 _id;
+            public Int64 id
+            {
+                get { return _id; }
+                set
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
+                }
+            }
 
+            string _DateOfBirth;
+            public string DateOfBirth
+            {
+                get { return _DateOfBirth; }
+                set
+                {
+                    _DateOfBirth = value;
+                    NotifyPropertyChanged("DateOfBirth");
+                }
+
+            }
 
             byte _TitleID;
             public byte TitleID
