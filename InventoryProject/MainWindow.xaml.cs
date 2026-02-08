@@ -40,6 +40,7 @@ namespace InventoryProject
             txt_SalesReport.Foreground = Brushes.White;
             txt_Client.Foreground = Brushes.White;
             txt_UserManagement.Foreground = Brushes.White;
+            txt_ClientDiscount.Foreground = Brushes.White;
             id = userid;
             username = user;
             this.dataCon.privilege = this.repo.GetUserLogin(id);
@@ -62,6 +63,7 @@ namespace InventoryProject
                     txt_SalesReport.Foreground = Brushes.White;
                     txt_Client.Foreground = Brushes.White;
                     txt_UserManagement.Foreground = Brushes.White;
+                    txt_ClientDiscount.Foreground = Brushes.White;
                     break;
                 case 1:
                     UserPrivileges a = this.dataCon.privilege.Find(x => x.PrivilegeID == index);
@@ -76,6 +78,7 @@ namespace InventoryProject
                         txt_SalesReport.Foreground = Brushes.White;
                         txt_Client.Foreground = Brushes.White;
                         txt_UserManagement.Foreground = Brushes.White;
+                        txt_ClientDiscount.Foreground = Brushes.White;
                     }
                     else
                     {
@@ -97,6 +100,7 @@ namespace InventoryProject
                         txt_SalesReport.Foreground = Brushes.White;
                         txt_Client.Foreground = Brushes.White;
                         txt_UserManagement.Foreground = Brushes.White;
+                        txt_ClientDiscount.Foreground = Brushes.White;
                     }
                     else
                     {
@@ -117,6 +121,7 @@ namespace InventoryProject
                         txt_SalesReport.Foreground = Brushes.White;
                         txt_Client.Foreground = Brushes.White;
                         txt_UserManagement.Foreground = Brushes.White;
+                        txt_ClientDiscount.Foreground = Brushes.White;
                     }
                     else
                     {
@@ -136,6 +141,7 @@ namespace InventoryProject
                         txt_SalesReport.Foreground = Brushes.Black;
                         txt_Client.Foreground = Brushes.White;
                         txt_UserManagement.Foreground = Brushes.White;
+                        txt_ClientDiscount.Foreground = Brushes.White;
                     }
                     else
                     {
@@ -155,6 +161,7 @@ namespace InventoryProject
                         txt_SalesReport.Foreground = Brushes.White;
                         txt_Client.Foreground = Brushes.Black;
                         txt_UserManagement.Foreground = Brushes.White;
+                        txt_ClientDiscount.Foreground = Brushes.White;
                     }
                     else
                     {
@@ -163,9 +170,9 @@ namespace InventoryProject
                     break;
                 case 6:
 
-                    UserPrivileges g = this.dataCon.privilege.Find(x => x.PrivilegeID == index);
+                    UserPrivileges h = this.dataCon.privilege.Find(x => x.PrivilegeID == index);
 
-                    if (g != null)
+                    if (h != null)
                     {
                         MainContent.Content = new UserManagementPage();
                         txt_home.Foreground = Brushes.White;
@@ -175,12 +182,33 @@ namespace InventoryProject
                         txt_SalesReport.Foreground = Brushes.White;
                         txt_Client.Foreground = Brushes.White;
                         txt_UserManagement.Foreground = Brushes.Black;
+                        txt_ClientDiscount.Foreground = Brushes.White;
                     }
                     else
                     {
                         MessageBox.Show("You do not have permission to access this module!");
                     }
                    
+                    break;
+                case 7:
+                    UserPrivileges g = this.dataCon.privilege.Find(x => x.PrivilegeID == index);
+
+                    if (g != null)
+                    {
+                        //MainContent.Content = new ClientInformationPage();
+                        txt_home.Foreground = Brushes.White;
+                        txt_Inventory.Foreground = Brushes.White;
+                        txt_POS.Foreground = Brushes.White;
+                        txt_InventoryManagement.Foreground = Brushes.White;
+                        txt_SalesReport.Foreground = Brushes.White;
+                        txt_Client.Foreground = Brushes.White;
+                        txt_UserManagement.Foreground = Brushes.White;
+                        txt_ClientDiscount.Foreground = Brushes.Black;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You do not have permission to access this module!");
+                    }
                     break;
             }
         }

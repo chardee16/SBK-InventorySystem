@@ -83,6 +83,15 @@
                         </Button>
                     </StackPanel>
 
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="5" Width="180" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="CashOnDelivery"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_ClientDiscount" Text="DISCOUNT &amp; DELIVERY"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
 
                     <StackPanel Orientation="Vertical">
                         <Button Uid="6" Width="171" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">

@@ -135,6 +135,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\ItemModule\ItemLogs.cs" />
+    <Compile Include="Pages\ClientDiscountDeliveryPage.xaml.cs">
+      <DependentUpon>ClientDiscountDeliveryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\APIKey.cs" />
     <Compile Include="Services\ApiResponse.cs" />
     <Compile Include="Template\Receipt.cs">
@@ -248,6 +251,10 @@
     <Compile Include="Windows\SupplierWindow.xaml.cs">
       <DependentUpon>SupplierWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\ClientDiscountDeliveryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
