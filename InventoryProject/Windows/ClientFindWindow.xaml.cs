@@ -21,11 +21,19 @@ namespace InventoryProject.Windows
     public partial class ClientFindWindow : Window
     {
         SalesPage mv;
+        ClientDiscountDelivery cm;
         public ClientFindWindow(SalesPage mw)
         {
             InitializeComponent();
             txt_ClientID.Focus();
             mv = mw;
+        }
+
+        public ClientFindWindow(ClientDiscountDelivery mw)
+        {
+            InitializeComponent();
+            txt_ClientID.Focus();
+            cm = mw;
         }
 
         private void HandleKeys(object sender, KeyEventArgs e)
@@ -38,7 +46,7 @@ namespace InventoryProject.Windows
                     break;
                 case Key.Enter:
                     e.Handled = true;
-                    ClientListWindow subWindow = new ClientListWindow(txt_ClientID.Text, txt_ClientName.Text, this,mv);
+                    ClientListWindow subWindow = new ClientListWindow(txt_ClientID.Text, txt_ClientName.Text, this,mv,cm);
                     subWindow.ShowDialog();
                     break;             
             }
@@ -46,7 +54,7 @@ namespace InventoryProject.Windows
 
         private void btn_Ok_Click(object sender, RoutedEventArgs e)
         {
-            ClientListWindow subWindow = new ClientListWindow(txt_ClientID.Text,txt_ClientName.Text,this, mv);
+            ClientListWindow subWindow = new ClientListWindow(txt_ClientID.Text,txt_ClientName.Text,this, mv, cm);
             subWindow.ShowDialog();
         }
 

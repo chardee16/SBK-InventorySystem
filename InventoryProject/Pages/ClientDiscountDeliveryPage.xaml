@@ -1,14 +1,402 @@
 ﻿<Page x:Class="InventoryProject.Pages.ClientDiscountDelivery"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:InventoryProject.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:InventoryProject.Pages"
+        xmlns:currency="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextbox"
+        mc:Ignorable="d" 
+        d:DesignHeight="640" d:DesignWidth="1280"
       Title="ClientDiscountDelivery">
 
-    <Grid>
-        
+    <Page.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+            x:Name="Bd" BorderBrush="Black"
+            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+    </Page.Resources>
+
+    <Grid Background="#FFE4E4E4">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Width="1240" Orientation="Vertical" Height="330" Margin="0,20,0,0">
+                <Border BorderBrush="White" BorderThickness="0" Height="280" Margin="0,0,0,0" CornerRadius="5" Background="White">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="1240">
+
+                        <StackPanel Orientation="Horizontal" Width="1238">
+
+                            <StackPanel Orientation="Vertical" Margin="0,0,50,0" Width="325">
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Client ID"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                    <TextBox Width="209" x:Name="txt_ClientID" IsEnabled="False" Text="{Binding Path = id,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="#FF949494" materialDesign:HintAssist.Hint="ClientID" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Client Name"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                    <TextBox Width="209" x:Name="txt_FirstName" IsEnabled="False" Text="{Binding Path = ClientName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Client Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Item Code"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                    <TextBox Width="209" x:Name="txt_ItemCode" IsEnabled="False" Text="{Binding Path = ItemCode,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Item Code" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Item Name"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                    <TextBox Width="209" x:Name="txt_ItemName" IsEnabled="False" Text="{Binding Path = ItemName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Item Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Discount Price"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90"/>
+                                    <currency:CurrencyTextBox x:Name="txt_DiscountPrice" Number="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                                        <currency:CurrencyTextBox.Style>
+                                            <Style TargetType="{x:Type currency:CurrencyTextBox}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Validation.HasError" Value="True">
+                                                        <Setter Property="ToolTip" Value="Amount" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </currency:CurrencyTextBox.Style>
+                                    </currency:CurrencyTextBox>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Price"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90"/>
+                                    <currency:CurrencyTextBox x:Name="txt_Price" IsEnabled="False" Number="{Binding Path= Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                                        <currency:CurrencyTextBox.Style>
+                                            <Style TargetType="{x:Type currency:CurrencyTextBox}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Validation.HasError" Value="True">
+                                                        <Setter Property="ToolTip" Value="Amount" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </currency:CurrencyTextBox.Style>
+                                    </currency:CurrencyTextBox>
+
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Quantity"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90" Height="23"/>
+                                    <currency:CurrencyTextBox x:Name="txt_DiscountAmount" Number="{Binding Path= Quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="64" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                                        <currency:CurrencyTextBox.Style>
+                                            <Style TargetType="{x:Type currency:CurrencyTextBox}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Validation.HasError" Value="True">
+                                                        <Setter Property="ToolTip" Value="Amount" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </currency:CurrencyTextBox.Style>
+                                    </currency:CurrencyTextBox>
+
+                                    <Button x:Name="btn_AddDelivery" Margin="10,0,0,0" BorderBrush="Black" BorderThickness="1" Padding="0" Click="btn_AddDelivery_Click" Width="127" Height="47" >
+                                        <Button.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF979494" Offset="0.058"/>
+                                                <GradientStop Color="#FFE4E2E2" Offset="0.913"/>
+                                            </LinearGradientBrush>
+                                        </Button.Background>
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="LorryDelivery"   Foreground="Black" />
+                                            <TextBlock Text="ADD TO DELIVERY" Foreground="Black" FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="170,10,0,0" Width="129">
+
+
+                                </StackPanel>
+
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Width="522">
+
+                                <DataGrid x:Name="DG_Cart" PreviewKeyDown="DG_Cart_PreviewKeyDown" ItemsSource="{Binding Path=SaleitemList,UpdateSourceTrigger=PropertyChanged}" Background="#FFD1D1D1" Width="520" Margin="0,0,0,0" Height="278" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" FontSize="10" FontWeight="Bold">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Path=ItemDescription,UpdateSourceTrigger=PropertyChanged}" Header="DESCRIPTION"  Width="*" IsReadOnly="True">
+                                            <DataGridTextColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                                    <Setter Property="Background" Value="#FFD1D1D1"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </Style>
+                                            </DataGridTextColumn.HeaderStyle>
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path=Price,UpdateSourceTrigger=PropertyChanged}" Header="PRICE"  Width="*" IsReadOnly="True">
+                                            <DataGridTextColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                                    <Setter Property="Background" Value="#FFD1D1D1"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </Style>
+                                            </DataGridTextColumn.HeaderStyle>
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path=Discount,UpdateSourceTrigger=PropertyChanged}" Header="DISCOUNT PRICE"  Width="*" IsReadOnly="True">
+                                            <DataGridTextColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                                    <Setter Property="Background" Value="#FFD1D1D1"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </Style>
+                                            </DataGridTextColumn.HeaderStyle>
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path=Quantity,UpdateSourceTrigger=PropertyChanged}" Header="QUANTITY"  Width="*" IsReadOnly="True">
+                                            <DataGridTextColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                                    <Setter Property="Background" Value="#FFD1D1D1"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </Style>
+                                            </DataGridTextColumn.HeaderStyle>
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path=Total,UpdateSourceTrigger=PropertyChanged}" Header="TOTAL"  Width="*" IsReadOnly="True">
+                                            <DataGridTextColumn.HeaderStyle>
+                                                <Style TargetType="DataGridColumnHeader">
+                                                    <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                                    <Setter Property="Background" Value="#FFD1D1D1"/>
+                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                </Style>
+                                            </DataGridTextColumn.HeaderStyle>
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Width="346">
+                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                    <Label Content="Delivery Name:"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="101"/>
+                                    <ComboBox x:Name="cmb_Delivery" Width="171"  ItemsSource="{Binding Path=DeliveryClass,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="DeliveryID" SelectedValue="{Binding DeliveryID}" DisplayMemberPath="DeliveryDescription" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Delivery" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                                    <Button x:Name="btn_Name" Width="30" Height="25" Margin="20,0,0,0" BorderBrush="Black" ToolTip="Add Delivery Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderThickness="1" Padding="0" Click="btn_Name_Click" >
+                                        <Button.BitmapEffect>
+                                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="10" Opacity="0.5" />
+                                        </Button.BitmapEffect>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="Add"  Height="25" Width="25" Foreground="Black" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,195,0,0" >
+
+                                    <Label Content="TOTAL" FontSize="25" Margin="0,0,0,0" FontWeight="Bold" Width="89" HorizontalContentAlignment="Right"/>
+                                    <TextBlock Text="{Binding Path = TotalPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Margin="10,0,0,0" TextAlignment="Right" Width="239"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+
+
+
+                </Border>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,290,0">
+                        <materialDesign:PackIcon Foreground="Crimson" Kind="Magnify"  Height="25" Width="25"  VerticalAlignment="Center"/>
+                        <Border Background="White" CornerRadius="5" BorderBrush="Black" BorderThickness="1">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FFB1B1B1"/>
+                            </Border.Effect>
+                            <TextBox x:Name="txt_Search" TextChanged="txt_Search_TextChanged" TextWrapping="Wrap"  FontSize="14" HorizontalAlignment="Stretch" Height="30" Margin="3 0 0 0" Width="400" BorderThickness="1,1,1,1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                        </Border>
+                    </StackPanel>
+
+                    <Button x:Name="btn_FindClient" Width="120" Height="30" Margin="200,0,0,0" BorderBrush="Black" HorizontalAlignment="Right" BorderThickness="0" Padding="0" Click="btn_Find_Click">
+
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="FindInPage"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="FIND CLIENT" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="btn_SetForDelivery" Width="135" Height="30" Margin="50,0,0,0" BorderBrush="Black" BorderThickness="0" Padding="0" Click="btn_SetForDelivery_Click" >
+
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="CashOnDelivery"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="SET FOR DELIVERY" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Margin="0,5,0,0">
+                <DataGrid x:Name="DG_Products" ItemsSource="{Binding Path=itemList,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" Width="1240" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="20,0" Height="270" PreviewMouseDoubleClick="DG_Products_PreviewMouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ItemDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="DESCRIPTION" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding GenericName, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="GENERIC NAME" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding CategoryDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="180" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="CATEGORY" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding ShelfDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="70" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="STORE SHELVE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding PurchasePrice, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="100" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="PURCHASE PRICE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="100" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="SELLING PRICE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding ExpiryDate, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="120" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="EXPIRY DATE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Visibility="Hidden" Binding="{Binding SideEffect, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="SIDE EFFECT" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding SupplierDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="120" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="SUPPLIER" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+
+                        <DataGridTextColumn Binding="{Binding Stock, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="100" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="STOCKS" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn  Binding="{Binding DiscountPrice, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                            <DataGridTextColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="DISCOUNT PRICE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
+

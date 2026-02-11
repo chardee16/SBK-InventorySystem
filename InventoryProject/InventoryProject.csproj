@@ -134,10 +134,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ClientDiscountDeliveryModule\ItemDeliveryClass.cs" />
     <Compile Include="Models\ItemModule\ItemLogs.cs" />
     <Compile Include="Pages\ClientDiscountDeliveryPage.xaml.cs">
       <DependentUpon>ClientDiscountDeliveryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Repository\DiscountDeliveryRepository.cs" />
     <Compile Include="Services\APIKey.cs" />
     <Compile Include="Services\ApiResponse.cs" />
     <Compile Include="Template\Receipt.cs">
@@ -148,6 +150,9 @@
     </Compile>
     <Compile Include="Windows\CategoryWindow.xaml.cs">
       <DependentUpon>CategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DeliveryWindow.xaml.cs">
+      <DependentUpon>DeliveryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\NameWindow.xaml.cs">
       <DependentUpon>NameWindow.xaml</DependentUpon>
@@ -256,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DeliveryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -429,6 +438,14 @@
   <ItemGroup>
     <Resource Include="Images\fast-food.png" />
     <Resource Include="Images\inventory-logo.png" />
+    <Content Include="SQLScripts\DiscountDelivery\GetClientDiscount.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\GetDeliveryProductList.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\GetDeliveryList.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\InsertClientDiscount.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\SaveForDelivery.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\UpdateClientDiscount.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\UpdateDelivery.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\InsertDelivery.sql" />
     <Content Include="SQLScripts\Items\InsertCategory.sql" />
     <Content Include="SQLScripts\Items\InsertName.sql" />
     <Content Include="SQLScripts\Items\InsertStoreShelve.sql" />

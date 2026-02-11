@@ -195,7 +195,7 @@ namespace InventoryProject
 
                     if (g != null)
                     {
-                        //MainContent.Content = new ClientInformationPage();
+                        MainContent.Content = new ClientDiscountDelivery();
                         txt_home.Foreground = Brushes.White;
                         txt_Inventory.Foreground = Brushes.White;
                         txt_POS.Foreground = Brushes.White;

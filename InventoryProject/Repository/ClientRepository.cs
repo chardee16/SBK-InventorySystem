@@ -19,100 +19,100 @@ namespace InventoryProject.Repository
 
         public List<InsertClient> GetAllClients()
         {
-            //List<InsertClient> toReturn = new List<InsertClient>();
-            //try
-            //{
-            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Client\\SelectClient.sql";
-            //    return Connection.Query<InsertClient>(this.sqlFile.sqlQuery).ToList();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return toReturn;
-            //}
-
-            var clientList = new List<InsertClient>();
-
+            List<InsertClient> toReturn = new List<InsertClient>();
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/client/get_all_client";
-
-                    client.DefaultRequestHeaders.Add("KEY", api.key);
-                    client.DefaultRequestHeaders.Add("Accept", api.accept);
-                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
-
-                    HttpResponseMessage response = client.GetAsync(url).Result;
-                    string json = response.Content.ReadAsStringAsync().Result;
-
-                    if (!response.IsSuccessStatusCode)
-                        return clientList;
-
-                    var result = JsonConvert.DeserializeObject<ApiResponse<List<InsertClient>>>(json);
-
-                    if (result != null && result.status == "SUCCESS" && result.data != null)
-                    {
-                        clientList = result.data;
-                    }
-                }
+                this.sqlFile.sqlQuery = _config.SQLDirectory + "Client\\SelectClient.sql";
+                return Connection.Query<InsertClient>(this.sqlFile.sqlQuery).ToList();
             }
             catch (Exception ex)
             {
-                // log error if needed
+                return toReturn;
             }
 
-            return clientList;
+            //var clientList = new List<InsertClient>();
+
+            //try
+            //{
+            //    using (HttpClient client = new HttpClient())
+            //    {
+            //        var url = "https://inventory-api-railway-production.up.railway.app/api/client/get_all_client";
+
+            //        client.DefaultRequestHeaders.Add("KEY", api.key);
+            //        client.DefaultRequestHeaders.Add("Accept", api.accept);
+            //        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+            //        HttpResponseMessage response = client.GetAsync(url).Result;
+            //        string json = response.Content.ReadAsStringAsync().Result;
+
+            //        if (!response.IsSuccessStatusCode)
+            //            return clientList;
+
+            //        var result = JsonConvert.DeserializeObject<ApiResponse<List<InsertClient>>>(json);
+
+            //        if (result != null && result.status == "SUCCESS" && result.data != null)
+            //        {
+            //            clientList = result.data;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // log error if needed
+            //}
+
+            //return clientList;
         }
 
         public List<InsertClient> GetListClients(String id, String name)
         {
-            //List<InsertClient> toReturn = new List<InsertClient>();
-            //try
-            //{
-            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Client\\SelectListClients.sql";
-            //    sqlFile.setParameter("_clientid", id);
-            //    sqlFile.setParameter("_fullname", name);
-            //    return Connection.Query<InsertClient>(this.sqlFile.sqlQuery).ToList();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return toReturn;
-            //}
-
-            var clientList = new List<InsertClient>();
-
+            List<InsertClient> toReturn = new List<InsertClient>();
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    var url = $"https://inventory-api-railway-production.up.railway.app/api/client/get_client_details/{id}";
-
-                    client.DefaultRequestHeaders.Add("KEY", api.key);
-                    client.DefaultRequestHeaders.Add("accept", api.accept);
-                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
-
-
-                    HttpResponseMessage response = client.GetAsync(url).Result;
-
-                    if (!response.IsSuccessStatusCode)
-                        return clientList;
-
-                    var json = response.Content.ReadAsStringAsync().Result;
-
-                    var result = JsonConvert.DeserializeObject<ApiResponse<List<InsertClient>>>(json);
-
-                    if (result != null && result.status == "SUCCESS" && result.data != null)
-                    {
-                        clientList.AddRange(result.data);
-                    }
-                }
+                this.sqlFile.sqlQuery = _config.SQLDirectory + "Client\\SelectListClients.sql";
+                sqlFile.setParameter("_clientid", id);
+                sqlFile.setParameter("_fullname", name);
+                return Connection.Query<InsertClient>(this.sqlFile.sqlQuery).ToList();
             }
             catch (Exception ex)
             {
-                // log error if needed
+                return toReturn;
             }
 
-            return clientList;
+            //var clientList = new List<InsertClient>();
+
+            //try
+            //{
+            //    using (HttpClient client = new HttpClient())
+            //    {
+            //        var url = $"https://inventory-api-railway-production.up.railway.app/api/client/get_client_details/{id}";
+
+            //        client.DefaultRequestHeaders.Add("KEY", api.key);
+            //        client.DefaultRequestHeaders.Add("accept", api.accept);
+            //        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+            //        HttpResponseMessage response = client.GetAsync(url).Result;
+
+            //        if (!response.IsSuccessStatusCode)
+            //            return clientList;
+
+            //        var json = response.Content.ReadAsStringAsync().Result;
+
+            //        var result = JsonConvert.DeserializeObject<ApiResponse<List<InsertClient>>>(json);
+
+            //        if (result != null && result.status == "SUCCESS" && result.data != null)
+            //        {
+            //            clientList.AddRange(result.data);
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // log error if needed
+            //}
+
+            //return clientList;
         }
 
         public Boolean InsertInventoryClient(InsertClient insertclientlist)

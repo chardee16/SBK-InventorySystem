@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:InventoryProject"
        mc:Ignorable="d" Height="800" Width="1280" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
 
-   
+
 
     <StackPanel Background="#FFD1D1D1">
         <Grid x:Name="GridDrag" Height="35" Background="#FF098ED3" MouseDown="GridDrag_MouseDown" >
@@ -83,8 +83,18 @@
                         </Button>
                     </StackPanel>
 
+
                     <StackPanel Orientation="Vertical">
-                        <Button Uid="5" Width="180" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                        <Button Uid="6" Width="167" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
+                            <StackPanel>
+                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="SettingsOutline"  Height="50" Width="50"  VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txt_UserManagement" Text="USER MANAGEMENT"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical">
+                        <Button Uid="7" Width="179" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
                             <StackPanel>
                                 <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="CashOnDelivery"  Height="50" Width="50"  VerticalAlignment="Center"/>
                                 <TextBlock x:Name="txt_ClientDiscount" Text="DISCOUNT &amp; DELIVERY"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
@@ -93,18 +103,8 @@
                     </StackPanel>
 
 
-                    <StackPanel Orientation="Vertical">
-                        <Button Uid="6" Width="171" Height="75" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Champagne &amp; Limousines" Click="Button_Click">
-                            <StackPanel>
-                                <materialDesign:PackIcon HorizontalAlignment="Center" Foreground="Black" Kind="SettingsOutline"  Height="50" Width="50"  VerticalAlignment="Center"/>
-                                <TextBlock x:Name="txt_UserManagement" Text="USER MANAGEMENT"  FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-
-
                 </StackPanel>
-                <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF010202" HorizontalAlignment="Left" Margin="10,80,0,0"/>
+                <Grid x:Name="GridCursor" Height="5" Background="#FF010202" Margin="10,92,0,12" HorizontalAlignment="Left" Width="180"/>
             </Grid>
         </Border>
 
