@@ -396,16 +396,48 @@ namespace InventoryProject.Repository
 
         public List<ItemClass> GetProductList()
         {
-            List<ItemClass> toReturn = new List<ItemClass>();
+            //List<ItemClass> toReturn = new List<ItemClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetProductList.sql";
+            //    return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+            var productlist = new List<ItemClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetProductList.sql";
-                return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/inventory/get_product_list";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return productlist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<ItemClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        productlist = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return productlist;
 
         }
 

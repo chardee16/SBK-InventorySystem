@@ -221,9 +221,9 @@
 
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Width="346">
                                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                                    <Label Content="Delivery Name:"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="101"/>
-                                    <ComboBox x:Name="cmb_Delivery" Width="171"  ItemsSource="{Binding Path=DeliveryClass,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="DeliveryID" SelectedValue="{Binding DeliveryID}" DisplayMemberPath="DeliveryDescription" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Delivery" Margin="0,0,0,0" Padding="0,10,0,5"/>
-                                    <Button x:Name="btn_Name" Width="30" Height="25" Margin="20,0,0,0" BorderBrush="Black" ToolTip="Add Delivery Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderThickness="1" Padding="0" Click="btn_Name_Click" >
+                                    <Label Content="Assigned Delivery:"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="115"/>
+                                    <ComboBox x:Name="cmb_Delivery" Width="213"  ItemsSource="{Binding Path=userparam,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="UserID" SelectedValue="{Binding UserID}" DisplayMemberPath="Firstname" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Delivery" Margin="0,0,0,0" Padding="0,10,0,5"/>
+                                    <Button Visibility="Hidden" x:Name="btn_Name" Width="30" Height="25" Margin="20,0,0,0" BorderBrush="Black" ToolTip="Add Delivery Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderThickness="1" Padding="0" Click="btn_Name_Click" >
                                         <Button.BitmapEffect>
                                             <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="10" Opacity="0.5" />
                                         </Button.BitmapEffect>
@@ -287,10 +287,10 @@
             <StackPanel Margin="0,5,0,0">
                 <DataGrid x:Name="DG_Products" ItemsSource="{Binding Path=itemList,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" Width="1240" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="20,0" Height="270" PreviewMouseDoubleClick="DG_Products_PreviewMouseDoubleClick">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding ItemDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="DESCRIPTION" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                    <TextBlock Text="ITEM NAME" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                             <DataGridTextColumn.ElementStyle>

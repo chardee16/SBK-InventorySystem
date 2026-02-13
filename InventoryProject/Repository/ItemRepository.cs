@@ -2,9 +2,11 @@
 using InventoryProject.Models;
 using InventoryProject.Models.ItemModule;
 using InventoryProject.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +16,7 @@ namespace InventoryProject.Repository
     {
         SQLFile sqlFile = new SQLFile();
         Config _config = new Config();
-
+        APIKey api = new APIKey();
         public List<ItemCategoryClass> GetCategoryList()
         {
             List<ItemCategoryClass> toReturn = new List<ItemCategoryClass>();
@@ -143,16 +145,51 @@ namespace InventoryProject.Repository
 
         public List<ItemClass> GetItemList()
         {
-            List<ItemClass> toReturn = new List<ItemClass>();
+            //List<ItemClass> toReturn = new List<ItemClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetProductList.sql";
+            //    return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+            var itemlist = new List<ItemClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetProductList.sql";
-                return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/get_item_list";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return itemlist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<ItemClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        itemlist = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return itemlist;
+
+
 
         }
 

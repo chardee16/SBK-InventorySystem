@@ -30,12 +30,12 @@ namespace InventoryProject.Windows
             this.dataCon = new AddStockDataContext();
             this.DataContext = this.dataCon;
 
-            this.dataCon.ItemCode = item.ItemCode;
+            this.dataCon.ItemCode = item.ItemCode ?? 0;
             this.dataCon.ItemName = item.ItemName;
             this.dataCon.ItemDescription = item.ItemDescription;
-            this.dataCon.CategoryID = item.CategoryID;
+            this.dataCon.CategoryID = item.CategoryID ?? 0;
             this.dataCon.CategoryDescription = item.CategoryDescription;
-            this.dataCon.Price = item.Price;
+            this.dataCon.Price = item.Price ?? 0;
             this.dataCon.Barcode = item.Barcode;
 
         }

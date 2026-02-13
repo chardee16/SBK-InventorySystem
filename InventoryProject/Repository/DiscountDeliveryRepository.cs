@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using InventoryProject.Models;
 using InventoryProject.Models.ClientDiscountDeliveryModule;
+using InventoryProject.Models.ClientModule;
 using InventoryProject.Models.SalesModule;
 using InventoryProject.Services;
 using Newtonsoft.Json;
@@ -12,6 +13,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static InventoryProject.Repository.SalesRepository;
 
 namespace InventoryProject.Repository
 {
@@ -24,16 +27,49 @@ namespace InventoryProject.Repository
 
         public List<ItemClass> GetProductList()
         {
-            List<ItemClass> toReturn = new List<ItemClass>();
+            //List<ItemClass> toReturn = new List<ItemClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetDeliveryProductList.sql";
+            //    return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+            var productlist = new List<ItemClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetDeliveryProductList.sql";
-                return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/inventory/get_product_list";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return productlist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse2<ItemClass>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        productlist = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return productlist;
 
         }
 
@@ -86,6 +122,30 @@ namespace InventoryProject.Repository
             }
         }
 
+
+        public class ClientDiscountList
+        {
+
+            public string id { get; set; }
+            public string BranchCode { get; set; }
+            public string ClientID { get; set; }
+            public string ItemCode { get; set; }
+            public string Discount { get; set; }
+        }
+
+        public class TransactionDelivery
+        {
+            public string item_code { get; set; }
+            public string quantity { get; set; }
+            public string price { get; set; }
+            public string discount { get; set; }
+            public string total_discount { get; set; }
+            public string amount { get; set; }
+            public string delivery_id { get; set; }
+            public string encoded_by { get; set; }
+            public string client_id { get; set; }
+        }
+
         public Boolean InsertForDelivery(ObservableCollection<SalesItemClass> saleItemList, Int64 ClientID, Int64 DeliveryID, String TransactionDate)
         {
             try
@@ -98,6 +158,8 @@ namespace InventoryProject.Repository
                 Int64 deliveryid = DeliveryID;
                 String date = TransactionDate;
                 String Last = "";
+                List<TransactionDelivery> delivery_items = new List<TransactionDelivery>();
+
                 foreach (var item in saleItemList)
                 {
                     counter++;
@@ -114,71 +176,153 @@ namespace InventoryProject.Repository
                                     + "," + item.Total + "," + 1 + ",'" + date + "'," + 1
                                     + ",'" + clientid + "', " + deliveryid + ")" + Last;
 
-                    //TransactionDetailValue2 += "(" + 1 + "," + clientid + "," + item.ItemCode + "," + item.Discount+ ")" + Last;
-
-
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetClientDiscount.sql";
-                    sqlFile.setParameter("_ClientID", clientid.ToString());
-                    sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
-
-                    int exists = Connection.ExecuteScalar<int>(sqlFile.sqlQuery);
-
-                    if (exists > 0){
-
-                        this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\UpdateClientDiscount.sql";
-                    }
-                    else {
-                        this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\InsertClientDiscount.sql";
-                    }
-
-                    sqlFile.setParameter("_ClientID", clientid.ToString());
-                    sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
-                    sqlFile.setParameter("_Discount", item.Discount.ToString());
-                    sqlFile.setParameter("_BranchCode", 1.ToString());
-
-                    var affectedRowAddUpdate = Connection.Execute(sqlFile.sqlQuery);
 
 
 
-                }
 
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\SaveForDelivery.sql";
+                    delivery_items.Add(new TransactionDelivery()
+                    {
+                        item_code = item.ItemCode.ToString(),
+                        quantity = item.Quantity.ToString(),
+                        price = item.Price.ToString(),
+                        discount = item.Discount.ToString(),
+                        total_discount = item.DiscountAmount.ToString(),
+                        amount = item.Total.ToString(),
+                        encoded_by = 1.ToString(),
+                        client_id = clientid.ToString(),
+                        delivery_id = deliveryid.ToString(),
+                    });
 
-                sqlFile.setParameter("_TransactionCode", 5.ToString());
-                sqlFile.setParameter("_TransYear", DateTime.Today.ToString("yyyy"));
-                sqlFile.setParameter("_TransactionDL", TransactionDetailValue);
 
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
-
-
-                if (affectedRow > 0)
-                {
 
                     //this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetClientDiscount.sql";
+                    //sqlFile.setParameter("_ClientID", clientid.ToString());
+                    //sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
 
-                    //this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\InsertClientDiscount.sql";
+                    //int exists = Connection.ExecuteScalar<int>(sqlFile.sqlQuery);
 
-                    //sqlFile.setParameter("_InsertClientDiscount", TransactionDetailValue2);
-
-                    //var affectedRow2 = Connection.Execute(sqlFile.sqlQuery);
-
-
-                    //if (affectedRow2 > 0)
+                    //if (exists > 0)
                     //{
-                    //    return true;
+
+                    //    this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\UpdateClientDiscount.sql";
                     //}
                     //else
                     //{
-                    //    return false;
+                    //    this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\InsertClientDiscount.sql";
                     //}
 
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    //sqlFile.setParameter("_ClientID", clientid.ToString());
+                    //sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
+                    //sqlFile.setParameter("_Discount", item.Discount.ToString());
+                    //sqlFile.setParameter("_BranchCode", 1.ToString());
+
+                    //var affectedRowAddUpdate = Connection.Execute(sqlFile.sqlQuery);
+
+
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        var url = $"https://inventory-api-railway-production.up.railway.app/api/delivery/get_client_discount/{clientid}/{item.ItemCode}";
+
+                        client.DefaultRequestHeaders.Add("KEY", api.key);
+                        client.DefaultRequestHeaders.Add("accept", api.accept);
+                        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+                        HttpResponseMessage response = client.GetAsync(url).Result;
+
+                        var json = response.Content.ReadAsStringAsync().Result;
+                        var result = JsonConvert.DeserializeObject<ApiResponse<ClientDiscountList>>(json);
+
+                        if (result != null && result.data != null)
+                        {
+                            var urlupdate = "https://inventory-api-railway-production.up.railway.app/api/delivery/update_client_discount";
+
+                            var load = new
+                            {
+                                client_id = clientid.ToString(),
+                                discount = item.Discount.ToString(),
+                            };
+
+                            var jsonupdate = JsonConvert.SerializeObject(load);
+
+                            var contentupdate = new StringContent(jsonupdate, Encoding.UTF8, "application/json");
+
+                            HttpResponseMessage responseupdate = client.PostAsync(urlupdate, contentupdate).Result;
+
+                        }
+                        else
+                        {
+                            var urlinsert = "https://inventory-api-railway-production.up.railway.app/api/delivery/insert_client_discount";
+
+                            var load = new
+                            {
+                                client_id = clientid.ToString(),
+                                item_code = item.ItemCode.ToString(),
+                                discount = item.Discount.ToString(),
+                            };
+
+                            var jsoninsert = JsonConvert.SerializeObject(load);
+
+                            var contentinsert = new StringContent(jsoninsert, Encoding.UTF8, "application/json");
+
+                            HttpResponseMessage responseinsert = client.PostAsync(urlinsert, contentinsert).Result;
+
+                        }
+
+                    }
+
                 }
 
+                //this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\SaveForDelivery.sql";
+
+                //sqlFile.setParameter("_TransactionCode", 5.ToString());
+                //sqlFile.setParameter("_TransYear", DateTime.Today.ToString("yyyy"));
+                //sqlFile.setParameter("_TransactionDL", TransactionDetailValue);
+
+                //var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+
+
+                //if (affectedRow > 0)
+                //{
+
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/delivery/save_delivery";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var saveload = new
+                    {
+                        user_id = 1.ToString(),
+                        delivery_items,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(saveload);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (response.Content != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
             catch
             {

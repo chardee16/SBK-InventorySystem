@@ -69,7 +69,7 @@
                 <DataGrid x:Name="DG_Items" ItemsSource="{Binding itemList, UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" CanUserAddRows="False" HorizontalScrollBarVisibility="Disabled" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="10,10,10,0" Height="350" PreviewMouseDoubleClick="DG_Items_PreviewMouseDoubleClick" RowHeight="30" FontSize="12">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding ItemCode, UpdateSourceTrigger=PropertyChanged}" Header="ITEM ID" Width="80" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding ItemDescription, UpdateSourceTrigger=PropertyChanged}" Header="DESCRIPTION" Width="200" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" Header="ITEM NAME" Width="200" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding Price, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" Header="PRICE" Width="110" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="{x:Type TextBlock}">

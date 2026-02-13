@@ -207,13 +207,13 @@ namespace InventoryProject.Pages
                 }
                 else
                 {
-                    this.dataCon.ItemCode = selected.ItemCode;
+                    this.dataCon.ItemCode = selected.ItemCode ?? 0;
                     this.dataCon.ItemName = selected.ItemName;
                     this.dataCon.ItemDescription = selected.ItemDescription;
-                    this.dataCon.CategoryID = selected.CategoryID;
-                    this.dataCon.Price = selected.Price;
-                    this.dataCon.Stock = selected.Stock;
-                    this.dataCon.UnitID = selected.UnitID;
+                    this.dataCon.CategoryID = selected.CategoryID ?? 0;
+                    this.dataCon.Price = selected.Price ?? 0;
+                    this.dataCon.Stock = selected.Stock ?? 0;
+                    this.dataCon.UnitID = selected.UnitID ?? 0;
                     this.dataCon.UnitAbbr = selected.UnitAbbr;
                     this.dataCon.Barcode = selected.Barcode;
                     this.dataCon.Quantity = 1;

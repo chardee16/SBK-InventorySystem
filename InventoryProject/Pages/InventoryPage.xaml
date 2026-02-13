@@ -140,7 +140,7 @@
                 </StackPanel>
                 <DataGrid x:Name="DG_Items" ItemsSource="{Binding Path=itemList,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" Width="1200" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="0,10,0,0" Height="540" PreviewMouseDoubleClick="DG_Items_PreviewMouseDoubleClick" FontSize="12">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=ItemDescription,UpdateSourceTrigger=PropertyChanged}" Header="DESCRIPTION" Width="230" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Path=ItemName,UpdateSourceTrigger=PropertyChanged}" Header="ITEM NAME" Width="230" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

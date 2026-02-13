@@ -2,6 +2,7 @@
 using InventoryProject.Models;
 using InventoryProject.Models.ClientDiscountDeliveryModule;
 using InventoryProject.Models.SalesModule;
+using InventoryProject.Models.Users;
 using InventoryProject.Repository;
 using InventoryProject.Windows;
 using System;
@@ -32,6 +33,7 @@ namespace InventoryProject.Pages
         DiscountDataContext dataCon = new DiscountDataContext();
         DiscountDeliveryRepository repo = new DiscountDeliveryRepository();
         List<SalesItemClass> salesItem = new List<SalesItemClass>();
+        UserRepository repouser = new UserRepository();
         ObservableCollection<ItemClass> filter;
         private ICollectionView MyData;
         string SearchText = string.Empty;
@@ -49,8 +51,12 @@ namespace InventoryProject.Pages
         }
         private void InitializeWorkers()
         {
+
+            this.dataCon.userparam = this.repouser.GetAllUsers().Where(u => u.IsDelivery).ToList();
+
             this.dataCon.ProductList = repo.GetProductList();
-            this.dataCon.DeliveryClass = this.repo.GetDeliveryList();
+
+            //this.dataCon.DeliveryClass = this.repo.GetDeliveryList();
             filter = new ObservableCollection<ItemClass>(this.dataCon.ProductList);
             DG_Products.ItemsSource = filter;
             MyData = CollectionViewSource.GetDefaultView(filter);
@@ -98,10 +104,10 @@ namespace InventoryProject.Pages
                 this.dataCon.DiscountPrice = 0;
                 //this.dataCon.Price = 0;
                 ItemClass selected = (ItemClass)DG_Products.SelectedItem;
-                this.dataCon.ItemCode = selected.ItemCode;
+                this.dataCon.ItemCode = selected.ItemCode ?? 0;
                 this.dataCon.ItemName = selected.ItemName;
-                this.dataCon.Price = selected.Price;
-                this.dataCon.Stock = selected.Stock;
+                this.dataCon.Price = selected.Price ?? 0;
+                this.dataCon.Stock = selected.Stock ?? 0;
             }
             catch
             {
@@ -168,9 +174,11 @@ namespace InventoryProject.Pages
             this.dataCon.Quantity = 0;
             this.dataCon.DiscountPrice = 0;
             this.dataCon.Price = 0;
-            this.dataCon.SaleitemList = null;
+            this.dataCon.SaleitemList = new ObservableCollection<SalesItemClass>();
+            this.salesItem = new List<SalesItemClass>();
             this.dataCon.TotalPrice = 0;
             this.dataCon.DeliveryID = 0;
+            this.dataCon.UserID = 0;
         }
 
         public class DiscountDataContext : INotifyPropertyChanged
@@ -184,6 +192,17 @@ namespace InventoryProject.Pages
                 {
                     _DeliveryClass = value;
                     NotifyPropertyChanged("DeliveryClass");
+                }
+            }
+
+            List<UserParam> _userparam;
+            public List<UserParam> userparam
+            {
+                get { return _userparam; }
+                set
+                {
+                    _userparam = value;
+                    NotifyPropertyChanged("userparam");
                 }
             }
 
@@ -223,6 +242,23 @@ namespace InventoryProject.Pages
                     {
                         _DeliveryID = value;
                         NotifyPropertyChanged("DeliveryID");
+                    }
+                }
+            }
+
+            Int32 _UserID;
+            public Int32 UserID
+            {
+                get
+                {
+                    return _UserID;
+                }
+                set
+                {
+                    if (value != _UserID)
+                    {
+                        _UserID = value;
+                        NotifyPropertyChanged("UserID");
                     }
                 }
             }
@@ -422,6 +458,24 @@ namespace InventoryProject.Pages
 
                 return;
             }
+            else if (this.dataCon.DiscountPrice > this.dataCon.Price)
+            {
+                MessageBox.Show(
+                    "The discount price cannot be greater than the original price.",
+                    "Warning",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.dataCon.DiscountPrice = 0;
+                    txt_DiscountPrice.Focus();
+                    Keyboard.Focus(txt_DiscountPrice);
+                }));
+
+                return;
+
+            }
             else if (this.dataCon.Quantity == 0)
             {
                 MessageBox.Show(
@@ -504,6 +558,7 @@ namespace InventoryProject.Pages
             this.dataCon.id = 0.ToString();
             this.dataCon.ClientName = "";
             this.dataCon.DeliveryID = 0;
+            this.dataCon.UserID = 0;
             this.dataCon.TotalPrice = 0;
             this.dataCon.SaleitemList.Clear();
         }
@@ -549,7 +604,7 @@ namespace InventoryProject.Pages
         {
             try
             {
-                if (this.dataCon.DeliveryID == 0)
+                if (this.dataCon.UserID == 0)
                 {
                     MessageBox.Show("Please select delivery!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
                     Dispatcher.BeginInvoke(new Action(() =>
@@ -588,10 +643,10 @@ namespace InventoryProject.Pages
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to set these items for delivery?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to set these item(s) for delivery?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    if (this.repo.InsertForDelivery(this.dataCon.SaleitemList, Convert.ToInt64(this.dataCon.id), this.dataCon.DeliveryID, DateTime.Now.ToString("yyyy/MM/dd")))
+                    if (this.repo.InsertForDelivery(this.dataCon.SaleitemList, Convert.ToInt64(this.dataCon.id), this.dataCon.UserID, DateTime.Now.ToString("yyyy/MM/dd")))
                     {
                         MessageBox.Show("Items have been set for delivery.", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
                         ClearValues();

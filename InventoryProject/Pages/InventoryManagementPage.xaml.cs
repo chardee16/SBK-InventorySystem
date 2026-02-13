@@ -486,24 +486,24 @@ namespace InventoryProject.Pages
             try
             {
                 ItemClass selected = (ItemClass)DG_Products.SelectedItem;
-                this.dataCon.ItemCode = selected.ItemCode;
+                this.dataCon.ItemCode = selected.ItemCode ?? 0;
                 this.dataCon.ItemName = selected.ItemName;
                 this.dataCon.ItemDescription = selected.ItemDescription;
-                this.dataCon.GenericID = selected.GenericID;
-                this.dataCon.CategoryID = selected.CategoryID;
-                this.dataCon.ShelfID = selected.ShelfID;
-                this.dataCon.SupplierID = selected.SupplierID;
+                this.dataCon.GenericID = selected.GenericID ?? 0;
+                this.dataCon.CategoryID = selected.CategoryID ?? 0;
+                this.dataCon.ShelfID = selected.ShelfID ?? 0;
+                this.dataCon.SupplierID = selected.SupplierID ?? 0;
                 this.dataCon.Barcode = selected.Barcode;
-                this.dataCon.PurchasePrice = selected.PurchasePrice;
-                this.dataCon.MarkupValue = selected.MarkupValue;
-                this.dataCon.Price = selected.Price;
+                this.dataCon.PurchasePrice = selected.PurchasePrice ?? 0;
+                this.dataCon.MarkupValue = selected.MarkupValue ?? 0;
+                this.dataCon.Price = selected.Price ?? 0;
                 this.dataCon.ExpiryDate = selected.ExpiryDate;
-                this.dataCon.Stock = selected.Stock;
+                this.dataCon.Stock = selected.Stock ?? 0;
                 this.dataCon.SideEffect = selected.SideEffect;
-                this.dataCon.UnitID = selected.UnitID;
-                this.dataCon.Value = selected.Value;
+                this.dataCon.UnitID = selected.UnitID ?? 0;
+                this.dataCon.Value = selected.Value ?? 0;
 
-                totalstocks = selected.Stock;
+                totalstocks = selected.Stock ?? 0;
                 btn_Save.IsEnabled = false;
                 btn_Save.Opacity = 0.5;
                 btn_Edit.IsEnabled = true;

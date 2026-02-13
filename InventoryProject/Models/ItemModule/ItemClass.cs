@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace InventoryProject.Models
 {
     public class ItemClass : INotifyPropertyChanged
     {
-        Int64 _ItemCode;
-        public Int64 ItemCode
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Int64? _ItemCode;
+        public Int64? ItemCode
         {
             get
             {
@@ -28,7 +30,7 @@ namespace InventoryProject.Models
 
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ItemName;
         public String ItemName
         {
@@ -47,7 +49,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ItemDescription;
         public String ItemDescription
         {
@@ -65,9 +67,9 @@ namespace InventoryProject.Models
             }
         }
 
-
-        Int32 _GenericID;
-        public Int32 GenericID
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Int32? _GenericID;
+        public Int32? GenericID
         {
             get
             {
@@ -84,7 +86,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _GenericName;
         public String GenericName
         {
@@ -103,9 +105,9 @@ namespace InventoryProject.Models
         }
 
 
-
-        Int32 _CategoryID;
-        public Int32 CategoryID
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Int32? _CategoryID;
+        public Int32? CategoryID
         {
             get
             {
@@ -121,7 +123,7 @@ namespace InventoryProject.Models
             }
         }
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _CategoryDescription;
         public String CategoryDescription
         {
@@ -139,9 +141,9 @@ namespace InventoryProject.Models
             }
         }
 
-
-        Decimal _PurchasePrice;
-        public Decimal PurchasePrice
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Decimal? _PurchasePrice;
+        public Decimal? PurchasePrice
         {
             get
             {
@@ -158,9 +160,9 @@ namespace InventoryProject.Models
         }
 
 
-
-        Decimal _Price;
-        public Decimal Price
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Decimal? _Price;
+        public Decimal? Price
         {
             get
             {
@@ -177,11 +179,11 @@ namespace InventoryProject.Models
         }
 
 
-        
 
 
-        Decimal _MarkupValue;
-        public Decimal MarkupValue
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Decimal? _MarkupValue;
+        public Decimal? MarkupValue
         {
             get
             {
@@ -197,9 +199,9 @@ namespace InventoryProject.Models
             }
         }
 
-
-        Decimal _Value;
-        public Decimal Value
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Decimal? _Value;
+        public Decimal? Value
         {
             get
             {
@@ -217,7 +219,7 @@ namespace InventoryProject.Models
 
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ExpiryDate;
         public String ExpiryDate
         {
@@ -235,9 +237,9 @@ namespace InventoryProject.Models
             }
         }
 
-
-        Int32 _ShelfID;
-        public Int32 ShelfID
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Int32? _ShelfID;
+        public Int32? ShelfID
         {
             get
             {
@@ -254,7 +256,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ShelfDescription;
         public String ShelfDescription
         {
@@ -273,9 +275,9 @@ namespace InventoryProject.Models
         }
 
 
-
-        Int32 _SupplierID;
-        public Int32 SupplierID
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Int32? _SupplierID;
+        public Int32? SupplierID
         {
             get
             {
@@ -292,7 +294,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _SupplierDescription;
         public String SupplierDescription
         {
@@ -311,7 +313,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _SideEffect;
         public String SideEffect
         {
@@ -330,7 +332,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _Barcode;
         public String Barcode
         {
@@ -350,9 +352,9 @@ namespace InventoryProject.Models
 
 
 
-
-        Decimal _Stock;
-        public Decimal Stock
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Decimal? _Stock;
+        public Decimal? Stock
         {
             get
             {
@@ -368,9 +370,9 @@ namespace InventoryProject.Models
             }
         }
 
-
-        Int32 _UnitID;
-        public Int32 UnitID
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
+        Int32? _UnitID;
+        public Int32? UnitID
         {
             get
             {
@@ -387,7 +389,7 @@ namespace InventoryProject.Models
         }
 
 
-
+        [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _UnitAbbr;
         public String UnitAbbr
         {
@@ -414,6 +416,25 @@ namespace InventoryProject.Models
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+
+        public class NullToEmptyStringConverter : JsonConverter<string>
+        {
+            public override string ReadJson(
+                JsonReader reader,
+                Type objectType,
+                string existingValue,
+                bool hasExistingValue,
+                JsonSerializer serializer)
+            {
+                return reader.TokenType == JsonToken.Null ? "" : reader.Value?.ToString() ?? "";
+            }
+
+            public override void WriteJson(JsonWriter writer, string value, JsonSerializer serializer)
+            {
+                writer.WriteValue(value ?? "");
             }
         }
     }

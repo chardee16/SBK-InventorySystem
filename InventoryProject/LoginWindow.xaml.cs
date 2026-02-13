@@ -83,7 +83,8 @@ namespace InventoryProject
                 byte[] ba = Encoding.Default.GetBytes(Encryption.Encrypt(txt_Password.Password));
                 var hexString = BitConverter.ToString(ba);
                 this.dataCon.one = new UserParam();
-                this.dataCon.userparam = this.repo.GetUserList(txt_username.Text, hexString);
+               // this.dataCon.userparam = this.repo.GetUserList(txt_username.Text, hexString);
+                this.dataCon.userparam = this.repo.GetUserList(txt_username.Text, txt_Password.Password);
                 foreach (var item in this.dataCon.userparam)
                 {
                     this.dataCon.one.Firstname = item.Firstname;
@@ -95,6 +96,7 @@ namespace InventoryProject
                     this.dataCon.one.Middlename = item.Middlename;
                     this.dataCon.one.Password = item.Password;
                     this.dataCon.one.UserID = item.UserID;
+                    this.dataCon.one.Id = item.Id;
                     this.dataCon.one.Username = item.Username;
                 }
 

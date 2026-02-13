@@ -142,6 +142,7 @@
     <Compile Include="Repository\DiscountDeliveryRepository.cs" />
     <Compile Include="Services\APIKey.cs" />
     <Compile Include="Services\ApiResponse.cs" />
+    <Compile Include="Services\APIResponse2.cs" />
     <Compile Include="Template\Receipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

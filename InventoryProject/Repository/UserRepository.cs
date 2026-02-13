@@ -21,64 +21,64 @@ namespace InventoryProject.Repository
 
         public List<UserParam> GetUserList(String username, String password)
         {
-            List<UserParam> toReturn = new List<UserParam>();
-            try
-            {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\GetUserParam.sql";
-                sqlFile.setParameter("_username", username);
-                sqlFile.setParameter("_password", password);
-                return Connection.Query<UserParam>(this.sqlFile.sqlQuery).ToList();
-            }
-            catch (Exception ex)
-            {
-                return toReturn;
-            }
-
-            //var users = new List<UserParam>();
-
+            //List<UserParam> toReturn = new List<UserParam>();
             //try
             //{
-            //    using (HttpClient client = new HttpClient())
-            //    {
-            //        var url = "https://inventory-api-railway-production.up.railway.app/api/auth/login";
-
-            //        client.DefaultRequestHeaders.Add("KEY", api.key);
-            //        client.DefaultRequestHeaders.Add("accept", api.accept);
-            //        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token); 
-
-            //        var load = new
-            //        {
-            //            username = username,
-            //            password = "123",
-            //        };
-
-            //        var content = new StringContent(
-            //            JsonConvert.SerializeObject(load),
-            //            Encoding.UTF8,
-            //            "application/json"
-            //        );
-
-            //        HttpResponseMessage response = client.PostAsync(url, content).Result;
-
-            //        if (!response.IsSuccessStatusCode)
-            //            return users;
-
-            //        var json = response.Content.ReadAsStringAsync().Result;
-
-            //        var result = JsonConvert.DeserializeObject<ApiResponse<UserParam>>(json);
-
-            //        if (result != null && result.status == "SUCCESS" && result.data != null)
-            //        {
-            //            users.Add(result.data);
-            //        }
-            //    }
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\GetUserParam.sql";
+            //    sqlFile.setParameter("_username", username);
+            //    sqlFile.setParameter("_password", password);
+            //    return Connection.Query<UserParam>(this.sqlFile.sqlQuery).ToList();
             //}
             //catch (Exception ex)
             //{
-            //    // log error if needed
+            //    return toReturn;
             //}
 
-            //return users;
+            var users = new List<UserParam>();
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/auth/login";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var load = new
+                    {
+                        username = username,
+                        password = password,
+                    };
+
+                    var content = new StringContent(
+                        JsonConvert.SerializeObject(load),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return users;
+
+                    var json = response.Content.ReadAsStringAsync().Result;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<UserParam>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        users.Add(result.data);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // log error if needed
+            }
+
+            return users;
 
         }
 

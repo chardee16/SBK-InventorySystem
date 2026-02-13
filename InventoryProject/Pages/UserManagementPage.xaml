@@ -170,7 +170,8 @@
                                         <TextBlock Text="ENABLE" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button>
-                                <CheckBox Margin="50,0,0,0" Background="Gray" x:Name="chck_isAdmin" Content="IsAdmin" ></CheckBox>
+                                <CheckBox Margin="40,0,0,0" Background="Gray" x:Name="chck_isAdmin" Content="IsAdmin" ></CheckBox>
+                                <CheckBox Margin="10,0,0,0" Background="Gray" x:Name="chck_isDelivery" Content="IsDelivery" ></CheckBox>
                             </StackPanel>
 
                         </StackPanel>
