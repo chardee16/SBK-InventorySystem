@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+          xmlns:currency="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextbox"
         xmlns:local="clr-namespace:InventoryProject.Windows"
         mc:Ignorable="d"
-        Title="DeliveryWindow" Height="519.956" Width="529.599" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+        Title="DeliveryWindow" Height="642" Width="529.599" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
 
     <Window.Resources>
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
@@ -31,7 +32,7 @@
 
     </Window.Resources>
 
-    <Grid>
+    <Grid Height="692" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
@@ -45,7 +46,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,0,0,50">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFB8D4EE" Offset="0.263"/>
@@ -53,28 +54,63 @@
                 </LinearGradientBrush>
             </Grid.Background>
 
-            <StackPanel Orientation="Vertical" Margin="0,28,0,0" Height="149" VerticalAlignment="Top">
+            <StackPanel Orientation="Vertical" Margin="0,28,0,0" Height="266" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
-                    <Label FontSize="15" Content="DeliveryID: " FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
-                    <TextBox x:Name="txt_ProductID" IsReadOnly="True" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=DeliveryID,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="305" Height="35" Background="#FFEBEBEB" FontSize="18"/>
+                    <Label FontSize="15" Content="Client ID: " FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
+                    <TextBox x:Name="txt_ClientID" IsEnabled="False" Opacity="0.5" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=id,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="305" Height="35" Background="#FFEBEBEB" FontSize="18"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <Label FontSize="15" Content="Delivery Description:" FontWeight="Bold" Margin="25,0,0,0" FontFamily="Microsoft JhengHei" Width="165" />
-                    <TextBox x:Name="txt_ProductName" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=DeliveryDescription,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="306" Height="35" Background="#FFEBEBEB" FontSize="18"/>
+                    <Label FontSize="15" Content="Client Name:" FontWeight="Bold" Margin="25,0,0,0" FontFamily="Microsoft JhengHei" Width="165" />
+                    <TextBox x:Name="txt_ClientName" Opacity="0.5" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=ClientName,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="306" Height="35" Background="#FFEBEBEB" FontSize="18"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label FontSize="15" Content="Item Code: " FontWeight="Bold" Margin="25,0,0,0" FontFamily="Microsoft JhengHei" Width="166" Height="29" />
+                    <TextBox x:Name="txt_ItemCode" IsEnabled="False" Opacity="0.5" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=ItemCode,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,10,0,0" Width="305" Height="35" Background="#FFEBEBEB" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label FontSize="15" Content="Item Name:" FontWeight="Bold" Margin="25,0,0,0" FontFamily="Microsoft JhengHei" Width="165" />
+                    <TextBox x:Name="txt_ItemName" IsEnabled="False" Opacity="0.5" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=ItemName,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="306" Height="35" Background="#FFEBEBEB" FontSize="18"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label FontSize="15" Content="Price:" FontWeight="Bold" Margin="25,0,0,0" FontFamily="Microsoft JhengHei" Width="165" />
+                    <currency:CurrencyTextBox x:Name="txt_Price" IsEnabled="False"  Number="{Binding Path = Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="302" Height="30" Margin="0,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                        <currency:CurrencyTextBox.Style>
+                            <Style TargetType="{x:Type currency:CurrencyTextBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="ToolTip" Value="Amount" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </currency:CurrencyTextBox.Style>
+                    </currency:CurrencyTextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label FontSize="15" Content="Discount:" FontWeight="Bold" Margin="25,0,0,0" FontFamily="Microsoft JhengHei" Width="165" />
+                    <currency:CurrencyTextBox x:Name="txt_DiscountPrice" IsEnabled="False" Number="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="302" Height="30" Margin="0,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                        <currency:CurrencyTextBox.Style>
+                            <Style TargetType="{x:Type currency:CurrencyTextBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="ToolTip" Value="Amount" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </currency:CurrencyTextBox.Style>
+                    </currency:CurrencyTextBox>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,129,0,0" Height="36" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" Margin="0,290,0,0" Height="36" VerticalAlignment="Top">
 
                 <Button x:Name="btn_Save" Margin="206,3,0,3" Content="SAVE" HorizontalAlignment="Center" Width="89" Height="30" Background="#FFEAEAEA" BorderBrush="#FF2E2E2E" FontFamily="Tempus Sans ITC" FontWeight="Bold" Click="btn_Save_Click" />
                 <Button x:Name="btn_Edit" Content="EDIT"  Margin="10,3,0,3" HorizontalAlignment="Center" Width="89" Height="30" Background="#FFEAEAEA" BorderBrush="#FF2E2E2E" FontFamily="Tempus Sans ITC" FontWeight="Bold" Click="btn_Edit_Click" />
                 <Button x:Name="btn_Cancel" Content="CANCEL"  Margin="10,3,0,3" HorizontalAlignment="Center" Width="89" Height="30" Background="#FFEAEAEA" BorderBrush="#FF2E2E2E" FontFamily="Tempus Sans ITC" FontWeight="Bold" Click="btn_Cancel_Click" />
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Margin="0,182,0,0" Height="298" VerticalAlignment="Top">
-                <DataGrid x:Name="dg_delivery" PreviewMouseDoubleClick="dg_category_PreviewMouseDoubleClick" Margin="10,0" AutoGenerateColumns="False" ItemsSource="{Binding DeliveryClass, UpdateSourceTrigger=PropertyChanged}"  CanUserAddRows="False" Height="302" >
+            <StackPanel Orientation="Vertical" Margin="0,335,0,0" Height="310" VerticalAlignment="Top">
+                <DataGrid x:Name="DG_Product" PreviewMouseDoubleClick="dg_category_PreviewMouseDoubleClick" Margin="10,0" AutoGenerateColumns="False" ItemsSource="{Binding ProductList, UpdateSourceTrigger=PropertyChanged}"  CanUserAddRows="False" Height="266" >
                     <DataGrid.RowStyle>
                         <Style TargetType="{x:Type DataGridRow}">
 
@@ -84,8 +120,10 @@
 
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn IsReadOnly="True" Header="Delivery ID" Width="1.5*" Binding="{Binding DeliveryID, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn IsReadOnly="True" Header="Delivery Description" Width="3.5*" Binding="{Binding DeliveryDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Item Code" Width="2.4*" Binding="{Binding ItemCode, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn IsReadOnly="True" Header="Item Name" Width="3.5*" Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Price" Width="2*" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Discount" Width="3.5*" Binding="{Binding DiscountPrice, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataGrid.Columns>
 
                 </DataGrid>

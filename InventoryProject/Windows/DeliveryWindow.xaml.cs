@@ -1,8 +1,10 @@
 ﻿using InventoryProject.Models;
 using InventoryProject.Models.ClientDiscountDeliveryModule;
+using InventoryProject.Models.SalesModule;
 using InventoryProject.Repository;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -26,11 +28,17 @@ namespace InventoryProject.Windows
     {
         DiscountDeliveryRepository repo = new DiscountDeliveryRepository();
         DeliveryDataContext dataCon = new DeliveryDataContext();
-        public DeliveryWindow()
+        public DeliveryWindow(Int64 clientid, string firstname, string middlename, string lastname)
         {
             InitializeComponent();
             btn_Edit.IsEnabled = false;
             this.DataContext = this.dataCon;
+            this.dataCon.id = clientid;
+            string fullname =
+                    (firstname ?? "") + " " +
+                    (middlename ?? "") + " " +
+                    (lastname ?? "");
+            this.dataCon.ClientName = fullname.Trim();
             LoadDelivery();
         }
 
@@ -38,7 +46,7 @@ namespace InventoryProject.Windows
         {
             try
             {
-                this.dataCon.DeliveryClass = this.repo.GetDeliveryList();
+                this.dataCon.ProductList = repo.GetClientProductList(this.dataCon.id);
             }
             catch (Exception)
             {
@@ -51,8 +59,10 @@ namespace InventoryProject.Windows
         {
             try
             {
-                this.dataCon.DeliveryDescription = "";
-                this.dataCon.DeliveryID = 0;
+                this.dataCon.ItemName = "";
+                this.dataCon.ItemCode = 0;
+                this.dataCon.Price = 0;
+                this.dataCon.DiscountPrice = 0;
             }
             catch (Exception)
             {
@@ -75,6 +85,7 @@ namespace InventoryProject.Windows
         {
             try
             {
+                txt_DiscountPrice.IsEnabled = true;
                 btn_Edit.IsEnabled = false;
                 btn_Save.IsEnabled = true;
             }
@@ -89,6 +100,7 @@ namespace InventoryProject.Windows
             {
                 btn_Edit.IsEnabled = false;
                 btn_Save.IsEnabled = true;
+                txt_DiscountPrice.IsEnabled = false;
                 ClearValues();
             }
             catch (Exception)
@@ -105,12 +117,21 @@ namespace InventoryProject.Windows
         {
             try
             {
-                ItemDeliveryClass selected = (ItemDeliveryClass)dg_delivery.SelectedItem;
-                this.dataCon.DeliveryID = selected.DeliveryID;
-                this.dataCon.DeliveryDescription = selected.DeliveryDescription;
+                ItemClass selected = (ItemClass)DG_Product.SelectedItem;
+                this.dataCon.ItemCode = selected.ItemCode ?? 0;
+                this.dataCon.ItemName = selected.ItemName;
+                this.dataCon.Price = selected.Price ?? 0;
+                this.dataCon.DiscountPrice = selected.DiscountPrice;
 
+                txt_DiscountPrice.IsEnabled = false;
                 btn_Save.IsEnabled = false;
                 btn_Edit.IsEnabled = true;
+
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    txt_DiscountPrice.Focus();
+                    Keyboard.Focus(txt_DiscountPrice);
+                }));
 
             }
             catch (Exception)
@@ -128,38 +149,40 @@ namespace InventoryProject.Windows
 
                 string addup = "";
 
-                if (this.dataCon.DeliveryID > 0)
+                if (this.dataCon.ItemCode > 0)
                 {
                     addup = "update";
                 }
                 else
                 {
                     addup = "add";
+                    MessageBox.Show("No Item selected!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
                 }
 
-                    MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure you want to {addup} this delivery?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure you want to {addup} this discount?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    if (!String.IsNullOrEmpty(this.dataCon.DeliveryDescription))
+                    if (!String.IsNullOrEmpty(this.dataCon.ItemName))
                     {
-                        this.dataCon.delivery = new ItemDeliveryClass();
+                        this.dataCon.item = new ItemClass();
 
-                        this.dataCon.delivery.DeliveryDescription = this.dataCon.DeliveryDescription;
-                        this.dataCon.delivery.DeliveryID = this.dataCon.DeliveryID;
+                        this.dataCon.item.ItemCode = this.dataCon.ItemCode;
+                        this.dataCon.item.ItemName = this.dataCon.ItemName;
 
-                        if (this.repo.InsertDelivery(this.dataCon.delivery))
+                        if (this.repo.InsertForClientDiscount(this.dataCon.id, this.dataCon.item.ItemCode ?? 0, Convert.ToDecimal(txt_DiscountPrice.Text)))
                         {
                             if (this.dataCon.DeliveryID > 0)
                             {
-                                MessageBox.Show("Delivery Successfully Updated!", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Discount Successfully Updated!", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                             else
                             {
-                                MessageBox.Show("Delivery Successfully Saved.", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Discount Successfully Saved.", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                             LoadDelivery();
                             ClearValues();
-
+                            txt_DiscountPrice.IsEnabled = false;
                         }
                         else
                         {
@@ -179,26 +202,26 @@ namespace InventoryProject.Windows
         public class DeliveryDataContext : INotifyPropertyChanged
         {
 
-            List<ItemDeliveryClass> _DeliveryClass;
-            public List<ItemDeliveryClass> DeliveryClass
+            List<ItemClass> _ProductList;
+            public List<ItemClass> ProductList
             {
-                get { return _DeliveryClass; }
+                get { return _ProductList; }
                 set
                 {
-                    _DeliveryClass = value;
-                    NotifyPropertyChanged("DeliveryClass");
+                    _ProductList = value;
+                    NotifyPropertyChanged("ProductList");
                 }
             }
 
 
-            ItemDeliveryClass _delivery;
-            public ItemDeliveryClass delivery
+            ItemClass _item;
+            public ItemClass item
             {
-                get { return _delivery; }
+                get { return _item; }
                 set
                 {
-                    _delivery = value;
-                    NotifyPropertyChanged("delivery");
+                    _item = value;
+                    NotifyPropertyChanged("item");
                 }
             }
 
@@ -219,7 +242,33 @@ namespace InventoryProject.Windows
                 }
             }
 
+            Int64 _id;
+            public Int64 id
+            {
+                get { return _id; }
+                set
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
+                }
+            }
 
+            String _ClientName;
+            public String ClientName
+            {
+                get
+                {
+                    return _ClientName;
+                }
+                set
+                {
+                    if (value != _ClientName)
+                    {
+                        _ClientName = value;
+                        NotifyPropertyChanged("ClientName");
+                    }
+                }
+            }
 
             String _DeliveryDescription;
             public String DeliveryDescription
@@ -234,6 +283,75 @@ namespace InventoryProject.Windows
                     {
                         _DeliveryDescription = value;
                         NotifyPropertyChanged("DeliveryDescription");
+                    }
+                }
+            }
+
+            Int64 _ItemCode;
+            public Int64 ItemCode
+            {
+                get
+                {
+                    return _ItemCode;
+                }
+                set
+                {
+                    if (value != _ItemCode)
+                    {
+                        _ItemCode = value;
+                        NotifyPropertyChanged("ItemCode");
+                    }
+                }
+            }
+
+            Decimal _DiscountPrice;
+            public Decimal DiscountPrice
+            {
+                get
+                {
+                    return _DiscountPrice;
+                }
+                set
+                {
+                    if (value != _DiscountPrice)
+                    {
+                        _DiscountPrice = value;
+                        NotifyPropertyChanged("DiscountPrice");
+                    }
+                }
+            }
+
+            Decimal _Price;
+            public Decimal Price
+            {
+                get
+                {
+                    return _Price;
+                }
+                set
+                {
+                    if (value != _Price)
+                    {
+                        _Price = value;
+                        NotifyPropertyChanged("Price");
+                    }
+                }
+            }
+
+
+            String _ItemName;
+            public String ItemName
+            {
+                get
+                {
+                    return _ItemName;
+                }
+                set
+                {
+                    if (value != _ItemName)
+                    {
+                        _ItemName = value;
+                        NotifyPropertyChanged("ItemName");
                     }
                 }
             }

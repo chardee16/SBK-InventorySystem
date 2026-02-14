@@ -28,7 +28,22 @@ namespace InventoryProject.Models
             }
         }
 
-
+        Decimal _DiscountPrice;
+        public Decimal DiscountPrice
+        {
+            get
+            {
+                return _DiscountPrice;
+            }
+            set
+            {
+                if (value != _DiscountPrice)
+                {
+                    _DiscountPrice = value;
+                    NotifyPropertyChanged("DiscountPrice");
+                }
+            }
+        }
 
         [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ItemName;

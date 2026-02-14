@@ -54,7 +54,7 @@ namespace InventoryProject.Pages
 
             this.dataCon.userparam = this.repouser.GetAllUsers().Where(u => u.IsDelivery).ToList();
 
-            this.dataCon.ProductList = repo.GetProductList();
+            this.dataCon.ProductList = repo.GetClientProductList(Convert.ToInt64(this.dataCon.id));
 
             //this.dataCon.DeliveryClass = this.repo.GetDeliveryList();
             filter = new ObservableCollection<ItemClass>(this.dataCon.ProductList);
@@ -90,8 +90,8 @@ namespace InventoryProject.Pages
                 DoubleClick();
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    txt_DiscountPrice.Focus();
-                    Keyboard.Focus(txt_DiscountPrice);
+                    txt_Quantity.Focus();
+                    Keyboard.Focus(txt_Quantity);
                 }));
             }
         }
@@ -108,6 +108,7 @@ namespace InventoryProject.Pages
                 this.dataCon.ItemName = selected.ItemName;
                 this.dataCon.Price = selected.Price ?? 0;
                 this.dataCon.Stock = selected.Stock ?? 0;
+                this.dataCon.DiscountPrice = selected.DiscountPrice;
             }
             catch
             {
@@ -179,6 +180,11 @@ namespace InventoryProject.Pages
             this.dataCon.TotalPrice = 0;
             this.dataCon.DeliveryID = 0;
             this.dataCon.UserID = 0;
+
+            InitializeWorkers();
+
+
+
         }
 
         public class DiscountDataContext : INotifyPropertyChanged
@@ -561,6 +567,7 @@ namespace InventoryProject.Pages
             this.dataCon.UserID = 0;
             this.dataCon.TotalPrice = 0;
             this.dataCon.SaleitemList.Clear();
+            InitializeWorkers();
         }
 
 
@@ -596,8 +603,8 @@ namespace InventoryProject.Pages
 
         private void btn_Name_Click(object sender, RoutedEventArgs e)
         {
-            DeliveryWindow subWindow = new DeliveryWindow();
-            subWindow.ShowDialog();
+            //DeliveryWindow subWindow = new DeliveryWindow();
+            //subWindow.ShowDialog();
         }
 
         private void btn_SetForDelivery_Click(object sender, RoutedEventArgs e)

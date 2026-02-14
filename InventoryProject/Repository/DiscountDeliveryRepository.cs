@@ -73,6 +73,25 @@ namespace InventoryProject.Repository
 
         }
 
+
+        public List<ItemClass> GetClientProductList(Int64 ClientID)
+        {
+            List<ItemClass> toReturn = new List<ItemClass>();
+            Int64 clientid = ClientID;
+            try
+            {
+                this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetClientDiscountProductList.sql";
+
+                sqlFile.setParameter("_ClientID", clientid.ToString());
+
+                return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+            }
+            catch (Exception ex)
+            {
+                return toReturn;
+            }
+        }
+
         public List<ItemDeliveryClass> GetDeliveryList()
         {
             List<ItemDeliveryClass> toReturn = new List<ItemDeliveryClass>();
@@ -323,6 +342,78 @@ namespace InventoryProject.Repository
                         return false;
                     }
                 }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public Boolean InsertForClientDiscount(Int64 ClientID, Int64 ItemCode, Decimal DiscountPrice)
+        {
+            try
+            {
+             
+                Int64 clientid = ClientID;
+                Int64 itemcode = ItemCode;
+                Decimal discountprice = DiscountPrice;
+                List<TransactionDelivery> delivery_items = new List<TransactionDelivery>();
+
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"https://inventory-api-railway-production.up.railway.app/api/delivery/get_client_discount/{clientid}/{itemcode}";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<ApiResponse<ClientDiscountList>>(json);
+
+                    if (result != null && result.data != null)
+                    {
+                        var urlupdate = "https://inventory-api-railway-production.up.railway.app/api/delivery/update_client_discount";
+
+                        var load = new
+                        {
+                            client_id = clientid.ToString(),
+                            discount = discountprice.ToString(),
+                        };
+
+                        var jsonupdate = JsonConvert.SerializeObject(load);
+
+                        var contentupdate = new StringContent(jsonupdate, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage responseupdate = client.PostAsync(urlupdate, contentupdate).Result;
+
+                    }
+                    else
+                    {
+                        var urlinsert = "https://inventory-api-railway-production.up.railway.app/api/delivery/insert_client_discount";
+
+                        var load = new
+                        {
+                            client_id = clientid.ToString(),
+                            item_code = itemcode,
+                            discount = discountprice,
+                        };
+
+                        var jsoninsert = JsonConvert.SerializeObject(load);
+
+                        var contentinsert = new StringContent(jsoninsert, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage responseinsert = client.PostAsync(urlinsert, contentinsert).Result;
+
+                    }
+
+
+                    return true;
+
+                }   
             }
             catch
             {

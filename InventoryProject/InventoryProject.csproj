@@ -440,6 +440,7 @@
     <Resource Include="Images\fast-food.png" />
     <Resource Include="Images\inventory-logo.png" />
     <Content Include="SQLScripts\DiscountDelivery\GetClientDiscount.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\GetClientDiscountProductList.sql" />
     <Content Include="SQLScripts\DiscountDelivery\GetDeliveryProductList.sql" />
     <Content Include="SQLScripts\DiscountDelivery\GetDeliveryList.sql" />
     <Content Include="SQLScripts\DiscountDelivery\InsertClientDiscount.sql" />

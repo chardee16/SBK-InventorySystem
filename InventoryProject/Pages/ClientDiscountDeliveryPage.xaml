@@ -68,7 +68,7 @@
 
                                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                     <Label Content="Discount Price"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90"/>
-                                    <currency:CurrencyTextBox x:Name="txt_DiscountPrice" Number="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                                    <currency:CurrencyTextBox x:Name="txt_DiscountPrice" IsEnabled="False" Number="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
                                         <currency:CurrencyTextBox.Style>
                                             <Style TargetType="{x:Type currency:CurrencyTextBox}">
                                                 <Style.Triggers>
@@ -99,7 +99,7 @@
 
                                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                     <Label Content="Quantity"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90" Height="23"/>
-                                    <currency:CurrencyTextBox x:Name="txt_DiscountAmount" Number="{Binding Path= Quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="64" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                                    <currency:CurrencyTextBox x:Name="txt_Quantity" Number="{Binding Path= Quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="64" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
                                         <currency:CurrencyTextBox.Style>
                                             <Style TargetType="{x:Type currency:CurrencyTextBox}">
                                                 <Style.Triggers>
@@ -385,7 +385,7 @@
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn  Binding="{Binding DiscountPrice, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                        <DataGridTextColumn  Binding="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="DISCOUNT PRICE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>

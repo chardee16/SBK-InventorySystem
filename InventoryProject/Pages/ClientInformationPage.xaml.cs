@@ -1,7 +1,10 @@
-﻿using InventoryProject.Models.ClientModule;
+﻿using InventoryProject.Models;
+using InventoryProject.Models.ClientModule;
 using InventoryProject.Repository;
+using InventoryProject.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
@@ -11,6 +14,7 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace InventoryProject.Pages
@@ -26,6 +30,9 @@ namespace InventoryProject.Pages
         private static string CurrentPath = Environment.CurrentDirectory;
         public bool _ispassed = false;
         String message = "";
+        ObservableCollection<InsertClient> filter;
+        private ICollectionView MyData;
+        string SearchText = string.Empty;
         public ClientInformationPage()
         {
             InitializeComponent();
@@ -52,6 +59,10 @@ namespace InventoryProject.Pages
                 item.BirthDate = Convert.ToDateTime(item.BirthDate).ToString("MM/dd/yyyy");
             }
 
+
+            filter = new ObservableCollection<InsertClient>(this.dataCon.SelectClients);
+            DG_Clients.ItemsSource = filter;
+            MyData = CollectionViewSource.GetDefaultView(filter);
         }
 
         private void btn_New_Click(object sender, RoutedEventArgs e)
@@ -106,6 +117,23 @@ namespace InventoryProject.Pages
             {
             }
 
+        }
+
+        private void txt_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox t = sender as TextBox;
+            SearchText = t.Text.ToString();
+            MyData.Filter = FilterData;
+
+            DG_Clients.SelectedIndex = 0;
+        }
+
+        private bool FilterData(object item)
+        {
+            var value = (InsertClient)item;
+            if (value == null || value.id <= 0)
+                return false;
+            return Convert.ToString(value.id).Contains(SearchText.ToLower()) || value.FirstName.ToLower().Contains(SearchText.ToLower()) || value.MiddleName.ToLower().Contains(SearchText.ToLower()) || value.LastName.ToLower().Contains(SearchText.ToLower());
         }
 
         private void ClearValues()
@@ -750,5 +778,18 @@ namespace InventoryProject.Pages
             txt_Age.Text = getAge.ToString();
         }
 
+        private void btn_discount_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.dataCon.id > 0)
+            {
+                DeliveryWindow window = new DeliveryWindow(this.dataCon.id, this.dataCon.FirstName, this.dataCon.MiddleName, this.dataCon.LastName);
+                window.Show();
+
+            }
+            else
+            {
+                MessageBox.Show("Please select client first!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }
