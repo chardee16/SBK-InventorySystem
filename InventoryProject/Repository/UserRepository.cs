@@ -82,8 +82,6 @@ namespace InventoryProject.Repository
 
         }
 
-
-
         public List<UserParam> GetAllUsers()
         {
             List<UserParam> toReturn = new List<UserParam>();
@@ -156,7 +154,6 @@ namespace InventoryProject.Repository
             }
         }
 
-
         public Boolean ResetUserInfo(UserParam updateuser)
         {
             try
@@ -182,7 +179,6 @@ namespace InventoryProject.Repository
                 return false;
             }
         }
-
 
         public Boolean ActivateUserInfo(UserParam updateuser)
         {
