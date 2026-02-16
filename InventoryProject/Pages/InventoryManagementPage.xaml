@@ -76,7 +76,7 @@
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                 <Label Content="Category*" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
-                                <ComboBox x:Name="cmb_Category" Width="350" ItemsSource="{Binding Path=itemCategories,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="CategoryID" SelectedValue="{Binding CategoryID}" DisplayMemberPath="CategoryDescription" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Category" Margin="10,0,0,0" Padding="0,10,0,5"/>
+                                <ComboBox x:Name="cmb_Category" Width="350" ItemsSource="{Binding Path=itemCategories,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="CategoryID" SelectedValue="{Binding CategoryID}" DisplayMemberPath="CategoryDesc" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Category" Margin="10,0,0,0" Padding="0,10,0,5"/>
                                 <Button x:Name="btn_AddCategory"  Width="30" Height="25" Margin="20,0,0,0" BorderBrush="Black" ToolTip="Add Category" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderThickness="1" Padding="0" Click="btn_AddCategory_Click">
                                     <!--<Button.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -360,7 +360,7 @@
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding CategoryDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="180" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding CategoryDesc, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="180" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="CATEGORY" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>

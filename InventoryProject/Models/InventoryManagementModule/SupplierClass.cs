@@ -66,6 +66,43 @@ namespace InventoryProject.Models.InventoryManagementModule
         }
 
 
+        Int32 _id;
+        public Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
+                }
+            }
+        }
+
+
+
+        String _Supplier;
+        public String Supplier
+        {
+            get
+            {
+                return _Supplier;
+            }
+            set
+            {
+                if (value != _Supplier)
+                {
+                    _Supplier = value;
+                    NotifyPropertyChanged("SupplierDescription");
+                }
+            }
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String info)

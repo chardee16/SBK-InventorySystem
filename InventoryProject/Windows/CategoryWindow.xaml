@@ -54,11 +54,11 @@
             <StackPanel Orientation="Vertical" Margin="0,28,0,0" Height="149" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <Label FontSize="15" Content="CategoryID: " FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
-                    <TextBox x:Name="txt_ProductID" IsReadOnly="True" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=CategoryID,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="305" Height="35" Background="#FFEBEBEB" FontSize="18"/>
+                    <TextBox x:Name="txt_ProductID" IsReadOnly="True" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=id,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="305" Height="35" Background="#FFEBEBEB" FontSize="18"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                     <Label FontSize="15" Content="Category Description:" FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" />
-                    <TextBox x:Name="txt_ProductName" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=CategoryDescription,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="306" Height="35" Background="#FFEBEBEB" FontSize="18"/>
+                    <TextBox x:Name="txt_ProductName" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=CategoryDesc,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="306" Height="35" Background="#FFEBEBEB" FontSize="18"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0"/>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0"/>
@@ -87,8 +87,8 @@
 
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn IsReadOnly="True" Header="CategoryID" Width="1.5*" Binding="{Binding CategoryID, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn IsReadOnly="True" Header="Category Description" Width="3.5*" Binding="{Binding CategoryDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="CategoryID" Width="1.5*" Binding="{Binding id, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn IsReadOnly="True" Header="Category Description" Width="3.5*" Binding="{Binding CategoryDesc, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataGrid.Columns>
 
                 </DataGrid>

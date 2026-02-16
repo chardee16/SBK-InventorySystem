@@ -52,7 +52,7 @@ namespace InventoryProject.Pages
         private void InitializeWorkers()
         {
 
-            this.dataCon.userparam = this.repouser.GetAllUsers().Where(u => u.IsDelivery).ToList();
+            this.dataCon.userparam = this.repouser.GetAllUsers().Where(u => u.IsDelivery ?? false).ToList();
 
             this.dataCon.ProductList = repo.GetClientProductList(Convert.ToInt64(this.dataCon.id));
 

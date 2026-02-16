@@ -56,6 +56,12 @@ namespace InventoryProject.Repository
                     if (result != null && result.status == "SUCCESS" && result.data != null)
                     {
                         itemlist = result.data;
+
+
+                        foreach (var item in itemlist)
+                        {
+                            item.CategoryDescription = item.CategoryDesc;
+                        }
                     }
                 }
             }

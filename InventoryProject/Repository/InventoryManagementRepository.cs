@@ -22,16 +22,57 @@ namespace InventoryProject.Repository
 
         public List<GenericMedicineClass> GetGenericMedicine()
         {
-            List<GenericMedicineClass> toReturn = new List<GenericMedicineClass>();
+            //List<GenericMedicineClass> toReturn = new List<GenericMedicineClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetGenericList.sql";
+            //    return Connection.Query<GenericMedicineClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<GenericMedicineClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetGenericList.sql";
-                return Connection.Query<GenericMedicineClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/inventory/get_generic_list";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<GenericMedicineClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+
+                        foreach (var item in toReturn)
+                        {
+                            item.GenericID = item.id;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return toReturn;
+
+
 
         }
 
@@ -62,7 +103,7 @@ namespace InventoryProject.Repository
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -165,7 +206,7 @@ namespace InventoryProject.Repository
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -174,16 +215,50 @@ namespace InventoryProject.Repository
 
         public List<ItemCategoryClass> GetCategoryList()
         {
-            List<ItemCategoryClass> toReturn = new List<ItemCategoryClass>();
+            //List<ItemCategoryClass> toReturn = new List<ItemCategoryClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\GetCategoryList.sql";
+            //    return Connection.Query<ItemCategoryClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var categorylist = new List<ItemCategoryClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\GetCategoryList.sql";
-                return Connection.Query<ItemCategoryClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/get_category";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return categorylist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<ItemCategoryClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        categorylist = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return categorylist;
 
         }
 
@@ -191,16 +266,56 @@ namespace InventoryProject.Repository
 
         public List<ShelveClass> GetShelveList()
         {
-            List<ShelveClass> toReturn = new List<ShelveClass>();
+            //List<ShelveClass> toReturn = new List<ShelveClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetShelveList.sql";
+            //    return Connection.Query<ShelveClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<ShelveClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetShelveList.sql";
-                return Connection.Query<ShelveClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/inventory/get_shelves_list";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<ShelveClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+
+                        foreach (var item in toReturn)
+                        {
+                            item.ShelfID = item.id;
+                        
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return toReturn;
 
         }
 
@@ -208,17 +323,57 @@ namespace InventoryProject.Repository
 
         public List<SupplierClass> GetSupplierList()
         {
-            List<SupplierClass> toReturn = new List<SupplierClass>();
+            //List<SupplierClass> toReturn = new List<SupplierClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetSupplierList.sql";
+            //    return Connection.Query<SupplierClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<SupplierClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "InventoryManagement\\GetSupplierList.sql";
-                return Connection.Query<SupplierClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/inventory/get_supplier_list";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<SupplierClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+
+                        foreach (var item in toReturn)
+                        {
+                            item.SupplierID = item.id;
+                            item.SupplierDescription = item.Supplier;
+
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
 
+            return toReturn;
         }
 
 
@@ -353,38 +508,91 @@ namespace InventoryProject.Repository
 
         public Boolean UpdateItem(ItemClass item)
         {
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateItem.sql";
+            //    sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
+            //    sqlFile.setParameter("_ItemName", item.ItemName);
+            //    sqlFile.setParameter("_ItemDescription", item.ItemDescription);
+            //    sqlFile.setParameter("_GenericID", item.GenericID.ToString());
+            //    sqlFile.setParameter("_CategoryID", item.CategoryID.ToString());
+            //    sqlFile.setParameter("_ShelfID", item.ShelfID.ToString());
+            //    sqlFile.setParameter("_SupplierID", item.SupplierID.ToString());
+            //    sqlFile.setParameter("_Barcode", item.Barcode);
+            //    sqlFile.setParameter("_PurchasePrice", item.PurchasePrice.ToString());
+            //    sqlFile.setParameter("_MarkupValue", item.MarkupValue.ToString());
+            //    sqlFile.setParameter("_Price", item.Price.ToString());
+            //    sqlFile.setParameter("_Stock", item.Stock.ToString());
+            //    sqlFile.setParameter("_SideEffect", item.SideEffect);
+            //    sqlFile.setParameter("_UnitID", item.UnitID.ToString());
+            //    sqlFile.setParameter("_Value", item.Value.ToString());
+
+            //    var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+
+
+            //    if (affectedRow > 0)
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
+
+
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateItem.sql";
-                sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
-                sqlFile.setParameter("_ItemName", item.ItemName);
-                sqlFile.setParameter("_ItemDescription", item.ItemDescription);
-                sqlFile.setParameter("_GenericID", item.GenericID.ToString());
-                sqlFile.setParameter("_CategoryID", item.CategoryID.ToString());
-                sqlFile.setParameter("_ShelfID", item.ShelfID.ToString());
-                sqlFile.setParameter("_SupplierID", item.SupplierID.ToString());
-                sqlFile.setParameter("_Barcode", item.Barcode);
-                sqlFile.setParameter("_PurchasePrice", item.PurchasePrice.ToString());
-                sqlFile.setParameter("_MarkupValue", item.MarkupValue.ToString());
-                sqlFile.setParameter("_Price", item.Price.ToString());
-                sqlFile.setParameter("_Stock", item.Stock.ToString());
-                sqlFile.setParameter("_SideEffect", item.SideEffect);
-                sqlFile.setParameter("_UnitID", item.UnitID.ToString());
-                sqlFile.setParameter("_Value", item.Value.ToString());
-
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
-
-
-                if (affectedRow > 0)
+                using (HttpClient client = new HttpClient())
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/update_item";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var load = new
+                    {
+
+                        user_id = 1.ToString(),
+                        item_code = item.ItemCode.ToString(),
+                        item_name = item.ItemName,
+                        item_description = item.ItemDescription,
+                        generic_id = item.GenericID,
+                        category_id = item.CategoryID,
+                        unit_id = item.UnitID,
+                        purchase_price = item.PurchasePrice,
+                        price = item.Price,
+                        markup_value = item.MarkupValue,
+                        shelf_id = item.ShelfID,
+                        supplier_id = item.SupplierID,
+                        side_effect = item.SideEffect,
+                        barcode = item.Barcode,
+                        stock = item.Stock,
+                        expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy/MM/dd"),
+                        value = item.Value
+                    };
+
+                    var json = JsonConvert.SerializeObject(load);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    var responseBody = response.Content.ReadAsStringAsync().Result;
+                    Console.WriteLine(responseBody);
+
+                    return response.IsSuccessStatusCode;
+
+
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -429,6 +637,12 @@ namespace InventoryProject.Repository
                     if (result != null && result.status == "SUCCESS" && result.data != null)
                     {
                         productlist = result.data;
+
+                        foreach (var item in productlist)
+                        {
+                            item.SupplierID = item.id;
+                            item.SupplierDescription = item.Supplier;
+                        }
                     }
                 }
             }

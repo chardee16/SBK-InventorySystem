@@ -63,6 +63,40 @@ namespace InventoryProject.Models
             }
         }
 
+        String _CategoryDesc;
+        public String CategoryDesc
+        {
+            get
+            {
+                return _CategoryDesc;
+            }
+            set
+            {
+                if (value != _CategoryDesc)
+                {
+                    _CategoryDesc = value;
+                    NotifyPropertyChanged("CategoryDesc");
+                }
+            }
+        }
+
+        String _Supplier;
+        public String Supplier
+        {
+            get
+            {
+                return _Supplier;
+            }
+            set
+            {
+                if (value != _Supplier)
+                {
+                    _Supplier = value;
+                    NotifyPropertyChanged("Supplier");
+                }
+            }
+        }
+
 
         [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ItemDescription;
@@ -270,7 +304,6 @@ namespace InventoryProject.Models
             }
         }
 
-
         [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _ShelfDescription;
         public String ShelfDescription
@@ -308,6 +341,23 @@ namespace InventoryProject.Models
             }
         }
 
+
+        Int32? _id;
+        public Int32? id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
+                }
+            }
+        }
 
         [JsonConverter(typeof(NullToEmptyStringConverter))]
         String _SupplierDescription;

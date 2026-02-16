@@ -28,6 +28,24 @@ namespace InventoryProject.Models.InventoryManagementModule
 
 
 
+        Int32 _id;
+        public Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
+                }
+            }
+        }
+
+
         String _GenericName;
         public String GenericName
         {

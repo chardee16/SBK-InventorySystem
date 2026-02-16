@@ -27,6 +27,40 @@ namespace InventoryProject.Models
             }
         }
 
+        Int32 _id;
+        public Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value != _id)
+                {
+                    _id = value;
+                    NotifyPropertyChanged("id");
+                }
+            }
+        }
+
+
+        String _CategoryDesc;
+        public String CategoryDesc
+        {
+            get
+            {
+                return _CategoryDesc;
+            }
+            set
+            {
+                if (value != _CategoryDesc)
+                {
+                    _CategoryDesc = value;
+                    NotifyPropertyChanged("CategoryDesc");
+                }
+            }
+        }
 
 
         String _CategoryDescription;

@@ -10,6 +10,7 @@ using System.Data.SQLite;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Script.Serialization;
@@ -255,7 +256,7 @@ namespace InventoryProject.Pages
                 user.Firstname = txt_FirstName.Text;
                 user.Middlename = txt_MiddleName.Text;
                 user.Username = txt_UserName.Text;
-                user.Password = hexString;
+                user.Password = txt_Password.Password;
 
                 user.privil = new List<UserPrivileges>();
 
@@ -299,7 +300,7 @@ namespace InventoryProject.Pages
                         {
                             user.privil.Add(new UserPrivileges()
                             {
-                                UserID = Convert.ToInt32(txt_UserID.Text),
+                                UserID = String.IsNullOrWhiteSpace(txt_UserID.Text) ? 0 : Convert.ToInt32(txt_UserID.Text),
                                 IsAllowed = true,
                                 PrivilegeID = item.ID,
                             });

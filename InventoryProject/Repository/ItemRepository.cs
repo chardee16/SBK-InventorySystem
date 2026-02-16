@@ -19,16 +19,54 @@ namespace InventoryProject.Repository
         APIKey api = new APIKey();
         public List<ItemCategoryClass> GetCategoryList()
         {
-            List<ItemCategoryClass> toReturn = new List<ItemCategoryClass>();
+            //List<ItemCategoryClass> toReturn = new List<ItemCategoryClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\GetCategoryList.sql";
+            //    return Connection.Query<ItemCategoryClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+            var categorylist = new List<ItemCategoryClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\GetCategoryList.sql";
-                return Connection.Query<ItemCategoryClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/get_category";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return categorylist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<ItemCategoryClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        categorylist = result.data;
+                        foreach (var item in categorylist)
+                        {
+                            item.CategoryDescription = item.CategoryDesc;
+                            item.CategoryID = item.id;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return categorylist;
 
         }
 
@@ -52,16 +90,55 @@ namespace InventoryProject.Repository
 
         public List<UnitClass> GetUnitList()
         {
-            List<UnitClass> toReturn = new List<UnitClass>();
+            //List<UnitClass> toReturn = new List<UnitClass>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\GetUnitList.sql";
+            //    return Connection.Query<UnitClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<UnitClass>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\GetUnitList.sql";
-                return Connection.Query<UnitClass>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/get_units";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<UnitClass>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+
+                        foreach (var item in toReturn)
+                        {
+                            item.UnitID = item.id;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return toReturn;
 
         }
 
@@ -179,6 +256,15 @@ namespace InventoryProject.Repository
                     if (result != null && result.status == "SUCCESS" && result.data != null)
                     {
                         itemlist = result.data;
+
+
+                        foreach (var item in itemlist)
+                        {
+                            item.GenericName = item.GenericName;
+                            item.CategoryDescription = item.CategoryDesc;
+                            item.SupplierDescription = item.Supplier;
+                        }
+
                     }
                 }
             }

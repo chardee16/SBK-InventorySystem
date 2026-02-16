@@ -50,8 +50,8 @@ namespace InventoryProject.Windows
         {
             try
             {
-                this.dataCon.CategoryDescription = "";
-                this.dataCon.CategoryID = 0;
+                this.dataCon.CategoryDesc = "";
+                this.dataCon.id = 0;
             }
             catch (Exception)
             {
@@ -92,8 +92,8 @@ namespace InventoryProject.Windows
             try
             {
                 ItemCategoryClass selected = (ItemCategoryClass)dg_category.SelectedItem;
-                this.dataCon.CategoryID = selected.CategoryID;
-                this.dataCon.CategoryDescription = selected.CategoryDescription;
+                this.dataCon.id = selected.id;
+                this.dataCon.CategoryDesc = selected.CategoryDesc;
 
                 btn_Save.IsEnabled = false;
                 btn_Edit.IsEnabled = true;
@@ -126,16 +126,16 @@ namespace InventoryProject.Windows
                 MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to add this category?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    if (!String.IsNullOrEmpty(this.dataCon.CategoryDescription))
+                    if (!String.IsNullOrEmpty(this.dataCon.CategoryDesc))
                     {
                         this.dataCon.category = new ItemCategoryClass();
 
-                        this.dataCon.category.CategoryDescription = this.dataCon.CategoryDescription;
-                        this.dataCon.category.CategoryID = this.dataCon.CategoryID;
+                        this.dataCon.category.CategoryDesc = this.dataCon.CategoryDesc;
+                        this.dataCon.category.id = this.dataCon.id;
 
                         if (this.repo.InsertCategory(this.dataCon.category))
                         {
-                            if (this.dataCon.CategoryID > 0)
+                            if (this.dataCon.id > 0)
                             {
                                 MessageBox.Show("Category Successfully Updated!", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
@@ -219,6 +219,41 @@ namespace InventoryProject.Windows
                     {
                         _CategoryDescription = value;
                         NotifyPropertyChanged("CategoryDescription");
+                    }
+                }
+            }
+
+            Int32 _id;
+            public Int32 id
+            {
+                get
+                {
+                    return _id;
+                }
+                set
+                {
+                    if (value != _id)
+                    {
+                        _id = value;
+                        NotifyPropertyChanged("id");
+                    }
+                }
+            }
+
+
+            String _CategoryDesc;
+            public String CategoryDesc
+            {
+                get
+                {
+                    return _CategoryDesc;
+                }
+                set
+                {
+                    if (value != _CategoryDesc)
+                    {
+                        _CategoryDesc = value;
+                        NotifyPropertyChanged("CategoryDesc");
                     }
                 }
             }

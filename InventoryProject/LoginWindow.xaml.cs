@@ -101,7 +101,7 @@ namespace InventoryProject
                 }
 
 
-                if (this.dataCon.one.IsReset)
+                if (this.dataCon.one.IsReset ?? false)
                 {
                     PasswordChangeWindow main = new PasswordChangeWindow(this.dataCon.one.UserID);
                     this.Hide();

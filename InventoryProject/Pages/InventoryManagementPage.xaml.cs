@@ -75,10 +75,32 @@ namespace InventoryProject.Pages
             while (true)
             {
                 this.dataCon.genericMedList = repo.GetGenericMedicine();
+
+
+
                 this.dataCon.itemCategories = repo.GetCategoryList();
+                foreach (var item in this.dataCon.itemCategories)
+                {
+
+                    item.CategoryID = item.id;
+                }
+
+
                 this.dataCon.shelveList = repo.GetShelveList();
+                foreach (var item in this.dataCon.shelveList)
+                {
+
+                    item.ShelfID = item.id;
+                }
+
+
                 this.dataCon.supplierList = repo.GetSupplierList();
+
+
+
                 this.dataCon.unitList = repo2.GetUnitList();
+
+
                 break;
             }
         }
@@ -502,6 +524,11 @@ namespace InventoryProject.Pages
                 this.dataCon.SideEffect = selected.SideEffect;
                 this.dataCon.UnitID = selected.UnitID ?? 0;
                 this.dataCon.Value = selected.Value ?? 0;
+                this.dataCon.CategoryDesc = selected.CategoryDesc;
+                this.dataCon.SupplierDescription = selected.SupplierDescription;
+                
+                
+                
 
                 totalstocks = selected.Stock ?? 0;
                 btn_Save.IsEnabled = false;
@@ -654,6 +681,58 @@ namespace InventoryProject.Pages
                 {
                     _shelveList = value;
                     NotifyPropertyChanged("shelveList");
+                }
+            }
+
+            String _SupplierDescription;
+            public String SupplierDescription
+            {
+                get
+                {
+                    return _SupplierDescription;
+                }
+                set
+                {
+                    if (value != _SupplierDescription)
+                    {
+                        _SupplierDescription = value;
+                        NotifyPropertyChanged("SupplierDescription");
+                    }
+                }
+            }
+
+            Int32 _id;
+            public Int32 id
+            {
+                get
+                {
+                    return _id;
+                }
+                set
+                {
+                    if (value != _id)
+                    {
+                        _id = value;
+                        NotifyPropertyChanged("id");
+                    }
+                }
+            }
+
+
+            String _CategoryDesc;
+            public String CategoryDesc
+            {
+                get
+                {
+                    return _CategoryDesc;
+                }
+                set
+                {
+                    if (value != _CategoryDesc)
+                    {
+                        _CategoryDesc = value;
+                        NotifyPropertyChanged("CategoryDesc");
+                    }
                 }
             }
 
