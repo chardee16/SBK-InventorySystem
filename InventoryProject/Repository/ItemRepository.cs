@@ -5,10 +5,13 @@ using InventoryProject.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static InventoryProject.Repository.SalesRepository;
 
 namespace InventoryProject.Repository
 {
@@ -185,31 +188,78 @@ namespace InventoryProject.Repository
 
         public Boolean AddStock(ItemClass item)
         {
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\AddStock.sql";
+            //    sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
+            //    sqlFile.setParameter("_Stock", item.Stock.ToString());
+            //    sqlFile.setParameter("_Price", item.Price.ToString());
+            //    sqlFile.setParameter("_ExpiryDate", item.ExpiryDate);
+            //    sqlFile.setParameter("_UserID", 1.ToString());
+            //    sqlFile.setParameter("_BranchCode", 1.ToString());
+            //    sqlFile.setParameter("_TransactionCode", 2.ToString());
+            //    sqlFile.setParameter("_TransYear", DateTime.Today.Year.ToString());
+            //    sqlFile.setParameter("_TransactionDate", DateTime.Today.ToString("yyyy-MM-dd"));
+
+
+            //    var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+
+
+            //    if (affectedRow > 0)
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\AddStock.sql";
-                sqlFile.setParameter("_ItemCode", item.ItemCode.ToString());
-                sqlFile.setParameter("_Stock", item.Stock.ToString());
-                sqlFile.setParameter("_Price", item.Price.ToString());
-                sqlFile.setParameter("_ExpiryDate", item.ExpiryDate);
-                sqlFile.setParameter("_UserID", 1.ToString());
-                sqlFile.setParameter("_BranchCode", 1.ToString());
-                sqlFile.setParameter("_TransactionCode", 2.ToString());
-                sqlFile.setParameter("_TransYear", DateTime.Today.Year.ToString());
-                sqlFile.setParameter("_TransactionDate", DateTime.Today.ToString("yyyy-MM-dd"));
-
-
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
-
-
-                if (affectedRow > 0)
+            
+                using (HttpClient client = new HttpClient())
                 {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/add_stock";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var load = new
+                    {
+
+                        user_id = 1.ToString(),
+                        item_code = item.ItemCode,
+                        stock = item.Stock,
+                        price = item.Price,
+                        expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy-MM-dd"),
+
+                        //item_code = itemCode.ToString(),
+                        //quantity = itemQuantity.ToString(),
+                        //price = itemPrice.ToString(),
+                        //discount = itemDiscount.ToString(),
+                        //discount_amount = itemDiscountAmount.ToString(),
+                        //unit_id = itemUnitID.ToString(),
+                        //expiry_date = expiryDate,
+                    };
+
+                    var json = JsonConvert.SerializeObject(load);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    //var responseBody = response.Content.ReadAsStringAsync().Result;
+                    //Console.WriteLine(responseBody);
+
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+
             }
             catch
             {

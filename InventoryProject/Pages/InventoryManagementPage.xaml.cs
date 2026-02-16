@@ -372,6 +372,7 @@ namespace InventoryProject.Pages
             item.SideEffect = this.dataCon.SideEffect;
             item.UnitID = this.dataCon.UnitID;
             item.Value = this.dataCon.Value;
+            item.ExpiryDate = this.dataCon.ExpiryDate;
 
             if (this.repo.UpdateItem(item))
             {
