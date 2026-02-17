@@ -139,32 +139,99 @@ namespace InventoryProject.Repository
 
         public List<UserPrivileges> GetUserLogin(int UserID)
         {
-            List<UserPrivileges> toReturn = new List<UserPrivileges>();
+            //List<UserPrivileges> toReturn = new List<UserPrivileges>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\GetUserLogin.sql";
+            //    sqlFile.setParameter("_UserID", UserID.ToString());
+            //    return Connection.Query<UserPrivileges>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+            var toReturn = new List<UserPrivileges>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\GetUserLogin.sql";
-                sqlFile.setParameter("_UserID", UserID.ToString());
-                return Connection.Query<UserPrivileges>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"https://inventory-api-railway-production.up.railway.app/api/user/get_user_privileges/{UserID}";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<UserPrivileges>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
-        
+
+            return toReturn;
+
         }
 
         public List<Privilege> GetAllPrivilege()
         {
-            List<Privilege> toReturn = new List<Privilege>();
+            //List<Privilege> toReturn = new List<Privilege>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\GetAllPrivilege.sql";
+            //    return Connection.Query<Privilege>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<Privilege>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\GetAllPrivilege.sql";
-                return Connection.Query<Privilege>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/data/get_privileges";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<Privilege>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return toReturn;
 
         }
 
@@ -311,7 +378,7 @@ namespace InventoryProject.Repository
                     var responseBody = response.Content.ReadAsStringAsync().Result;
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        //InsertUpdatePrivilege(updateuser.privil);
+                        InsertUpdatePrivilege(updateuser.privil);
                     }
 
                     return response.IsSuccessStatusCode;
@@ -349,12 +416,14 @@ namespace InventoryProject.Repository
 
             //return true;
 
+            int id = GetAllUsers().LastOrDefault().Id;
+
             string[] myArray = new string[userprivil.Count];
 
             int i = 0;
             foreach (var item in userprivil)
             {
-                myArray[i] = item.UserID.ToString();
+                myArray[i] = item.PrivilegeID.ToString();
                 i++;
             }
 
@@ -370,7 +439,7 @@ namespace InventoryProject.Repository
 
                     var load = new
                     {
-                        user_id = userprivil.FirstOrDefault().UserID,
+                        user_id = id.ToString(),
                         privileges = myArray,
 
                     };
@@ -381,8 +450,8 @@ namespace InventoryProject.Repository
 
                     HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                    var responseBody = response.Content.ReadAsStringAsync().Result;
-                    Console.WriteLine(responseBody);
+                    //var responseBody = response.Content.ReadAsStringAsync().Result;
+                    //Console.WriteLine(responseBody);
 
                     return response.IsSuccessStatusCode;
 
@@ -399,34 +468,78 @@ namespace InventoryProject.Repository
 
         public Boolean UpdateUserInformation(UserParam updateuser)
         {
+            //try
+            //{
+
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\UpdateUserInformation.sql";
+            //    sqlFile.setParameter("_Username", updateuser.Username);
+            //    sqlFile.setParameter("_Firstname", updateuser.Firstname);
+            //    sqlFile.setParameter("_Middlename", updateuser.Middlename);
+            //    sqlFile.setParameter("_Lastname", updateuser.Lastname);
+            //    sqlFile.setParameter("_UserID", updateuser.UserID.ToString());
+
+            //    var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+
+            //    if (affectedRow > 0)
+            //    {
+            //        if (updateuser.privil.Count > 0)
+            //        {
+            //            UpdatePrivilege(updateuser.privil);
+            //        }
+
+            //        return true;
+
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
+
             try
             {
-
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "User\\UpdateUserInformation.sql";
-                sqlFile.setParameter("_Username", updateuser.Username);
-                sqlFile.setParameter("_Firstname", updateuser.Firstname);
-                sqlFile.setParameter("_Middlename", updateuser.Middlename);
-                sqlFile.setParameter("_Lastname", updateuser.Lastname);
-                sqlFile.setParameter("_UserID", updateuser.UserID.ToString());
-
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
-
-                if (affectedRow > 0)
+                using (HttpClient client = new HttpClient())
                 {
-                    if (updateuser.privil.Count > 0)
+                    var url = "https://inventory-api-railway-production.up.railway.app/api/user/update_user";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var load = new
                     {
-                        UpdatePrivilege(updateuser.privil);
+
+                        user_id = updateuser.UserID,
+                        password = updateuser.Password,
+                        firstname = updateuser.Firstname,
+                        middlename = updateuser.Middlename,
+                        lastname = updateuser.Lastname,
+                        is_admin = updateuser.IsAdmin,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(load);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    var responseBody = response.Content.ReadAsStringAsync().Result;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        //UpdatePrivilege(updateuser.privil);
                     }
 
-                    return true;
+                    return response.IsSuccessStatusCode;
+
 
                 }
-                else
-                {
-                    return false;
-                }
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }

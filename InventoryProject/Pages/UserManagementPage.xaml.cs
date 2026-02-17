@@ -53,6 +53,7 @@ namespace InventoryProject.Pages
             this.txt_UserName.Text = String.Empty;
             txt_Password.Password = String.Empty;
             txt_ConfirmPass.Password = String.Empty;
+            this.chck_isAdmin.IsChecked = false;
           
         }
 
@@ -257,6 +258,7 @@ namespace InventoryProject.Pages
                 user.Middlename = txt_MiddleName.Text;
                 user.Username = txt_UserName.Text;
                 user.Password = txt_Password.Password;
+                user.IsAdmin = chck_isAdmin.IsChecked ?? false;
 
                 user.privil = new List<UserPrivileges>();
 
@@ -270,7 +272,7 @@ namespace InventoryProject.Pages
                         {
                             user.privil.Add(new UserPrivileges()
                             {
-                                UserID = Convert.ToInt32(txt_UserID.Text),
+                                UserID = String.IsNullOrWhiteSpace(txt_UserID.Text) ? 0 : Convert.ToInt32(txt_UserID.Text),
                                 IsAllowed = true,
                                 PrivilegeID = item.ID,
                              });

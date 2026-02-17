@@ -76,17 +76,50 @@ namespace InventoryProject.Repository
 
         public List<ItemLogs> GetItemLogs(Int32 ItemCode)
         {
-            List<ItemLogs> toReturn = new List<ItemLogs>();
+            //List<ItemLogs> toReturn = new List<ItemLogs>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\ItemLogs.sql";
+            //    sqlFile.setParameter("_ItemCode", ItemCode.ToString());
+            //    return Connection.Query<ItemLogs>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+            var toReturn = new List<ItemLogs>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\ItemLogs.sql";
-                sqlFile.setParameter("_ItemCode", ItemCode.ToString());
-                return Connection.Query<ItemLogs>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"https://inventory-api-railway-production.up.railway.app/api/item/get_item_logs/{ItemCode}";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<List<ItemLogs>>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return toReturn;
 
         }
 
@@ -237,7 +270,7 @@ namespace InventoryProject.Repository
                         item_code = item.ItemCode,
                         stock = item.Stock,
                         price = item.Price,
-                        expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy-MM-dd"),
+                        expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy/MM/dd"),
 
                         //item_code = itemCode.ToString(),
                         //quantity = itemQuantity.ToString(),

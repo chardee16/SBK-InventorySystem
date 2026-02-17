@@ -584,8 +584,8 @@ namespace InventoryProject.Repository
 
                     HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                    var responseBody = response.Content.ReadAsStringAsync().Result;
-                    Console.WriteLine(responseBody);
+                    //var responseBody = response.Content.ReadAsStringAsync().Result;
+                    //Console.WriteLine(responseBody);
 
                     return response.IsSuccessStatusCode;
 
