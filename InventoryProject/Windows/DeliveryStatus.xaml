@@ -6,8 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Delivery Status"
-        Height="540"
-        Width="950"
+        Height="639"
+        Width="1229"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -18,7 +18,7 @@
                          materialDesign:ElevationAssist.Elevation="Dp8"
                          Background="{DynamicResource MaterialDesignPaper}">
 
-        <Grid>
+        <Grid Margin="0,0,0,-9">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="Auto"/>
@@ -76,7 +76,7 @@
                               Grid.Column="0"
                               Height="40"
                               ItemsSource="{Binding Path=userparam,UpdateSourceTrigger=PropertyChanged}"
-                              materialDesign:HintAssist.Hint="Delivery Man"
+                              materialDesign:HintAssist.Hint="Select Delivery"
                               Style="{StaticResource MaterialDesignFilledComboBox}"
                               DisplayMemberPath="Firstname"
                               SelectedValue="{Binding UserID}"
@@ -105,7 +105,7 @@
 
             <!-- DATA GRID -->
             <materialDesign:Card Grid.Row="2"
-                                 Margin="20,0,20,20"
+                                 Margin="20,0,20,62"
                                  Padding="10"
                                  materialDesign:ElevationAssist.Elevation="Dp2">
 
@@ -123,38 +123,77 @@
                                             Width="*"/>
 
                         <DataGridTextColumn Header="Item Name"
-                                            Binding="{Binding ItemName}"
-                                            Width="*"/>
+                                            Binding="{Binding ItemDescription}"
+                                            Width="180"/>
+
+                        <DataGridTextColumn Header="Price"
+                                            Binding="{Binding Price}"
+                                            Width="*">
+
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Out for Delivery"
-                                            Binding="{Binding TotalForDelivery}"
-                                            Width="*"/>
+                                            Binding="{Binding Out_For_Delivery}"
+                                            Width="180"/>
 
                         <DataGridTextColumn Header="Delivered"
                                             Binding="{Binding Delivered}"
-                                            Width="*"/>       
+                                            Width="*"/>
 
                         <DataGridTextColumn Header="Remaining"
                                             Binding="{Binding Remaining}"
                                             Width="*"/>
 
+                        <DataGridTextColumn Header="Total"
+                                            Binding="{Binding TotalPriceDelivered}"
+                                            Width="140">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+
                         <DataGridTemplateColumn Header="Return Remaining Items" Width="180">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Return"
+                                    <Button Content="Click Here to Return"
                                         Height="30"
-                                        Width="120"
+                                        Width="160"
                                         Margin="5,0,0,0"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        Click="ReturnButton_Click"/>                
+                                        Click="ReturnButton_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
                     </DataGrid.Columns>
                 </DataGrid>
-            </materialDesign:Card>
 
+
+
+            </materialDesign:Card>
+            <Label Content="TOTAL SALES" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="627,418,421,19" Grid.Row="2"/>
+            <TextBlock Text="{Binding Path=TotalSalesPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="792,421,234,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
         </Grid>
+
+
     </materialDesign:Card>
 </Window>

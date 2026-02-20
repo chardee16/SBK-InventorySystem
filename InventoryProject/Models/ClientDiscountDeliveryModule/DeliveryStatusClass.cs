@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -46,9 +47,9 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
             }
         }
 
-
+        [JsonProperty("Out for Delivery")]
         Int32 _OutForDelivery;
-        public Int32 OutForDelivery
+        public Int32 Out_For_Delivery
         {
             get
             {
@@ -59,7 +60,7 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
                 if (value != _OutForDelivery)
                 {
                     _OutForDelivery = value;
-                    NotifyPropertyChanged("OutForDelivery");
+                    NotifyPropertyChanged("Out_For_Delivery");
                 }
             }
         }
@@ -96,6 +97,59 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
                 {
                     _Remaining = value;
                     NotifyPropertyChanged("Remaining");
+                }
+            }
+        }
+
+
+        Decimal _Price;
+        public Decimal Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                if (value != _Price)
+                {
+                    _Price = value;
+                    NotifyPropertyChanged("Price");
+                }
+            }
+        }
+
+
+        Decimal _TotalPriceDelivered;
+        public Decimal TotalPriceDelivered
+        {
+            get
+            {
+                return _TotalPriceDelivered;
+            }
+            set
+            {
+                if (value != _TotalPriceDelivered)
+                {
+                    _TotalPriceDelivered = value;
+                    NotifyPropertyChanged("TotalPriceDelivered");
+                }
+            }
+        }
+
+        Decimal _TotalSalesPrice;
+        public Decimal TotalSalesPrice
+        {
+            get
+            {
+                return _TotalSalesPrice;
+            }
+            set
+            {
+                if (value != _TotalSalesPrice)
+                {
+                    _TotalSalesPrice = value;
+                    NotifyPropertyChanged("TotalSalesPrice");
                 }
             }
         }

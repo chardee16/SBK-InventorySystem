@@ -30,6 +30,7 @@ namespace InventoryProject.Windows
     {
         DeliveryDataContext dataCon = new DeliveryDataContext();
         DiscountDeliveryRepository repo = new DiscountDeliveryRepository();
+        SalesRepository salesrepo = new SalesRepository();
         UserRepository repouser = new UserRepository();
         public DeliveryStatus()
         {
@@ -94,6 +95,23 @@ namespace InventoryProject.Windows
                 }
             }
 
+            Decimal _TotalSalesPrice;
+            public Decimal TotalSalesPrice
+            {
+                get
+                {
+                    return _TotalSalesPrice;
+                }
+                set
+                {
+                    if (value != _TotalSalesPrice)
+                    {
+                        _TotalSalesPrice = value;
+                        NotifyPropertyChanged("TotalSalesPrice");
+                    }
+                }
+            }
+
 
             String _Date;
             public String Date
@@ -113,6 +131,29 @@ namespace InventoryProject.Windows
             }
 
 
+            ObservableCollection<SalesItemClass> _SaleitemList;
+            public ObservableCollection<SalesItemClass> SaleitemList
+            {
+                get { return _SaleitemList; }
+                set
+                {
+                    _SaleitemList = value;
+                    NotifyPropertyChanged("SaleitemList");
+                }
+            }
+
+            List<SalesItemClass> _SaleitemList2;
+            public List<SalesItemClass> SaleitemList2
+            {
+                get { return _SaleitemList2; }
+                set
+                {
+                    _SaleitemList2 = value;
+                    NotifyPropertyChanged("SaleitemList2");
+                }
+            }
+
+
 
 
             public event PropertyChangedEventHandler PropertyChanged;
@@ -127,7 +168,49 @@ namespace InventoryProject.Windows
 
         private void BTN_Load_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
+                if (this.dataCon.UserID == 0)
+                {
+                    MessageBox.Show("Please select delivery!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        CB_DeliveryMan.Focus();
+                        Keyboard.Focus(CB_DeliveryMan);
+                        CB_DeliveryMan.IsDropDownOpen = true;
+                    }));
+                    return;
+                }
+                else
+                {
+                    this.dataCon.deliverystatus = this.repo.GetDeliveryStatusList(Convert.ToInt64(this.dataCon.UserID), this.dataCon.Date);
+                    this.dataCon.TotalSalesPrice = 0;
+                    foreach (var item in this.dataCon.deliverystatus)
+                    {
+                        item.TotalPriceDelivered = Math.Round(item.Price * item.Delivered, 2);
+                        this.dataCon.TotalSalesPrice += item.TotalPriceDelivered;
+                    }
+
+                    if (this.dataCon.deliverystatus.Count == 0)
+                    {
+                        MessageBox.Show(
+                                "No delivery data found.",
+                                "Warning",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+
+                    }
+
+                }
+
+                  
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void Header_MouseDown(object sender, MouseButtonEventArgs e)
@@ -142,18 +225,101 @@ namespace InventoryProject.Windows
         }
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
-        {        
-            var button = sender as Button;
-            if (button == null) return;
+        {
+            try
+            {
 
-            var rowData = button.DataContext;
+                var button = sender as Button;
+                if (button == null) return;
 
-            dynamic delivery = rowData;
+                var rowData = button.DataContext;
 
-            string deliveryNo = delivery.DeliveryNo;
-            string customer = delivery.CustomerName;
+                dynamic delivery = rowData;
 
-            MessageBox.Show($"Returning remaining items for Delivery No: {deliveryNo}, Customer: {customer}");
+                String itemName = delivery.ItemDescription;
+                Int32 count = delivery.Remaining;
+
+                MessageBoxResult messageBoxResult = MessageBox.Show($"Are you sure you want to return {count} remaining items for {itemName}?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    this.dataCon.SaleitemList = new ObservableCollection<SalesItemClass>();
+                    this.dataCon.SaleitemList2 = new List<SalesItemClass>();
+                    this.dataCon.SaleitemList.Add(new SalesItemClass()
+                    {
+                        ItemCode = delivery.ItemCode,
+                        Quantity = delivery.Remaining * -1,
+                        Price = delivery.Price,
+                        Discount = 0,
+                        DiscountAmount = 0,
+                        Total = delivery.Remaining * delivery.Price,
+                        ExpiryDate = "1900-01-01"
+                    });
+
+                    this.dataCon.SaleitemList2.Add(new SalesItemClass()
+                    {
+                        ItemCode = delivery.ItemCode,
+                        Quantity = delivery.Remaining * -1,
+                        Price = delivery.Price,
+                        Discount = 0,
+                        DiscountAmount = 0,
+                        Total = delivery.Remaining * delivery.Price,
+                        ExpiryDate = "1900-01-01"
+                    });
+
+
+                    SetReturnFunction();
+                }
+
+
+
+            }
+            catch (Exception)
+            {
+
+            }
         }
+
+
+        private void SetReturnFunction()
+        {
+            try
+            {
+                
+
+                if (this.repo.InsertForReturnItems(this.dataCon.SaleitemList, 0, this.dataCon.UserID, Convert.ToDateTime(this.dataCon.Date).ToString("yyyy/MM/dd")))
+                {
+
+                    if (this.salesrepo.InsertPayment(this.dataCon.SaleitemList2, 0, 0, 0, 0, "0", "", DateTime.Now.ToString("yyyy/MM/dd"), 0))
+                    {
+
+                        MessageBox.Show("Items have been returned.",
+                                "Success",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+
+
+                    }
+                    else
+                    {
+
+                        MessageBox.Show("Something went wrong.\nPlease Contact Administrator!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong.\nPlease Contact Administrator!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
     }
 }

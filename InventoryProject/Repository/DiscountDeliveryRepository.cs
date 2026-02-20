@@ -218,6 +218,24 @@ namespace InventoryProject.Repository
             public string delivery_id { get; set; }
             public string encoded_by { get; set; }
             public string client_id { get; set; }
+
+
+        }
+
+        public class TransactionReturn
+        {
+            public string item_code { get; set; }
+            public string quantity { get; set; }
+            public string price { get; set; }
+            public string discount { get; set; }
+            public string total_discount { get; set; }
+            public string amount { get; set; }
+            public string delivery_id { get; set; }
+            public string encoded_by { get; set; }
+            public string client_id { get; set; }
+            public string transaction_code { get; set; }
+            public string transaction_date { get; set; }
+
         }
 
         public Boolean InsertForDelivery(ObservableCollection<SalesItemClass> saleItemList, Int64 ClientID, Int64 DeliveryID, String TransactionDate)
@@ -481,20 +499,148 @@ namespace InventoryProject.Repository
 
         public List<DeliveryStatusClass> GetDeliveryStatusList(Int64 UserID, String Date)
         {
-            List<DeliveryStatusClass> toReturn = new List<DeliveryStatusClass>();
-            Int64 clientid = UserID;
+            //List<DeliveryStatusClass> toReturn = new List<DeliveryStatusClass>();
+            //Int64 clientid = UserID;
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetDeliveryStatusList.sql";
+
+            //    sqlFile.setParameter("_UserID", clientid.ToString());
+            //    sqlFile.setParameter("_Date", Date);
+
+            //    return Connection.Query<DeliveryStatusClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<DeliveryStatusClass>();
+            Int64 userid = UserID;
+            String date = Convert.ToDateTime(Date).ToString("yyyy-MM-dd");
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetDeliveryStatusList.sql";
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/delivery/get_delivery_status_list/{userid}/{date}";
 
-                sqlFile.setParameter("_UserID", clientid.ToString());
-                sqlFile.setParameter("_Date", Date);
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
 
-                return Connection.Query<DeliveryStatusClass>(this.sqlFile.sqlQuery).ToList();
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+
+
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse2<DeliveryStatusClass>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
+            }
+
+            return toReturn;
+
+        }
+
+
+        public Boolean InsertForReturnItems(ObservableCollection<SalesItemClass> saleItemList, Int64 ClientID, Int64 DeliveryID, String TransactionDate)
+        {
+            try
+            {
+
+                String TransactionDetailValue = "";
+                //String TransactionDetailValue2 = "";
+                int counter = 0;
+                Int64 clientid = ClientID;
+                Int64 deliveryid = DeliveryID;
+                String date = TransactionDate;
+                String Last = "";
+                List<TransactionReturn> delivery_items = new List<TransactionReturn>();
+
+                foreach (var item in saleItemList)
+                {
+                    counter++;
+                    if (counter == saleItemList.Count)
+                    {
+                        Last = ";";
+                    }
+                    else
+                    {
+                        Last = ",\n";
+                    }
+                    TransactionDetailValue += "(" + 1 + "," + 7 + ",@ControlNo," + DateTime.Today.ToString("yyyy") + "," + item.ItemCode
+                                    + "," + item.Quantity + "," + item.Price + "," + item.Discount + "," + item.DiscountAmount
+                                    + "," + item.Total + "," + 1 + ",'" + date + "'," + 1
+                                    + ",'" + clientid + "', " + deliveryid + ")" + Last;
+
+
+
+
+
+                    delivery_items.Add(new TransactionReturn()
+                    {
+                        item_code = item.ItemCode.ToString(),
+                        quantity = item.Quantity.ToString(),
+                        price = item.Price.ToString(),
+                        discount = item.Discount.ToString(),
+                        total_discount = item.DiscountAmount.ToString(),
+                        amount = item.Total.ToString(),
+                        encoded_by = 1.ToString(),
+                        client_id = clientid.ToString(),
+                        delivery_id = deliveryid.ToString(),
+                        transaction_code = 7.ToString(),
+                        transaction_date = date
+
+                    });
+                }
+              
+
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/delivery/save_return";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var saveload = new
+                    {
+                        user_id = 1.ToString(),
+                        delivery_items,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(saveload);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (response.Content != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
             }
 
         }
