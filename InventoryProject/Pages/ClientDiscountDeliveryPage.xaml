@@ -46,27 +46,27 @@
                         <StackPanel Orientation="Horizontal" Width="1238">
 
                             <StackPanel Orientation="Vertical" Margin="0,0,50,0" Width="325">
-                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Horizontal" Visibility="Hidden" Margin="10,10,0,0">
                                     <Label Content="Client ID"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
                                     <TextBox Width="209" x:Name="txt_ClientID" IsEnabled="False" Text="{Binding Path = id,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="#FF949494" materialDesign:HintAssist.Hint="ClientID" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Horizontal" Visibility="Hidden" Margin="10,10,0,0">
                                     <Label Content="Client Name"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
                                     <TextBox Width="209" x:Name="txt_FirstName" IsEnabled="False" Text="{Binding Path = ClientName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Client Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="10,-30,0,0">
                                     <Label Content="Item Code"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
                                     <TextBox Width="209" x:Name="txt_ItemCode" IsEnabled="False" Text="{Binding Path = ItemCode,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Item Code" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Horizontal"  Margin="10,10,0,0">
                                     <Label Content="Item Name"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
                                     <TextBox Width="209" x:Name="txt_ItemName" IsEnabled="False" Text="{Binding Path = ItemName,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Item Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Horizontal" Visibility="Hidden" Margin="10,10,0,0">
                                     <Label Content="Discount Price"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90"/>
                                     <currency:CurrencyTextBox x:Name="txt_DiscountPrice" IsEnabled="False" Number="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
                                         <currency:CurrencyTextBox.Style>
@@ -81,7 +81,7 @@
                                     </currency:CurrencyTextBox>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="10,-30,0,0">
                                     <Label Content="Price"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90"/>
                                     <currency:CurrencyTextBox x:Name="txt_Price" IsEnabled="False" Number="{Binding Path= Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
                                         <currency:CurrencyTextBox.Style>
@@ -258,7 +258,18 @@
                         </Border>
                     </StackPanel>
 
-                    <Button x:Name="btn_FindClient" Width="120" Height="30" Margin="200,0,0,0" BorderBrush="Black" HorizontalAlignment="Right" BorderThickness="0" Padding="0" Click="btn_Find_Click">
+                    <Button x:Name="btn_ShowLogs" Width="165" Height="30" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="0" Padding="0" Click="btn_ShowLogs_Click">
+
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="ListStatus"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="SHOW DELIVERY STATUS" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="btn_FindClient" Visibility="Hidden" Width="120" Height="30" Margin="40,0,0,0" BorderBrush="Black" HorizontalAlignment="Right" BorderThickness="0" Padding="0" Click="btn_Find_Click">
 
                         <Button.BitmapEffect>
                             <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
@@ -385,7 +396,7 @@
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn  Binding="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
+                        <DataGridTextColumn Visibility="Hidden" Binding="{Binding Path = DiscountPrice, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="DISCOUNT PRICE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>

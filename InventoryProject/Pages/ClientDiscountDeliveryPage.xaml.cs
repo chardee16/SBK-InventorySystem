@@ -54,7 +54,8 @@ namespace InventoryProject.Pages
 
             this.dataCon.userparam = this.repouser.GetAllUsers().Where(u => u.IsDelivery ?? false).ToList();
 
-            this.dataCon.ProductList = repo.GetClientProductList(Convert.ToInt64(this.dataCon.id));
+            //this.dataCon.ProductList = repo.GetClientProductList(Convert.ToInt64(this.dataCon.id));
+            this.dataCon.ProductList = repo.GetProductList();
 
             //this.dataCon.DeliveryClass = this.repo.GetDeliveryList();
             filter = new ObservableCollection<ItemClass>(this.dataCon.ProductList);
@@ -81,19 +82,19 @@ namespace InventoryProject.Pages
 
         private void DG_Products_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (this.dataCon.id == null)
-            {
-                MessageBox.Show("Please select client first!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
+            //if (this.dataCon.id == null)
+            //{
+            //    MessageBox.Show("Please select client first!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //}
+            //else
+            //{
                 DoubleClick();
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     txt_Quantity.Focus();
                     Keyboard.Focus(txt_Quantity);
                 }));
-            }
+            //}
         }
 
         public void DoubleClick()
@@ -671,6 +672,12 @@ namespace InventoryProject.Pages
 
             }
 
+        }
+
+        private void btn_ShowLogs_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryStatus window = new DeliveryStatus();
+            window.ShowDialog();
         }
     }
 }

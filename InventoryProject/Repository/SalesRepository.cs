@@ -39,7 +39,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/item/get_item_list";
+                    var url = $"{api.http}/api/item/get_item_list";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -175,7 +175,7 @@ namespace InventoryProject.Repository
 
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/pos/save_purchase";
+                    var url = $"{api.http}/api/pos/save_purchase";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);

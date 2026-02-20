@@ -42,7 +42,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/auth/login";
+                    var url = $"{api.http}/api/auth/login";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -104,7 +104,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/user/get_all_users";
+                    var url = $"{api.http}/api/user/get_all_users";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -157,7 +157,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = $"https://inventory-api-railway-production.up.railway.app/api/user/get_user_privileges/{UserID}";
+                    var url = $"{api.http}/api/user/get_user_privileges/{UserID}";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -206,7 +206,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/data/get_privileges";
+                    var url = $"{api.http}/api/data/get_privileges";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -351,7 +351,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/user/create_user";
+                    var url = $"{api.http}/api/user/create_user";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -431,7 +431,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/user/add_user_privileges";
+                    var url = $"{api.http}/api/user/add_user_privileges";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -504,7 +504,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/user/update_user";
+                    var url = $"{api.http}/api/user/update_user";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);

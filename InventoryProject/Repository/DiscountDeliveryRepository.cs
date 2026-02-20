@@ -45,7 +45,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/inventory/get_product_list";
+                    var url = $"{api.http}/api/inventory/get_product_list";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -99,7 +99,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = $"https://inventory-api-railway-production.up.railway.app/api/delivery/get_client_discount_product_list/{clientid}";
+                    var url = $"{api.http}/api/delivery/get_client_discount_product_list/{clientid}";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -277,7 +277,7 @@ namespace InventoryProject.Repository
 
                     using (HttpClient client = new HttpClient())
                     {
-                        var url = $"https://inventory-api-railway-production.up.railway.app/api/delivery/get_client_discount/{clientid}/{item.ItemCode}";
+                        var url = $"{api.http}/api/delivery/get_client_discount/{clientid}/{item.ItemCode}";
 
                         client.DefaultRequestHeaders.Add("KEY", api.key);
                         client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -291,7 +291,7 @@ namespace InventoryProject.Repository
 
                         if (result != null && result.data != null)
                         {
-                            var urlupdate = "https://inventory-api-railway-production.up.railway.app/api/delivery/update_client_discount";
+                            var urlupdate = $"{api.http}/api/delivery/update_client_discount";
 
                             var load = new
                             {
@@ -309,7 +309,7 @@ namespace InventoryProject.Repository
                         }
                         else
                         {
-                            var urlinsert = "https://inventory-api-railway-production.up.railway.app/api/delivery/insert_client_discount";
+                            var urlinsert = $"{api.http}/api/delivery/insert_client_discount";
 
                             var load = new
                             {
@@ -351,7 +351,7 @@ namespace InventoryProject.Repository
 
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/delivery/save_delivery";
+                    var url = $"{api.http}/api/delivery/save_delivery";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -399,7 +399,7 @@ namespace InventoryProject.Repository
 
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = $"https://inventory-api-railway-production.up.railway.app/api/delivery/get_client_discount/{clientid}/{itemcode}";
+                    var url = $"{api.http}/api/delivery/get_client_discount/{clientid}/{itemcode}";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -413,7 +413,7 @@ namespace InventoryProject.Repository
 
                     if (result != null && result.data != null)
                     {
-                        var urlupdate = "https://inventory-api-railway-production.up.railway.app/api/delivery/update_client_discount";
+                        var urlupdate = $"{api.http}/api/delivery/update_client_discount";
 
                         var load = new
                         {
@@ -431,7 +431,7 @@ namespace InventoryProject.Repository
                     }
                     else
                     {
-                        var urlinsert = "https://inventory-api-railway-production.up.railway.app/api/delivery/insert_client_discount";
+                        var urlinsert = $"{api.http}/api/delivery/insert_client_discount";
 
                         var load = new
                         {
@@ -457,6 +457,27 @@ namespace InventoryProject.Repository
             {
                 return false;
             }
+        }
+
+
+        public List<DeliveryStatusClass> GetDeliveryStatusList(Int64 UserID, String Date)
+        {
+            List<DeliveryStatusClass> toReturn = new List<DeliveryStatusClass>();
+            Int64 clientid = UserID;
+            try
+            {
+                this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetDeliveryStatusList.sql";
+
+                sqlFile.setParameter("_UserID", clientid.ToString());
+                sqlFile.setParameter("_Date", Date);
+
+                return Connection.Query<DeliveryStatusClass>(this.sqlFile.sqlQuery).ToList();
+            }
+            catch (Exception ex)
+            {
+                return toReturn;
+            }
+
         }
 
     }

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-          xmlns:currency="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextbox"
+        xmlns:currency="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextbox"
         xmlns:local="clr-namespace:InventoryProject.Windows"
         mc:Ignorable="d"
         Title="DeliveryWindow" Height="642" Width="529.599" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">

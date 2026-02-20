@@ -134,6 +134,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ClientDiscountDeliveryModule\DeliveryStatusClass.cs" />
     <Compile Include="Models\ClientDiscountDeliveryModule\ItemDeliveryClass.cs" />
     <Compile Include="Models\ItemModule\ItemLogs.cs" />
     <Compile Include="Pages\ClientDiscountDeliveryPage.xaml.cs">
@@ -151,6 +152,9 @@
     </Compile>
     <Compile Include="Windows\CategoryWindow.xaml.cs">
       <DependentUpon>CategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DeliveryStatus.xaml.cs">
+      <DependentUpon>DeliveryStatus.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DeliveryWindow.xaml.cs">
       <DependentUpon>DeliveryWindow.xaml</DependentUpon>
@@ -262,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DeliveryStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -443,6 +451,7 @@
     <Content Include="SQLScripts\DiscountDelivery\GetClientDiscountProductList.sql" />
     <Content Include="SQLScripts\DiscountDelivery\GetDeliveryProductList.sql" />
     <Content Include="SQLScripts\DiscountDelivery\GetDeliveryList.sql" />
+    <Content Include="SQLScripts\DiscountDelivery\GetDeliveryStatusList.sql" />
     <Content Include="SQLScripts\DiscountDelivery\InsertClientDiscount.sql" />
     <Content Include="SQLScripts\DiscountDelivery\SaveForDelivery.sql" />
     <Content Include="SQLScripts\DiscountDelivery\UpdateClientDiscount.sql" />

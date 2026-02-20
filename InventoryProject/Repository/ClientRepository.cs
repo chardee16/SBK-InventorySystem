@@ -36,7 +36,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/client/get_all_client";
+                    var url = $"{api.http}/api/client/get_all_client";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("Accept", api.accept);
@@ -85,7 +85,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = $"https://inventory-api-railway-production.up.railway.app/api/client/get_client_details/{id}";
+                    var url = $"{api.http}/api/client/get_client_details/{id}";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -158,7 +158,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/client/insert_client";
+                    var url = $"{api.http}/api/client/insert_client";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
@@ -247,7 +247,7 @@ namespace InventoryProject.Repository
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var url = "https://inventory-api-railway-production.up.railway.app/api/client/update_client";
+                    var url = $"{api.http}/api/client/update_client";
 
                     client.DefaultRequestHeaders.Add("KEY", api.key);
                     client.DefaultRequestHeaders.Add("accept", api.accept);
