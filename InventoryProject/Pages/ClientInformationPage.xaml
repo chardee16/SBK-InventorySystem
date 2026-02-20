@@ -112,8 +112,8 @@
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                                <Label Content="Company" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
-                                <TextBox Width="239" Height="27" x:Name="txt_Company" Text="{Binding Path = Company,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Company" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
+                                <Label Content="Outlet Name:" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="83"/>
+                                <TextBox Width="239" Height="27" x:Name="txt_Company" Text="{Binding Path = Company,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Outlet Name" BorderThickness="1" FontWeight="SemiBold" Margin="0,0,0,0" Padding="5,0,0,0"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">

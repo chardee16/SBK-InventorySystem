@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,10 +32,8 @@ namespace InventoryProject.Pages
         public SeriesCollection PieCollection { get; set; }
         public string[] Labels { get; set; }
 
-        public Decimal LastYearIncome = 0;
-        public Decimal ThisYearIncome = 0;
-        public Int32 TotalStocks = 0;
-        public Int32 RemainingStocks = 0;
+        //public Decimal LastYearIncome = 0;
+        //public Decimal ThisYearIncome = 0;
         public string ResultIncome = "";
         public string ResultPercentageIncome = "";
         public Func<double, string> Formatter { get; set; }
@@ -44,6 +43,7 @@ namespace InventoryProject.Pages
         public HomePage()
         {
             InitializeComponent();
+            
             InitializeWorkers();
             try
             {
@@ -53,7 +53,7 @@ namespace InventoryProject.Pages
             {
 
             }
-            
+            this.DataContext = this.dataCon;
 
         }
 
@@ -69,14 +69,16 @@ namespace InventoryProject.Pages
         {
             while (true)
             {
-
                 this.dataCon.itemList = repo.TopSalesList();
                 this.dataCon.itemIncomeList = repo.TopIncomeList();
                 foreach (var item in this.dataCon.itemIncomeList)
                 {
-                    LastYearIncome = item.LastYearIncome;
-                    ThisYearIncome = item.ThisYearIncome;
+                    //txtblck_LastYearIncome.Text = (item.LastYearIncome ?? 0).ToString();
+                    this.dataCon.LastYearIncome = item.LastYearIncome ?? 0;
+                    //txtblck_ThisYearIncome.Text = (item.ThisYearIncome ?? 0).ToString();
+                    this.dataCon.ThisYearIncome = item.ThisYearIncome ?? 0;
                 }
+
 
                 break;
             }
@@ -86,6 +88,8 @@ namespace InventoryProject.Pages
         {
             try
             {
+
+               
 
                 SeriesCollection = new SeriesCollection
                 {
@@ -121,14 +125,6 @@ namespace InventoryProject.Pages
                     }
                     );
                 }
-                
-                var stocks = this.dataCon.itemList.FirstOrDefault();
-                if (stocks != null)
-                {
-                    TotalStocks = stocks.TotalStocks;
-                    RemainingStocks = stocks.Sales;
-                }
-                    
 
                 Labels = list.ToArray();
                 Formatter = value => value.ToString("N");
@@ -136,23 +132,57 @@ namespace InventoryProject.Pages
                 labelPoint = chartPoint =>
                    string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
-                ResultIncome = GetResult(LastYearIncome, ThisYearIncome);
-                ResultPercentageIncome = GetPercentageResult(LastYearIncome, ThisYearIncome);
+                var stocks = this.dataCon.itemList.FirstOrDefault();
+                if (stocks != null)
+                {
+                    TotalStocks = stocks.TotalStocks;
+                    RemainingStocks = stocks.Sales;
+                }
+
+                txtblck_LastYearIncome.Text = this.dataCon.LastYearIncome.ToString();
+                txtblck_ThisYearIncome.Text = this.dataCon.ThisYearIncome.ToString();
+                txtblck_ResultIncome.Text = GetResult(this.dataCon.LastYearIncome, this.dataCon.ThisYearIncome);
+                txtblck_ResultPercentageIncome.Text = GetPercentageResult(this.dataCon.LastYearIncome, this.dataCon.ThisYearIncome);
 
                 DataContext = this;
+
+             
+
+
             }
             catch (Exception)
             {
                 //throw;
             }
 
+
+         
+
         }
 
-        public string GetResult(Decimal LastYearIncome, Decimal ThisYearIncome)
+        private double _totalStocks;
+        public double TotalStocks
+        {
+            get => _totalStocks;
+            set { _totalStocks = value; OnPropertyChanged(); }
+        }
+
+        private double _remainingStocks;
+        public double RemainingStocks
+        {
+            get => _remainingStocks;
+            set { _remainingStocks = value; OnPropertyChanged(); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string n = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+
+        public string GetResult(Decimal? LastYearIncome, Decimal? ThisYearIncome)
         {
             string result = "";
-            decimal increase = 0;
-            decimal decrease = 0;
+            decimal? increase = 0;
+            decimal? decrease = 0;
 
             if (ThisYearIncome > LastYearIncome)//Increase
             {
@@ -168,11 +198,11 @@ namespace InventoryProject.Pages
 
             return result;
         }
-        public string GetPercentageResult(Decimal LastYearIncome, Decimal ThisYearIncome)
+        public string GetPercentageResult(Decimal? LastYearIncome, Decimal? ThisYearIncome)
         {
             string result = "";
-            decimal increase = 0;
-            decimal decrease = 0;
+            decimal? increase = 0;
+            decimal? decrease = 0;
 
             if (ThisYearIncome > LastYearIncome)//Increase
             {
@@ -231,40 +261,75 @@ namespace InventoryProject.Pages
                 }
             }
 
-            //Decimal _ThisYearIncome;
-            //public Decimal ThisYearIncome
-            //{
-            //    get
-            //    {
-            //        return _ThisYearIncome;
-            //    }
-            //    set
-            //    {
-            //        if (value != _ThisYearIncome)
-            //        {
-            //            _ThisYearIncome = value;
-            //            NotifyPropertyChanged("ThisYearIncome");
-            //        }
-            //    }
-            //}
+            Decimal? _ThisYearIncome;
+            public Decimal? ThisYearIncome
+            {
+                get
+                {
+                    return _ThisYearIncome;
+                }
+                set
+                {
+                    if (value != _ThisYearIncome)
+                    {
+                        _ThisYearIncome = value;
+                        NotifyPropertyChanged("ThisYearIncome");
+                    }
+                }
+            }
 
 
-            //Decimal _LastYearIncome;
-            //public Decimal LastYearIncome
-            //{
-            //    get
-            //    {
-            //        return _LastYearIncome;
-            //    }
-            //    set
-            //    {
-            //        if (value != _LastYearIncome)
-            //        {
-            //            _LastYearIncome = value;
-            //            NotifyPropertyChanged("LastYearIncome");
-            //        }
-            //    }
-            //}
+            Decimal? _LastYearIncome;
+            public Decimal? LastYearIncome
+            {
+                get
+                {
+                    return _LastYearIncome;
+                }
+                set
+                {
+                    if (value != _LastYearIncome)
+                    {
+                        _LastYearIncome = value;
+                        NotifyPropertyChanged("LastYearIncome");
+                    }
+                }
+            }
+
+
+            String _ResultIncome;
+            public String ResultIncome
+            {
+                get
+                {
+                    return _ResultIncome;
+                }
+                set
+                {
+                    if (value != _ResultIncome)
+                    {
+                        _ResultIncome = value;
+                        NotifyPropertyChanged("RemaininResultIncomegStocks");
+                    }
+                }
+            }
+
+            String _ResultPercentageIncome;
+            public String ResultPercentageIncome
+            {
+                get
+                {
+                    return _ResultPercentageIncome;
+                }
+                set
+                {
+                    if (value != _ResultPercentageIncome)
+                    {
+                        _ResultPercentageIncome = value;
+                        NotifyPropertyChanged("ResultPercentageIncome");
+                    }
+                }
+            }
 
             Int32 _ItemCount;
             public Int32 ItemCount

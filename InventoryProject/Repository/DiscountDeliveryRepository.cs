@@ -128,6 +128,25 @@ namespace InventoryProject.Repository
 
         }
 
+        public List<ItemClass> GetUserProductList(Int64 UserID, Int64 ClientID)
+        {
+            List<ItemClass> toReturn = new List<ItemClass>();
+            //Int64 clientid = ClientID;
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "DiscountDelivery\\GetClientDiscountProductList.sql";
+
+            //    sqlFile.setParameter("_ClientID", clientid.ToString());
+
+            //    return Connection.Query<ItemClass>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+                return toReturn;
+            //}
+
+        }
+
         public List<ItemDeliveryClass> GetDeliveryList()
         {
             List<ItemDeliveryClass> toReturn = new List<ItemDeliveryClass>();

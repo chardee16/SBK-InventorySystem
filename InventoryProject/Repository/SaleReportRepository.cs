@@ -3,10 +3,12 @@ using InventoryProject.Models;
 using InventoryProject.Models.InventoryManagementModule;
 using InventoryProject.Models.SalesReportModule;
 using InventoryProject.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +18,7 @@ namespace InventoryProject.Repository
     {
         SQLFile sqlFile = new SQLFile();
         Config _config = new Config();
-
+        APIKey api = new APIKey();
 
 
         public List<SalePerItemClass> GetItemList(String DateStart,String DateEnd)
@@ -110,31 +112,97 @@ namespace InventoryProject.Repository
 
         public List<TopSales> TopSalesList()
         {
-            List<TopSales> toReturn = new List<TopSales>();
+            //List<TopSales> toReturn = new List<TopSales>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "SaleReport\\GetTopSalesItem.sql";
+            //    return Connection.Query<TopSales>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+            var toReturn = new List<TopSales>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "SaleReport\\GetTopSalesItem.sql";
-                return Connection.Query<TopSales>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/report/get_top_sales_item";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse2<TopSales>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn = result.data;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return toReturn;
+                // log error if needed
             }
+
+            return toReturn;
 
         }
 
         public List<TopIncome> TopIncomeList()
         {
-            List<TopIncome> toReturn = new List<TopIncome>();
+            //List<TopIncome> toReturn = new List<TopIncome>();
+            //try
+            //{
+            //    this.sqlFile.sqlQuery = _config.SQLDirectory + "SaleReport\\GetOverviewIncome.sql";
+            //    return Connection.Query<TopIncome>(this.sqlFile.sqlQuery).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return toReturn;
+            //}
+
+
+            var toReturn = new List<TopIncome>();
+
             try
             {
-                this.sqlFile.sqlQuery = _config.SQLDirectory + "SaleReport\\GetOverviewIncome.sql";
-                return Connection.Query<TopIncome>(this.sqlFile.sqlQuery).ToList();
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/report/get_overview_income";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return toReturn;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse<TopIncome>>(json);
+
+                    if (result?.status == "SUCCESS" && result.data != null)
+                    {
+                        toReturn.Add(result.data);
+                    }
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                return toReturn;
             }
+
+            return toReturn;
 
         }
     }

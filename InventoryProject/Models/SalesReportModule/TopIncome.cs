@@ -10,8 +10,8 @@ namespace InventoryProject.Models.SalesReportModule
     public class TopIncome : INotifyPropertyChanged
     {
 
-        Decimal _ThisYearIncome;
-        public Decimal ThisYearIncome
+        Decimal? _ThisYearIncome;
+        public Decimal? ThisYearIncome
         {
             get
             {
@@ -28,8 +28,8 @@ namespace InventoryProject.Models.SalesReportModule
         }
 
 
-        Decimal _LastYearIncome;
-        public Decimal LastYearIncome
+        Decimal? _LastYearIncome;
+        public Decimal? LastYearIncome
         {
             get
             {

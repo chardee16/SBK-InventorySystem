@@ -123,7 +123,7 @@ namespace InventoryProject.Repository
                                     + ",'" + item.ExpiryDate + "', "+item.UnitID+", "+id+")" + Last;
 
                     itemCode = item.ItemCode;
-                    itemQuantity = item.Quantity * -1;
+                    itemQuantity = item.Quantity;
                     itemPrice = item.Price;
                     itemDiscount = item.Discount;
                     itemDiscountAmount = item.DiscountAmount;
