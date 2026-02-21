@@ -64,6 +64,24 @@ namespace InventoryProject.Models.SalesReportModule
         }
 
 
+        String _CategoryDesc;
+        public String CategoryDesc
+        {
+            get
+            {
+                return _CategoryDesc;
+            }
+            set
+            {
+                if (value != _CategoryDesc)
+                {
+                    _CategoryDesc = value;
+                    NotifyPropertyChanged("CategoryDesc");
+                }
+            }
+        }
+
+
         Decimal _Quantity;
         public Decimal Quantity
         {

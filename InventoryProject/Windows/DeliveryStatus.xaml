@@ -171,7 +171,7 @@
                             </DataGridTextColumn.EditingElementStyle>
                         </DataGridTextColumn>
 
-                        <DataGridTemplateColumn Header="Return Remaining Items" Width="180">
+                        <DataGridTemplateColumn Visibility="Hidden" Header="Return Remaining Items" Width="180">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="Click Here to Return"
@@ -190,8 +190,8 @@
 
 
             </materialDesign:Card>
-            <Label Content="TOTAL SALES" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="627,418,421,19" Grid.Row="2"/>
-            <TextBlock Text="{Binding Path=TotalSalesPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="792,421,234,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
+            <Label Content="TOTAL SALES" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="851,419,197,18" Grid.Row="2"/>
+            <TextBlock Text="{Binding Path=TotalSalesPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1017,421,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
         </Grid>
 
 

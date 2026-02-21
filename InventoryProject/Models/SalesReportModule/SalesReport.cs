@@ -13,6 +13,7 @@ namespace InventoryProject.Models.SalesReportModule
         public Decimal Price { get; set; }
         public String GenericName { get; set; }
         public String CategoryDescription { get; set; }
+        public String CategoryDesc { get; set; }
         public String UnitDescription { get; set; }
         public Int32 UnitID { get; set; }
         public Int32 CategoryID { get; set; }
