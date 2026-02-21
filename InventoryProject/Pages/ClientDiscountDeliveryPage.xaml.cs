@@ -1,4 +1,5 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.ReportAppServer;
 using InventoryProject.Models;
 using InventoryProject.Models.ClientDiscountDeliveryModule;
 using InventoryProject.Models.SalesModule;
@@ -33,6 +34,7 @@ namespace InventoryProject.Pages
         DiscountDataContext dataCon = new DiscountDataContext();
         DiscountDeliveryRepository repo = new DiscountDeliveryRepository();
         List<SalesItemClass> salesItem = new List<SalesItemClass>();
+        ReportDocument report = new ReportDocument();
         UserRepository repouser = new UserRepository();
         ObservableCollection<ItemClass> filter;
         private ICollectionView MyData;
@@ -285,6 +287,24 @@ namespace InventoryProject.Pages
                     {
                         _DeliveryDescription = value;
                         NotifyPropertyChanged("DeliveryDescription");
+                    }
+                }
+            }
+
+
+            String _Firstname;
+            public String Firstname
+            {
+                get
+                {
+                    return _Firstname;
+                }
+                set
+                {
+                    if (value != _Firstname)
+                    {
+                        _Firstname = value;
+                        NotifyPropertyChanged("Firstname");
                     }
                 }
             }
@@ -651,12 +671,26 @@ namespace InventoryProject.Pages
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to set these item(s) for delivery?", "CONFIRMATION", System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to set these item(s) for delivery?", "CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     if (this.repo.InsertForDelivery(this.dataCon.SaleitemList, Convert.ToInt64(this.dataCon.id), this.dataCon.UserID, DateTime.Now.ToString("yyyy/MM/dd")))
                     {
                         MessageBox.Show("Items have been set for delivery.", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+
+                        MessageBoxResult messageBoxResult2 = MessageBox.Show("Do you want to print the delivery document?", "CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Yes);
+                        if (messageBoxResult2 == MessageBoxResult.Yes)
+                        {
+                            UserParam item2 = (UserParam)cmb_Delivery.SelectedItem;
+                            GenerateDeliveryInventory(item2.Firstname);
+
+                        }
+
+
+
+                            
                         ClearValues();
                     }
                     else
@@ -672,6 +706,30 @@ namespace InventoryProject.Pages
 
             }
 
+        }
+
+
+        private void GenerateDeliveryInventory(String FirstName)
+        {
+            try
+            {
+                this.report = new Template.DeliveryInventory();
+
+                this.report.SetDataSource(this.dataCon.SaleitemList);
+                this.report.SetParameterValue("DeliveryName", FirstName);
+
+                Report Viewer = new Report();
+                Viewer.cryRpt = this.report;
+                Viewer.printing = this.report;
+                Viewer._CrystalReport.ViewerCore.ReportSource = report;
+
+                Viewer._CrystalReport.ViewerCore.Zoom(80);
+                Viewer.ShowDialog();
+            }
+            catch (Exception)
+            {
+            }  
+        
         }
 
         private void btn_ShowLogs_Click(object sender, RoutedEventArgs e)

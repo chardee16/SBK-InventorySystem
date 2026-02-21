@@ -144,6 +144,12 @@
     <Compile Include="Services\APIKey.cs" />
     <Compile Include="Services\ApiResponse.cs" />
     <Compile Include="Services\APIResponse2.cs" />
+    <Compile Include="Template\DeliveryInventory.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeliveryInventory.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Template\Receipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -400,6 +406,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Template\DeliveryInventory.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>DeliveryInventory.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Template\ItemStocksReportCrystal.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
