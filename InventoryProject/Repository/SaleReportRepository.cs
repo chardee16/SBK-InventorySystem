@@ -76,6 +76,11 @@ namespace InventoryProject.Repository
                         foreach (var item in toReturn)
                         {
                             item.CategoryDescription = item.CategoryDesc;
+
+
+
+                        
+
                         }
                     }
                 }

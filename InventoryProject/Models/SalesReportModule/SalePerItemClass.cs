@@ -82,6 +82,9 @@ namespace InventoryProject.Models.SalesReportModule
         }
 
 
+        
+
+
         Decimal _Quantity;
         public Decimal Quantity
         {
@@ -94,12 +97,52 @@ namespace InventoryProject.Models.SalesReportModule
                 if (value != _Quantity)
                 {
                     _Quantity = value;
+
+                    if (Quantity > 0)
+                    {
+                        GrossAmount = Price * Quantity;
+
+                    }
                     NotifyPropertyChanged("Quantity");
                 }
             }
         }
 
 
+        Decimal _Price;
+        public Decimal Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                if (value != _Price)
+                {
+                    _Price = value;
+
+                    NotifyPropertyChanged("Price");
+                }
+            }
+        }
+
+        Decimal _GrossAmount;
+        public Decimal GrossAmount
+        {
+            get
+            {
+                return _GrossAmount;
+            }
+            set
+            {
+                if (value != _GrossAmount)
+                {
+                    _GrossAmount = value;
+                    NotifyPropertyChanged("GrossAmount");
+                }
+            }
+        }
 
         Decimal _DiscountAmount;
         public Decimal DiscountAmount
