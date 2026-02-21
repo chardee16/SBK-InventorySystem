@@ -101,17 +101,22 @@ namespace InventoryProject.Repository
 
             foreach (var item in _NameSelectedReport)
             {
-                myList.Add(item.GenericID);
+                myList.Add(item.id);
 
-                addqueryname = "and items.ItemGenericID IN (" + string.Join(",", myList.ToArray()) + ")";
+                //addqueryname = "and items.ItemGenericID IN (" + string.Join(",", myList.ToArray()) + ")";
+                addqueryname = string.Join(",", myList.ToArray());
             }
 
 
             foreach (var item in _itemCategoriesSelectedReport)
             {
-                myList2.Add(item.CategoryID);
+                myList2.Add(item.id);
 
-                addquerycategory = "and items.CategoryID IN (" + string.Join(",", myList2.ToArray()) + ")";
+                //addquerycategory = "and items.CategoryID IN (" + string.Join(",", myList2.ToArray()) + ")";
+                addquerycategory = string.Join(",", myList2.ToArray());
+
+
+
             }
 
             try
@@ -135,8 +140,8 @@ namespace InventoryProject.Repository
                     {
                         date_start = Convert.ToDateTime(DateStart).ToString("yyyy-MM-dd"),
                         date_end = Convert.ToDateTime(DateEnd).ToString("yyyy-MM-dd"),
-                        name = addqueryname,
-                        category = addquerycategory,
+                        generic_ids = myList,
+                        categories = myList2
                     };
 
                     var content = new StringContent(
@@ -146,6 +151,8 @@ namespace InventoryProject.Repository
                     );
 
                     HttpResponseMessage response = client.PostAsync(url, content).Result;
+                    var responseBody = response.Content.ReadAsStringAsync().Result;
+
                     string json = response.Content.ReadAsStringAsync().Result;
 
                     if (!response.IsSuccessStatusCode)
@@ -160,6 +167,7 @@ namespace InventoryProject.Repository
                         foreach (var item in toReturn)
                         {
                             item.CategoryDescription = item.CategoryDesc;
+                            item.Amt = item.Amount;
                         }
                     }
                 }

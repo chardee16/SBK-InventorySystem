@@ -10,6 +10,7 @@ namespace InventoryProject.Models.SalesReportModule
     {
         public Int64 CTLNo { get; set; }
         public Decimal Amt { get; set; }
+        public Decimal Amount { get; set; }
         public Decimal Price { get; set; }
         public String GenericName { get; set; }
         public String CategoryDescription { get; set; }

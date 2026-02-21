@@ -250,6 +250,12 @@ namespace InventoryProject.Repository
                     if (result != null && result.status == "SUCCESS" && result.data != null)
                     {
                         categorylist = result.data;
+
+                        foreach (var item in categorylist)
+                        {
+                            item.CategoryDescription = item.CategoryDesc;
+                            item.CategoryID = item.CategoryID;
+                        }
                     }
                 }
             }
