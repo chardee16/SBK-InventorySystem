@@ -485,6 +485,17 @@ namespace InventoryProject.Pages
 
                 return;
             }
+            else if (this.dataCon.Quantity > this.dataCon.Stock)
+            {
+                MessageBox.Show(
+                   "The quantity is greater than the available stock.",
+                   "Warning",
+                   MessageBoxButton.OK,
+                   MessageBoxImage.Warning);
+                this.dataCon.Quantity = 0;
+                return;
+
+            }
             else if (this.dataCon.DiscountPrice > this.dataCon.Price)
             {
                 MessageBox.Show(
@@ -588,6 +599,7 @@ namespace InventoryProject.Pages
             this.dataCon.UserID = 0;
             this.dataCon.TotalPrice = 0;
             this.dataCon.SaleitemList.Clear();
+            this.salesItem.Clear();
             InitializeWorkers();
         }
 
