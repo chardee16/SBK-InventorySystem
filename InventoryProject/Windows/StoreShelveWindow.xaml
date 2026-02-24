@@ -53,11 +53,11 @@
 
             <StackPanel Orientation="Vertical" Margin="0,28,0,0" Height="149" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
-                    <Label FontSize="15" Content="ShelfID: " FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
+                    <Label FontSize="15" Content="Location ID: " FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
                     <TextBox x:Name="txt_ProductID" IsReadOnly="True" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=ShelfID,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="305" Height="35" Background="#FFEBEBEB" FontSize="18"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <Label FontSize="15" Content="ShelfDescription:" FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
+                    <Label FontSize="15" Content="Location Description:" FontWeight="Bold" Margin="25,0,0,0" HorizontalAlignment="Left" FontFamily="Microsoft JhengHei" Width="166" />
                     <TextBox x:Name="txt_ProductName" Template="{StaticResource TextBoxBaseControlTemplate}" Text="{Binding Path=ShelfDescription,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" BorderThickness="1" Margin="0,0,0,0" Width="306" Height="35" Background="#FFEBEBEB" FontSize="18"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0"/>
@@ -87,8 +87,8 @@
 
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn IsReadOnly="True" Header="ShelfID" Width="1.5*" Binding="{Binding ShelfID, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn IsReadOnly="True" Header="Shelf Description" Width="3.5*" Binding="{Binding ShelfDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="LoccationID" Width="1.5*" Binding="{Binding ShelfID, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn IsReadOnly="True" Header="Location Description" Width="3.5*" Binding="{Binding ShelfDescription, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataGrid.Columns>
 
                 </DataGrid>

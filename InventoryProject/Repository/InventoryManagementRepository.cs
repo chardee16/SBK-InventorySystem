@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace InventoryProject.Repository
 {
@@ -80,27 +81,68 @@ namespace InventoryProject.Repository
         {
             try
             {
-                if (category.CategoryID > 0)
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateCategory.sql";
-                }
-                else
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertCategory.sql";
-                }
+                //if (category.CategoryID > 0)
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateCategory.sql";
+                //}
+                //else
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertCategory.sql";
+                //}
 
-                sqlFile.setParameter("_CategoryID", category.CategoryID.ToString());
-                sqlFile.setParameter("_CategoryDescription", category.CategoryDescription);
+                //sqlFile.setParameter("_CategoryID", category.CategoryID.ToString());
+                //sqlFile.setParameter("_CategoryDescription", category.CategoryDescription);
 
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+                //var affectedRow = Connection.Execute(sqlFile.sqlQuery);
 
-                if (affectedRow > 0)
+                //if (affectedRow > 0)
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+                using (HttpClient client = new HttpClient())
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    var url = "";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+                    if (category.id > 0)
+                    {
+                        url = $"{api.http}/api/item/update_category";
+                    }
+                    else
+                    {
+                        url = $"{api.http}/api/item/add_category";
+                    }
+
+                    var saveload = new
+                    {
+                        category_id = category.id,
+                        category_desc = category.CategoryDesc,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(saveload);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (response.Content != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -113,28 +155,70 @@ namespace InventoryProject.Repository
         {
             try
             {
-                if (supplier.SupplierID > 0)
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateSupplier.sql";
-                }
-                else
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertSupplier.sql";
-                }
+                //if (supplier.SupplierID > 0)
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateSupplier.sql";
+                //}
+                //else
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertSupplier.sql";
+                //}
 
-                sqlFile.setParameter("_SupplierID", supplier.SupplierID.ToString());
-                sqlFile.setParameter("_SupplierDescription", supplier.SupplierDescription);
-                sqlFile.setParameter("_SupplierAddress", supplier.SupplierAddress);
+                //sqlFile.setParameter("_SupplierID", supplier.SupplierID.ToString());
+                //sqlFile.setParameter("_SupplierDescription", supplier.SupplierDescription);
+                //sqlFile.setParameter("_SupplierAddress", supplier.SupplierAddress);
 
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+                //var affectedRow = Connection.Execute(sqlFile.sqlQuery);
 
-                if (affectedRow > 0)
+                //if (affectedRow > 0)
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+                using (HttpClient client = new HttpClient())
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    var url = "";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+                    if (supplier.SupplierID > 0)
+                    {
+                        url = $"{api.http}/api/item/update_supplier";
+                    }
+                    else
+                    {
+                        url = $"{api.http}/api/item/add_supplier";
+                    }
+
+                    var saveload = new
+                    {
+                        supplier_id = supplier.SupplierID,
+                        supplier = supplier.SupplierDescription,
+                        supplier_address = supplier.SupplierAddress,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(saveload);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (response.Content != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch
@@ -148,27 +232,71 @@ namespace InventoryProject.Repository
         {
             try
             {
-                if (storeshelve.ShelfID > 0)
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateStoreShelve.sql";
-                }
-                else
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertStoreShelve.sql";
-                }
+                //if (storeshelve.ShelfID > 0)
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateStoreShelve.sql";
+                //}
+                //else
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertStoreShelve.sql";
+                //}
 
-                sqlFile.setParameter("_ShelfID", storeshelve.ShelfID.ToString());
-                sqlFile.setParameter("_ShelfDescription", storeshelve.ShelfDescription);
+                //sqlFile.setParameter("_ShelfID", storeshelve.ShelfID.ToString());
+                //sqlFile.setParameter("_ShelfDescription", storeshelve.ShelfDescription);
 
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+                //var affectedRow = Connection.Execute(sqlFile.sqlQuery);
 
-                if (affectedRow > 0)
+                //if (affectedRow > 0)
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+
+
+
+                using (HttpClient client = new HttpClient())
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    var url = "";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+                    if (storeshelve.ShelfID > 0)
+                    {
+                        url = $"{api.http}/api/item/update_shelf";
+                    }
+                    else
+                    {
+                        url = $"{api.http}/api/item/add_shelf";
+                    }
+
+                    var saveload = new
+                    {
+                        shelf_id = storeshelve.ShelfID,
+                        shelf_description = storeshelve.ShelfDescription,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(saveload);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (response.Content != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch
@@ -183,28 +311,71 @@ namespace InventoryProject.Repository
         {
             try
             {
-                if (generic.GenericID > 0)
+                //if (generic.GenericID > 0)
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateName.sql";
+                //}
+                //else
+                //{
+                //    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertName.sql";
+                //}
+
+                //sqlFile.setParameter("_GenericID", generic.GenericID.ToString());
+                //sqlFile.setParameter("_GenericName", generic.GenericName);
+
+                //var affectedRow = Connection.Execute(sqlFile.sqlQuery);
+
+                //if (affectedRow > 0)
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+
+                using (HttpClient client = new HttpClient())
                 {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\UpdateName.sql";
-                }
-                else
-                {
-                    this.sqlFile.sqlQuery = _config.SQLDirectory + "Items\\InsertName.sql";
+                    var url = "";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+
+                    if (generic.GenericID > 0)
+                    {
+                        url = $"{api.http}/api/item/update_generic_name";
+                    }
+                    else
+                    {
+                        url = $"{api.http}/api/item/add_generic_name";
+                    }
+
+                    var saveload = new
+                    {
+                        generic_id = generic.GenericID,
+                        name = generic.GenericName,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(saveload);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    if (response.Content != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
-                sqlFile.setParameter("_GenericID", generic.GenericID.ToString());
-                sqlFile.setParameter("_GenericName", generic.GenericName);
-
-                var affectedRow = Connection.Execute(sqlFile.sqlQuery);
-
-                if (affectedRow > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception ex)
             {

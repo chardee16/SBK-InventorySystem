@@ -95,9 +95,9 @@
 
 
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                                <Label Content="Store Shelve*" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
-                                <ComboBox x:Name="cmb_Shelves" Width="250"  ItemsSource="{Binding Path=shelveList,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="ShelfID" SelectedValue="{Binding ShelfID}" DisplayMemberPath="ShelfDescription" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Store Shelve" Margin="10,0,0,0" Padding="0,10,0,5"/>
-                                <Button x:Name="btn_AddStoreShelve" Width="30" Height="25" Margin="20,0,0,0" BorderBrush="Black" ToolTip="Add Store Shelve" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderThickness="1" Padding="0" Click="btn_AddStoreShelve_Click">
+                                <Label Content="Location*" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100"/>
+                                <ComboBox x:Name="cmb_Shelves" Width="250"  ItemsSource="{Binding Path=shelveList,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="ShelfID" SelectedValue="{Binding ShelfID}" DisplayMemberPath="ShelfDescription" materialDesign:ComboBoxAssist.ShowSelectedItem="true" materialDesign:HintAssist.Hint="Select Location" Margin="10,0,0,0" Padding="0,10,0,5"/>
+                                <Button x:Name="btn_AddStoreShelve" Width="30" Height="25" Margin="20,0,0,0" BorderBrush="Black" ToolTip="Add Location" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderThickness="1" Padding="0" Click="btn_AddStoreShelve_Click">
                                     <!--<Button.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             --><!--<GradientStop Color="#FF979494" Offset="0.058"/>
@@ -201,7 +201,7 @@
                             <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                 <Label Content="Stock*" VerticalContentAlignment="Bottom" FontWeight="Bold" Width="100" />
                                 <!--<TextBox Width="200" x:Name="txt_Stock" Text="{Binding Path = Stock,UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FF949494" materialDesign:HintAssist.Hint="Stock" BorderThickness="1" FontWeight="SemiBold" Margin="10,0,0,0" Padding="5,0,0,0"/>-->
-                                <currency:CurrencyTextBox x:Name="txt_Stock" Number="{Binding Path=Stock, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Margin="10,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14">
+                                <currency:CurrencyTextBox x:Name="txt_Stock" Number="{Binding Path=Stock, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="200" Margin="10,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" TextChanged="txt_Stock_TextChanged">
                                     <currency:CurrencyTextBox.Style>
                                         <Style TargetType="{x:Type currency:CurrencyTextBox}">
                                             <Style.Triggers>
@@ -360,17 +360,17 @@
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding CategoryDesc, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="180" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding CategoryDesc, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="CATEGORY" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding ShelfDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="70" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding ShelfDescription, UpdateSourceTrigger=PropertyChanged}" FontSize="11" Width="90" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="STORE SHELVE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                                    <TextBlock Text="LOCATION" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>

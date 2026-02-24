@@ -140,7 +140,7 @@
                 </StackPanel>
                 <DataGrid x:Name="DG_Items" ItemsSource="{Binding Path=itemList,UpdateSourceTrigger=PropertyChanged}" CanUserSortColumns="False" Width="1200" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="False" Margin="0,10,0,0" Height="540" PreviewMouseDoubleClick="DG_Items_PreviewMouseDoubleClick" FontSize="12">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=ItemName,UpdateSourceTrigger=PropertyChanged}" Header="ITEM NAME" Width="230" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Path=ItemName,UpdateSourceTrigger=PropertyChanged}" Header="ITEM NAME" Width="150" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -148,7 +148,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Path=GenericName,UpdateSourceTrigger=PropertyChanged}" Width="150" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding Path=ItemDescription,UpdateSourceTrigger=PropertyChanged}" Width="230" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -157,12 +157,12 @@
                             </DataGridTextColumn.ElementStyle>
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="GENERIC NAME" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                                    <TextBlock Text="DESCRIPTION" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
                                 </DataTemplate>
                             </DataGridTextColumn.HeaderTemplate>
                         </DataGridTextColumn>
                         <DataGridTextColumn Binding="{Binding Path=CategoryDescription,UpdateSourceTrigger=PropertyChanged}" Header="CATEGORY" Width="220" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding Path=ShelfDescription,UpdateSourceTrigger=PropertyChanged}" Width="80" IsReadOnly="True">
+                        <DataGridTextColumn Visibility="Hidden" Binding="{Binding Path=ShelfDescription,UpdateSourceTrigger=PropertyChanged}" Width="80" IsReadOnly="True">
                             <DataGridTextColumn.HeaderTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="STORE SHELVE" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>

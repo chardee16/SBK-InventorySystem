@@ -735,7 +735,7 @@ namespace InventoryProject.Pages
                 Viewer.printing = this.report;
                 Viewer._CrystalReport.ViewerCore.ReportSource = report;
 
-                Viewer._CrystalReport.ViewerCore.Zoom(80);
+                Viewer._CrystalReport.ViewerCore.Zoom(100);
                 Viewer.ShowDialog();
             }
             catch (Exception)

@@ -527,10 +527,10 @@ namespace InventoryProject.Pages
                 this.dataCon.Value = selected.Value ?? 0;
                 this.dataCon.CategoryDesc = selected.CategoryDesc;
                 this.dataCon.SupplierDescription = selected.SupplierDescription;
-                
-                
-                
 
+
+
+                this.dataCon.Value = this.dataCon.PurchasePrice * this.dataCon.Stock;
                 totalstocks = selected.Stock ?? 0;
                 btn_Save.IsEnabled = false;
                 btn_Save.Opacity = 0.5;
@@ -1195,6 +1195,18 @@ namespace InventoryProject.Pages
             catch (Exception)
             {
             }
+        }
+
+        private void txt_Stock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                this.dataCon.Value = this.dataCon.PurchasePrice * this.dataCon.Stock;
+            }
+            catch (Exception)
+            {
+            }
+          
         }
     }
 }

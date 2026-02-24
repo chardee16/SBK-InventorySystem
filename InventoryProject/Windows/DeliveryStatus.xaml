@@ -100,6 +100,15 @@
                             Content="LOAD STATUS"
                             Click="BTN_Load_Click"
                             />
+
+                    <Button x:Name="BTN_Generate"
+                            Grid.Column="3"
+                            Margin="314,0,0,0"
+                            Height="40"
+                            Background="#FFEAEAEA" BorderBrush="#FF2E2E2E" FontFamily="Tempus Sans ITC" FontWeight="Bold"
+                            Content="GENERATE REPORT"
+                            Click="BTN_Generate_Click"
+                            />
                 </Grid>
             </materialDesign:Card>
 
@@ -143,7 +152,7 @@
                             </DataGridTextColumn.EditingElementStyle>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Header="Out for Delivery"
+                        <DataGridTextColumn Header="Load Out"
                                             Binding="{Binding Out_For_Delivery}"
                                             Width="180"/>
 

@@ -1,4 +1,6 @@
-﻿using InventoryProject.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.ReportAppServer;
+using InventoryProject.Models;
 using InventoryProject.Models.ClientDiscountDeliveryModule;
 using InventoryProject.Models.SalesModule;
 using InventoryProject.Models.Users;
@@ -32,6 +34,7 @@ namespace InventoryProject.Windows
         DiscountDeliveryRepository repo = new DiscountDeliveryRepository();
         SalesRepository salesrepo = new SalesRepository();
         UserRepository repouser = new UserRepository();
+        ReportDocument report = new ReportDocument();
         public DeliveryStatus()
         {
             InitializeComponent();
@@ -321,5 +324,42 @@ namespace InventoryProject.Windows
 
         }
 
+        private void BTN_Generate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dataCon.deliverystatus != null)
+                {
+                    GenerateReport();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void GenerateReport()
+        {
+            try
+            {
+                UserParam item2 = (UserParam)CB_DeliveryMan.SelectedItem;
+                this.report = new Template.DeliveryReport();
+
+                this.report.SetDataSource(this.dataCon.deliverystatus);
+                this.report.SetParameterValue("DeliveryName", item2.Firstname);
+
+                Report Viewer = new Report();
+                Viewer.cryRpt = this.report;
+                Viewer.printing = this.report;
+                Viewer._CrystalReport.ViewerCore.ReportSource = report;
+
+                Viewer._CrystalReport.ViewerCore.Zoom(100);
+                Viewer.ShowDialog();
+            }
+            catch (Exception)
+            {
+            }
+
+        }
     }
 }

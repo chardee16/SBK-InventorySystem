@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace InventoryProject.Repository
 {
@@ -38,7 +39,7 @@ namespace InventoryProject.Repository
             //}
 
             var toReturn = new List<SalePerItemClass>();
-
+            var summedList = new List<SalePerItemClass>();
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -76,12 +77,24 @@ namespace InventoryProject.Repository
                         foreach (var item in toReturn)
                         {
                             item.CategoryDescription = item.CategoryDesc;
-
-
-
-                        
-
                         }
+
+                        summedList = toReturn
+                                .GroupBy(x => x.ItemCode)
+                                .Select(g => new SalePerItemClass
+                                {
+                                    ItemCode = g.Key,
+                                    ItemDescription = g.First().ItemDescription,
+                                    CategoryDescription = g.First().CategoryDescription,
+                                    Quantity = g.Sum(x => x.Quantity),
+                                    Price = g.First().Price,
+                                    GrossAmount = g.Sum(x => x.GrossAmount),
+                                    DiscountAmount = g.Sum(x => x.DiscountAmount),
+                                    TotalAmount = g.Sum(x => x.GrossAmount) - g.Sum(x => x.DiscountAmount),
+                                    Income = g.Sum (x => x.Income), 
+
+                                })
+                                .ToList();
                     }
                 }
             }
@@ -90,7 +103,7 @@ namespace InventoryProject.Repository
                 // log error if needed
             }
 
-            return toReturn;
+            return summedList;
 
 
         }
