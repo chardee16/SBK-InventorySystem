@@ -311,59 +311,60 @@ namespace InventoryProject.Repository
                     //var affectedRowAddUpdate = Connection.Execute(sqlFile.sqlQuery);
 
 
+                    #region
+                    //using (HttpClient client = new HttpClient())
+                    //{
+                    //    var url = $"{api.http}/api/delivery/get_client_discount/{clientid}/{item.ItemCode}";
 
-                    using (HttpClient client = new HttpClient())
-                    {
-                        var url = $"{api.http}/api/delivery/get_client_discount/{clientid}/{item.ItemCode}";
-
-                        client.DefaultRequestHeaders.Add("KEY", api.key);
-                        client.DefaultRequestHeaders.Add("accept", api.accept);
-                        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+                    //    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    //    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    //    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
 
 
-                        HttpResponseMessage response = client.GetAsync(url).Result;
+                    //    HttpResponseMessage response = client.GetAsync(url).Result;
 
-                        var json = response.Content.ReadAsStringAsync().Result;
-                        var result = JsonConvert.DeserializeObject<ApiResponse<ClientDiscountList>>(json);
+                    //    var json = response.Content.ReadAsStringAsync().Result;
+                    //    var result = JsonConvert.DeserializeObject<ApiResponse<ClientDiscountList>>(json);
 
-                        if (result != null && result.data != null)
-                        {
-                            var urlupdate = $"{api.http}/api/delivery/update_client_discount";
+                    //    if (result != null && result.data != null)
+                    //    {
+                    //        var urlupdate = $"{api.http}/api/delivery/update_client_discount";
 
-                            var load = new
-                            {
-                                client_id = clientid.ToString(),
-                                item_code = item.ItemCode.ToString(),
-                                discount = item.Discount.ToString(),
-                            };
+                    //        var load = new
+                    //        {
+                    //            client_id = clientid.ToString(),
+                    //            item_code = item.ItemCode.ToString(),
+                    //            discount = item.Discount.ToString(),
+                    //        };
 
-                            var jsonupdate = JsonConvert.SerializeObject(load);
+                    //        var jsonupdate = JsonConvert.SerializeObject(load);
 
-                            var contentupdate = new StringContent(jsonupdate, Encoding.UTF8, "application/json");
+                    //        var contentupdate = new StringContent(jsonupdate, Encoding.UTF8, "application/json");
 
-                            HttpResponseMessage responseupdate = client.PostAsync(urlupdate, contentupdate).Result;
+                    //        HttpResponseMessage responseupdate = client.PostAsync(urlupdate, contentupdate).Result;
 
-                        }
-                        else
-                        {
-                            var urlinsert = $"{api.http}/api/delivery/insert_client_discount";
+                    //    }
+                    //    else
+                    //    {
+                    //        var urlinsert = $"{api.http}/api/delivery/insert_client_discount";
 
-                            var load = new
-                            {
-                                client_id = clientid.ToString(),
-                                item_code = item.ItemCode.ToString(),
-                                discount = item.Discount.ToString(),
-                            };
+                    //        var load = new
+                    //        {
+                    //            client_id = clientid.ToString(),
+                    //            item_code = item.ItemCode.ToString(),
+                    //            discount = item.Discount.ToString(),
+                    //        };
 
-                            var jsoninsert = JsonConvert.SerializeObject(load);
+                    //        var jsoninsert = JsonConvert.SerializeObject(load);
 
-                            var contentinsert = new StringContent(jsoninsert, Encoding.UTF8, "application/json");
+                    //        var contentinsert = new StringContent(jsoninsert, Encoding.UTF8, "application/json");
 
-                            HttpResponseMessage responseinsert = client.PostAsync(urlinsert, contentinsert).Result;
+                    //        HttpResponseMessage responseinsert = client.PostAsync(urlinsert, contentinsert).Result;
 
-                        }
+                    //    }
 
-                    }
+                    //}
+                    #endregion
 
                 }
 
@@ -409,6 +410,11 @@ namespace InventoryProject.Repository
 
                     if (response.Content != null)
                     {
+
+                        var savepurchase = $"{api.http}/api/pos/save_purchase";
+
+
+
                         return true;
                     }
                     else

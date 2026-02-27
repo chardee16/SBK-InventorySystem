@@ -86,6 +86,7 @@ namespace InventoryProject.Repository
             public string expiry_date { get; set; }
             public string unit_id { get; set; }
             public string client_id { get; set; }
+            public string account_code { get; set; }
         }
 
 
@@ -141,6 +142,7 @@ namespace InventoryProject.Repository
                         expiry_date = expiryDate.ToString(),
                         unit_id = itemUnitID.ToString(),
                         client_id = id,
+                        account_code = 1001.ToString(),
                     });
 
                 }

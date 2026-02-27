@@ -20,6 +20,7 @@ namespace InventoryProject.Models.Users
         public Int32? JobPositionID { get; set; }
         public Boolean? IsReset { get; set; }
         public Boolean? IsDelivery { get; set; }
+        public Int32? AccountCode { get; set; }
         
         public List<UserPrivileges> privil { get; set; }
     }

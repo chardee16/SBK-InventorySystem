@@ -54,6 +54,7 @@ INSERT INTO tblTransactionDetails
 	,TransactionDate
 	,UPDTag
 	,ExpiryDate
+	,AccountCode
 )
 VALUES
 (
@@ -71,6 +72,7 @@ VALUES
 	,'@_TransactionDate'
 	,1
 	,'@_ExpiryDate'
+	,1001
 );
 
 
