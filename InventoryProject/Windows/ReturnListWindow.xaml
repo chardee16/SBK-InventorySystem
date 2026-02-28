@@ -106,7 +106,7 @@
                             Margin="314,0,0,0"
                             Height="40"
                             Background="#FFEAEAEA" BorderBrush="#FF2E2E2E" FontFamily="Tempus Sans ITC" FontWeight="Bold"
-                            Content="RETURN"
+                            Content="ACCEPT"
                             Click="BTN_Generate_Click"
                             />
                 </Grid>
