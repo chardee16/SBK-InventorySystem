@@ -273,6 +273,24 @@ namespace InventoryProject.Pages
             }
 
 
+            Int32? _AccountCode;
+            public Int32? AccountCode
+            {
+                get
+                {
+                    return _AccountCode;
+                }
+                set
+                {
+                    if (value != _AccountCode)
+                    {
+                        _AccountCode = value;
+                        NotifyPropertyChanged("AccountCode");
+                    }
+                }
+            }
+
+
 
             String _DeliveryDescription;
             public String DeliveryDescription
@@ -686,7 +704,8 @@ namespace InventoryProject.Pages
                 MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to set these item(s) for delivery?", "CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    if (this.repo.InsertForDelivery(this.dataCon.SaleitemList, Convert.ToInt64(this.dataCon.id), this.dataCon.UserID, DateTime.Now.ToString("yyyy/MM/dd")))
+                    UserParam item3 = (UserParam)cmb_Delivery.SelectedItem;
+                    if (this.repo.InsertForDelivery(this.dataCon.SaleitemList, Convert.ToInt64(this.dataCon.id), this.dataCon.UserID, DateTime.Now.ToString("yyyy/MM/dd"), item3.AccountCode))
                     {
                         MessageBox.Show("Items have been set for delivery.", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -747,6 +766,12 @@ namespace InventoryProject.Pages
         private void btn_ShowLogs_Click(object sender, RoutedEventArgs e)
         {
             DeliveryStatus window = new DeliveryStatus();
+            window.ShowDialog();
+        }
+
+        private void btn_Return_Click(object sender, RoutedEventArgs e)
+        {
+            ReturnListWindow window = new ReturnListWindow();
             window.ShowDialog();
         }
     }

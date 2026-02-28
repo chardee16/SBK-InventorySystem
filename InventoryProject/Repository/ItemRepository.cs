@@ -271,6 +271,8 @@ namespace InventoryProject.Repository
                         stock = item.Stock,
                         price = item.Price,
                         expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy/MM/dd"),
+                        account_code = 1001,
+                        updtag = 1,
 
                         //item_code = itemCode.ToString(),
                         //quantity = itemQuantity.ToString(),

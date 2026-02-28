@@ -99,7 +99,7 @@
 
                                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                     <Label Content="Quantity"  VerticalContentAlignment="Bottom" FontWeight="Bold" Width="90" Height="23"/>
-                                    <currency:CurrencyTextBox x:Name="txt_Quantity" Number="{Binding Path= Quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N2" Width="64" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
+                                    <currency:CurrencyTextBox x:Name="txt_Quantity" Number="{Binding Path= Quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" StringFormat="N0" Width="64" Height="30" Margin="20,0,0,0" BorderThickness="1" FontWeight="SemiBold" FontSize="14" >
                                         <currency:CurrencyTextBox.Style>
                                             <Style TargetType="{x:Type currency:CurrencyTextBox}">
                                                 <Style.Triggers>
@@ -248,7 +248,7 @@
                 </Border>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,290,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,100,0">
                         <materialDesign:PackIcon Foreground="Crimson" Kind="Magnify"  Height="25" Width="25"  VerticalAlignment="Center"/>
                         <Border Background="White" CornerRadius="5" BorderBrush="Black" BorderThickness="1">
                             <Border.Effect>
@@ -258,7 +258,7 @@
                         </Border>
                     </StackPanel>
 
-                    <Button x:Name="btn_ShowLogs" Width="165" Height="30" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="0" Padding="0" Click="btn_ShowLogs_Click">
+                    <Button x:Name="btn_ShowLogs" Width="165" Height="30" Margin="0,0,68,0" BorderBrush="Black" BorderThickness="0" Padding="0" Click="btn_ShowLogs_Click">
 
                         <Button.BitmapEffect>
                             <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
@@ -266,6 +266,17 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="ListStatus"  Height="25" Width="25" Foreground="Black" />
                             <TextBlock Text="SHOW DELIVERY STATUS" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="btn_Return" Width="122" Height="30" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="0" Padding="0" Click="btn_Return_Click">
+
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="0" ShadowDepth="0" Opacity="0" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="AssignmentReturn"  Height="25" Width="25" Foreground="Black" />
+                            <TextBlock Text="ACCEPT RETURN" Foreground="Black" FontFamily="Champagne &amp; Limousines" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 

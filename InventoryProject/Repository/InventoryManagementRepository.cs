@@ -624,6 +624,8 @@ namespace InventoryProject.Repository
                             expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy/MM/dd"),
                             user_id = 1.ToString(),
                             value = item.Value.ToString(),
+                            account_code = 1001,
+                            updtag = 1,
                         };
 
                         var json = JsonConvert.SerializeObject(load);

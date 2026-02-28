@@ -87,6 +87,8 @@ namespace InventoryProject.Repository
             public string unit_id { get; set; }
             public string client_id { get; set; }
             public string account_code { get; set; }
+            public string updtag { get; set; }
+            public string transaction_code { get; set; }
         }
 
 
@@ -143,6 +145,8 @@ namespace InventoryProject.Repository
                         unit_id = itemUnitID.ToString(),
                         client_id = id,
                         account_code = 1001.ToString(),
+                        updtag = 1.ToString(),
+                        transaction_code = 3.ToString(),
                     });
 
                 }
@@ -194,6 +198,7 @@ namespace InventoryProject.Repository
                         tendered_amount = TenderedAmount.ToString(),
                         change_amount = ChangeAmount.ToString(),
                         total_amount = totalAmount.ToString(),
+                        transaction_code = 3,
 
                         //item_code = itemCode.ToString(),
                         //quantity = itemQuantity.ToString(),

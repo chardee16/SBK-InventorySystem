@@ -136,6 +136,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\ClientDiscountDeliveryModule\DeliveryStatusClass.cs" />
     <Compile Include="Models\ClientDiscountDeliveryModule\ItemDeliveryClass.cs" />
+    <Compile Include="Models\ClientDiscountDeliveryModule\ReturnListClass.cs" />
     <Compile Include="Models\ItemModule\ItemLogs.cs" />
     <Compile Include="Pages\ClientDiscountDeliveryPage.xaml.cs">
       <DependentUpon>ClientDiscountDeliveryPage.xaml</DependentUpon>
@@ -164,6 +165,9 @@
     </Compile>
     <Compile Include="Windows\CategoryWindow.xaml.cs">
       <DependentUpon>CategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ReturnListWindow.xaml.cs">
+      <DependentUpon>ReturnListWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DeliveryStatus.xaml.cs">
       <DependentUpon>DeliveryStatus.xaml</DependentUpon>
@@ -280,6 +284,10 @@
     <Page Include="Windows\CategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ReturnListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\DeliveryStatus.xaml">
       <SubType>Designer</SubType>
