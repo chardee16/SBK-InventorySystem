@@ -100,7 +100,6 @@ namespace InventoryProject.Pages
 
                 this.dataCon.unitList = repo2.GetUnitList();
 
-
                 break;
             }
         }
