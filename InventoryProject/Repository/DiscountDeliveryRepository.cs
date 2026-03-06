@@ -428,7 +428,7 @@ namespace InventoryProject.Repository
 
                     var saveload = new
                     {
-                        user_id = 1.ToString(),
+                        user_id = User.UserID.ToString(),
                         delivery_items,
 
                     };
@@ -447,7 +447,7 @@ namespace InventoryProject.Repository
                         var load = new
                         {
 
-                            user_id = 1.ToString(),
+                            user_id = User.UserID.ToString(),
                             client_id = "",
                             client_name = "",
                             transaction_code = 5,
@@ -699,7 +699,7 @@ namespace InventoryProject.Repository
 
                     var saveload = new
                     {
-                        user_id = 1.ToString(),
+                        user_id = User.UserID.ToString(),
                         delivery_items,
 
                     };

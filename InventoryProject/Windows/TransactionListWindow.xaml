@@ -1,0 +1,150 @@
+﻿<Window x:Class="InventoryProject.Windows.TransactionListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Delivery Status"
+        Height="639"
+        Width="1229"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="#F5F5F5">
+
+    <!-- OUTER SHADOW CONTAINER -->
+    <materialDesign:Card Margin="10"
+                         materialDesign:ElevationAssist.Elevation="Dp8"
+                         Background="{DynamicResource MaterialDesignPaper}">
+
+        <Grid Margin="0,0,0,-9">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER BAR -->
+            <Grid Grid.Row="0"
+                  Background="{DynamicResource PrimaryHueMidBrush}"
+                  MouseDown="Header_MouseDown">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- TITLE -->
+                <TextBlock Text="List of Transactions"
+                           VerticalAlignment="Center"
+                           Margin="16,0,0,0"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="Black"/>
+
+                <!-- CLOSE BUTTON -->
+                <Button Grid.Column="1"
+                        Width="40"
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="BTN_Close_Click"
+                        ToolTip="Close"
+                        Style="{StaticResource MaterialDesignToolButton}">
+                    <materialDesign:PackIcon Kind="Close"
+                                             Foreground="Black"/>
+                </Button>
+            </Grid>
+
+            <!-- FILTER CARD -->
+            <materialDesign:Card Grid.Row="1"
+                                 Margin="20,15,20,10"
+                                 Padding="20"
+                                 materialDesign:ElevationAssist.Elevation="Dp2">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="260"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Date -->
+                    <DatePicker x:Name="DP_Date"
+                                SelectedDate="{Binding Path=Date}"
+                                Grid.Column="0"
+                                Margin="15,0,0,0"
+                                Height="40"
+                                materialDesign:HintAssist.Hint="Date"
+                                Style="{StaticResource MaterialDesignFilledDatePicker}"/>
+
+                    <!-- Load Button -->
+                    <Button x:Name="BTN_Load"
+                            Grid.Column="1"
+                            Margin="15,0,51,0"
+                            Height="40"
+                            Background="#FFEAEAEA" BorderBrush="#FF2E2E2E" FontFamily="Tempus Sans ITC" FontWeight="Bold"
+                            Content="LOAD"
+                            Click="BTN_Load_Click"
+                            />
+
+                  
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- DATA GRID -->
+            <materialDesign:Card Grid.Row="1"
+                                 Margin="20,104.4,19.8,24"
+                                 Padding="10"
+                                 materialDesign:ElevationAssist.Elevation="Dp2" Grid.RowSpan="2">
+
+                <DataGrid x:Name="DG_TransList"
+                          ItemsSource="{Binding Path=translist,UpdateSourceTrigger=PropertyChanged}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          MouseDoubleClick="DG_TransList_MouseDoubleClick"
+                          Style="{StaticResource MaterialDesignDataGrid}">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Control Number"
+                                            Binding="{Binding CTLNo}"
+                                            Width="*"/>
+
+                        <DataGridTextColumn Header="DateTime Added"
+                                            Binding="{Binding DateTimeAdded}"
+                                            Width="180"/>
+
+                        <DataGridTextColumn Header="Outlet Name"
+                                            Binding="{Binding ClientName}"
+                                            Width="*">
+
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+
+                        
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+
+            </materialDesign:Card>
+        </Grid>
+
+
+    </materialDesign:Card>
+</Window>

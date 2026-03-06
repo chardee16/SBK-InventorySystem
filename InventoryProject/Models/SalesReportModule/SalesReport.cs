@@ -22,6 +22,8 @@ namespace InventoryProject.Models.SalesReportModule
         public String TransactionDate { get; set; }
         public Decimal Quantity { get; set; }
         public String ItemDescription { get; set; }
+        public String Company { get; set; }
+        public String FirstName { get; set; }
 
     }
 }

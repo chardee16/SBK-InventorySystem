@@ -518,6 +518,20 @@ namespace InventoryProject.Pages
           
         }
 
+        private void btn_ShowTransactions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TransactionListWindow subwindow = new TransactionListWindow();
+                subwindow.ShowDialog();
+
+                ReloadPage();
+            }
+            catch (Exception)
+            { 
+            }
+        }
+
         private void HandleKeysEvent(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Up)

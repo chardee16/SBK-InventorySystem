@@ -190,7 +190,7 @@ namespace InventoryProject.Repository
                     var load = new
                     {
                        
-                        user_id = 1.ToString(),
+                        user_id = User.UserID.ToString(),
                         client_id = id,
                         client_name = name,
                         transaction_details,
@@ -284,6 +284,120 @@ namespace InventoryProject.Repository
                 }
             }
             catch
+            {
+                return false;
+            }
+        }
+
+
+        public List<TransListClass> GetTransSum(String Date)
+        {
+
+            var productlist = new List<TransListClass>();
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/pos/get_transum/{User.UserID}/{Convert.ToDateTime(Date).ToString("yyyy-MM-dd")}";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return productlist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse2<TransListClass>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        productlist = result.data;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // log error if needed
+            }
+
+            return productlist;
+
+        }
+
+
+        public List<TransDetailsClass> GetTransDetails(Int32 CTLNo, Int32 TransactionCode, String TransactionDate)
+        {
+         
+            var productlist = new List<TransDetailsClass>();
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/pos/get_transactions_details/{CTLNo}/{TransactionCode}/{Convert.ToDateTime(TransactionDate).ToString("yyyy-MM-dd")}";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("Accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    string json = response.Content.ReadAsStringAsync().Result;
+
+                    if (!response.IsSuccessStatusCode)
+                        return productlist;
+
+                    var result = JsonConvert.DeserializeObject<ApiResponse2<TransDetailsClass>>(json);
+
+                    if (result != null && result.status == "SUCCESS" && result.data != null)
+                    {
+                        productlist = result.data;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // log error if needed
+            }
+
+            return productlist;
+
+        }
+
+        public Boolean Reversal(Int32 CTLNo, Int32 TransactionCode, String TransactionDate)
+        {
+          
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var url = $"{api.http}/api/pos/reversal";
+
+                    client.DefaultRequestHeaders.Add("KEY", api.key);
+                    client.DefaultRequestHeaders.Add("accept", api.accept);
+                    client.DefaultRequestHeaders.Add("X-CSRF-TOKEN", api.token);
+
+                    var load = new
+                    {
+
+                        ctl_no = CTLNo,
+                        transaction_code = TransactionCode,
+                        transaction_date = TransactionDate,
+
+                    };
+
+                    var json = JsonConvert.SerializeObject(load);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                    return response.IsSuccessStatusCode;
+
+                }
+            }
+            catch (Exception ex)
             {
                 return false;
             }

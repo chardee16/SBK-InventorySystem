@@ -138,6 +138,8 @@
     <Compile Include="Models\ClientDiscountDeliveryModule\ItemDeliveryClass.cs" />
     <Compile Include="Models\ClientDiscountDeliveryModule\ReturnListClass.cs" />
     <Compile Include="Models\ItemModule\ItemLogs.cs" />
+    <Compile Include="Models\SalesModule\TransDetailsClass.cs" />
+    <Compile Include="Models\SalesModule\TransListClass.cs" />
     <Compile Include="Pages\ClientDiscountDeliveryPage.xaml.cs">
       <DependentUpon>ClientDiscountDeliveryPage.xaml</DependentUpon>
     </Compile>
@@ -145,6 +147,7 @@
     <Compile Include="Services\APIKey.cs" />
     <Compile Include="Services\ApiResponse.cs" />
     <Compile Include="Services\APIResponse2.cs" />
+    <Compile Include="Services\User.cs" />
     <Compile Include="Template\DeliveryInventory.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -165,6 +168,12 @@
     </Compile>
     <Compile Include="Windows\CategoryWindow.xaml.cs">
       <DependentUpon>CategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DetailsListWindow.xaml.cs">
+      <DependentUpon>DetailsListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TransactionListWindow.xaml.cs">
+      <DependentUpon>TransactionListWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ReturnListWindow.xaml.cs">
       <DependentUpon>ReturnListWindow.xaml</DependentUpon>
@@ -284,6 +293,14 @@
     <Page Include="Windows\CategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DetailsListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\TransactionListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ReturnListWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,5 +1,6 @@
 ﻿using InventoryProject.Models.Users;
 using InventoryProject.Repository;
+using InventoryProject.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -80,7 +81,7 @@ namespace InventoryProject
             else
             {
 
-                byte[] ba = Encoding.Default.GetBytes(Encryption.Encrypt(txt_Password.Password));
+                byte[] ba = Encoding.Default.GetBytes(Services.Encryption.Encrypt(txt_Password.Password));
                 var hexString = BitConverter.ToString(ba);
                 this.dataCon.one = new UserParam();
                // this.dataCon.userparam = this.repo.GetUserList(txt_username.Text, hexString);
@@ -98,6 +99,8 @@ namespace InventoryProject
                     this.dataCon.one.UserID = item.UserID;
                     this.dataCon.one.Id = item.Id;
                     this.dataCon.one.Username = item.Username;
+
+                    User.UserID = this.dataCon.one.UserID;
                 }
 
 

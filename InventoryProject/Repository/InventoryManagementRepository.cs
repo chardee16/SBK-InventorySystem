@@ -622,7 +622,7 @@ namespace InventoryProject.Repository
                             barcode = item.Barcode,
                             stock = item.Stock.ToString(),
                             expiry_date = Convert.ToDateTime(item.ExpiryDate).ToString("yyyy/MM/dd"),
-                            user_id = 1.ToString(),
+                            user_id = User.UserID.ToString(),
                             value = item.Value.ToString(),
                             account_code = 1001,
                             updtag = 1,
@@ -738,7 +738,7 @@ namespace InventoryProject.Repository
                     var load = new
                     {
 
-                        user_id = 1.ToString(),
+                        user_id = User.UserID.ToString(),
                         item_code = item.ItemCode.ToString(),
                         item_name = item.ItemName,
                         item_description = item.ItemDescription,

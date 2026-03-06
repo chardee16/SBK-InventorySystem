@@ -374,6 +374,21 @@
                             <TextBlock Text="Other Income" Foreground="Black" FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+                    <Button x:Name="btn_ShowTransactions" Width="126" Height="60" Margin="13,50,0,0" BorderBrush="Black" HorizontalAlignment="Left" BorderThickness="1" Padding="0" Click="btn_ShowTransactions_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF979494" Offset="0.058"/>
+                                <GradientStop Color="#FFE4E2E2" Offset="0.913"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Black" Direction="320" Softness="1" ShadowDepth="10" Opacity="0.5" />
+                        </Button.BitmapEffect>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <materialDesign:PackIcon HorizontalAlignment="Center"  Kind="FormatListBulleted"  Height="30" Width="50" Foreground="Black" />
+                            <TextBlock Text="View Transactions" Foreground="Black" FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
 
 

@@ -266,7 +266,7 @@ namespace InventoryProject.Repository
                     var load = new
                     {
 
-                        user_id = 1.ToString(),
+                        user_id = User.UserID.ToString(),
                         item_code = item.ItemCode,
                         stock = item.Stock,
                         price = item.Price,
