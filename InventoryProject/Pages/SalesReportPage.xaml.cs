@@ -234,7 +234,23 @@ namespace InventoryProject.Pages
 
                 this.dataCon.salesreport = repo.GetSalesReport(Convert.ToDateTime(this.dataCon.DateStartReport).ToString("MM/dd/yyyy"), Convert.ToDateTime(this.dataCon.DateEndReport).ToString("MM/dd/yyyy"), this.dataCon.NameSelectedReport, this.dataCon.itemCategoriesSelectedReport);
 
-                this.report = new Template.SalesReportCrystal();
+
+                if (chck_GroupByDelivery.IsChecked == true && chck_GroupByClient.IsChecked == true)
+                {
+                    this.report = new Template.SalesReportGroupAll();
+                }
+                else if (chck_GroupByDelivery.IsChecked == true)
+                {
+                    this.report = new Template.SalesReportGroupByDelivery();
+                }
+                else if (chck_GroupByClient.IsChecked == true)
+                {
+                    this.report = new Template.SalesReportGroupByOutlet();
+                }
+                else
+                {
+                    this.report = new Template.SalesReportCrystal();
+                }
 
                 this.report.SetDataSource(this.dataCon.salesreport);
                 this.report.SetParameterValue("TodaysDate", DateTime.Now.ToString("MMMM dd, yyyy  hh:mm tt"));
@@ -244,7 +260,7 @@ namespace InventoryProject.Pages
                 Viewer.printing = this.report;
                 Viewer._CrystalReport.ViewerCore.ReportSource = report;
 
-                Viewer._CrystalReport.ViewerCore.Zoom(150);
+                Viewer._CrystalReport.ViewerCore.Zoom(100);
                 Viewer.ShowDialog();
             }
             catch (Exception ex)

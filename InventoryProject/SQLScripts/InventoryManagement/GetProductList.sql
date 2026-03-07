@@ -29,7 +29,7 @@
 	,COALESCE
 	(
 		(SELECT COALESCE(SUM(Quantity),0) FROM tblTransactionDetails td 
-			WHERE td.ItemCode = item.ItemCode)
+			WHERE td.ItemCode = item.ItemCode and td.AccountCode = 1001)
 	,0) as Stock
 FROM tblItems item
 INNER JOIN tblCategory cat

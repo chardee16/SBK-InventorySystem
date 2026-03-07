@@ -111,7 +111,8 @@ namespace InventoryProject.Repository
 
         public List<SalesReport> GetSalesReport(String DateStart, String DateEnd, List<GenericMedicineClass> _NameSelectedReport, List<ItemCategoryClass> _itemCategoriesSelectedReport)
         {
-            List<SalesReport> toReturn = new List<SalesReport>();
+            var toReturn = new List<SalesReport>();
+            var summedList = new List<SalesReport>();
             ArrayList myList = new ArrayList();
             ArrayList myList2 = new ArrayList();
             string addqueryname = "";
@@ -187,9 +188,32 @@ namespace InventoryProject.Repository
                             item.CategoryDescription = item.CategoryDesc;
                             item.Amt = item.Amount;
                         }
+
+                        summedList = toReturn
+                               .GroupBy(x => x.ItemGenericID)
+                               .Select(g => new SalesReport
+                               {
+                                   ItemGenericID = g.Key,
+                                   ItemDescription = g.First().ItemDescription,
+                                   CategoryDescription = g.First().CategoryDescription,
+                                   Quantity = g.Sum(x => x.Quantity),
+                                   Price = g.First().Price,
+                                   CTLNo = g.First().CTLNo,
+                                   TransactionDate = g.First().TransactionDate,
+                                   UnitDescription = g.First().UnitDescription,
+                                   //Amount = g.Sum(x => x.Amount),
+                                   Amount = g.First().Price * g.Sum(x => x.Quantity),
+                                   Amt = g.Sum(x => x.Amt),
+                                   FirstName = g.First().FirstName,
+                                   Company = g.First().Company,
+                                   GenericName = g.First().GenericName,
+                                   Discount = g.Sum(x => x.Discount),
+                                   DiscountAmount = g.Sum(x => x.DiscountAmount),
+                               })
+                               .ToList();
                     }
                 }
-                return toReturn;
+                return summedList;
 
             }
             catch (Exception ex)

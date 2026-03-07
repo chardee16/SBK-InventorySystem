@@ -12,6 +12,8 @@ namespace InventoryProject.Models.SalesReportModule
         public Decimal Amt { get; set; }
         public Decimal Amount { get; set; }
         public Decimal Price { get; set; }
+        public Decimal Discount { get; set; }
+        public Decimal DiscountAmount { get; set; }
         public String GenericName { get; set; }
         public String CategoryDescription { get; set; }
         public String CategoryDesc { get; set; }

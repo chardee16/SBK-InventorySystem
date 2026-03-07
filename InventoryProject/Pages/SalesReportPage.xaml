@@ -233,10 +233,10 @@
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Vertical">
                                 <Label Content="Category" Foreground="#DD7D7D7D" FontFamily="Arial" FontSize="16" Width="90" Height="30" Margin="14,0,0,0" HorizontalAlignment="Left"/>
-                                <ListBox x:Name="lb_category" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" ItemsSource="{Binding Path=itemCategories,UpdateSourceTrigger=PropertyChanged}" Margin="14,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Visible" SelectedValuePath="CategoryID" SelectedValue="{Binding CategoryID}" DisplayMemberPath="CategoryDescription"  HorizontalAlignment="Left" Height="170" VerticalAlignment="Top" Width="216" BorderThickness="2" Background="#FFC9C7C7">
-                                </ListBox>
+                                <ListBox x:Name="lb_category" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" ItemsSource="{Binding Path=itemCategories,UpdateSourceTrigger=PropertyChanged}" Margin="14,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Visible" SelectedValuePath="CategoryID" SelectedValue="{Binding CategoryID}" DisplayMemberPath="CategoryDescription"  HorizontalAlignment="Left" Height="126" Width="216" BorderThickness="2" Background="#FFC9C7C7"/>
+                                <CheckBox x:Name="chck_GroupByDelivery" Background="Blue" Content="Group By Delivery" Margin="14,10,0,0" FontWeight="Bold"></CheckBox>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="btn_view" Click="btn_view_Click" Width="182" Height="30" Margin="20,8,0,0" BorderBrush="Black" HorizontalAlignment="Left" BorderThickness="1" Padding="0" >
+                                    <Button x:Name="btn_view" Click="btn_view_Click" Width="182" Height="30" Margin="20,10,0,0" BorderBrush="Black" HorizontalAlignment="Left" BorderThickness="1" Padding="0" >
                                         <Button.Background>
                                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                                 <GradientStop Color="#FF979494" Offset="0.058"/>
@@ -256,9 +256,9 @@
                             <Label Content="&gt;&gt;" HorizontalContentAlignment="Center" FontFamily="Book Antiqua" FontSize="14" Width="30" Height="30" Margin="0,-10,0,0" HorizontalAlignment="Center"/>
                             <StackPanel Orientation="Vertical">
                                 <Label Content="Selected Category" Foreground="#DD7D7D7D" FontFamily="Arial" FontSize="16" Width="180" Height="30" Margin="0,0,0,0" HorizontalAlignment="Left"/>
-                                <ListBox x:Name="lb_selectedcategory" SelectedValuePath="CategoryID" SelectedValue="{Binding CategoryID}" DisplayMemberPath="CategoryDescription" ItemsSource="{Binding Path=itemCategoriesSelected,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="0,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="170" VerticalAlignment="Top" Width="216" BorderThickness="2" Background="#FFF5F5DC">
-                                </ListBox>
-                                <Button x:Name="btn_Generate" Click="btn_Generate_Click" Width="120" Height="30" Margin="95,8,0,0" BorderBrush="Black" HorizontalAlignment="Left" BorderThickness="1" Padding="0" >
+                                <ListBox x:Name="lb_selectedcategory" SelectedValuePath="CategoryID" SelectedValue="{Binding CategoryID}" DisplayMemberPath="CategoryDescription" ItemsSource="{Binding Path=itemCategoriesSelected,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="0,0,0,0" ScrollViewer.HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="126" Width="216" BorderThickness="2" Background="#FFF5F5DC"/>
+                                <CheckBox x:Name="chck_GroupByClient" Background="Blue" Content="Group By Outlet" Margin="0,10,0,0" FontWeight="Bold"></CheckBox>
+                                <Button x:Name="btn_Generate" Click="btn_Generate_Click" Width="120" Height="30" Margin="95,10,0,0" BorderBrush="Black" HorizontalAlignment="Left" BorderThickness="1" Padding="0" >
                                     <Button.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="#FF979494" Offset="0.058"/>
