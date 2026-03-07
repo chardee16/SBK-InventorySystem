@@ -189,31 +189,31 @@ namespace InventoryProject.Repository
                             item.Amt = item.Amount;
                         }
 
-                        summedList = toReturn
-                               .GroupBy(x => x.ItemGenericID)
-                               .Select(g => new SalesReport
-                               {
-                                   ItemGenericID = g.Key,
-                                   ItemDescription = g.First().ItemDescription,
-                                   CategoryDescription = g.First().CategoryDescription,
-                                   Quantity = g.Sum(x => x.Quantity),
-                                   Price = g.First().Price,
-                                   CTLNo = g.First().CTLNo,
-                                   TransactionDate = g.First().TransactionDate,
-                                   UnitDescription = g.First().UnitDescription,
-                                   //Amount = g.Sum(x => x.Amount),
-                                   Amount = g.First().Price * g.Sum(x => x.Quantity),
-                                   Amt = g.Sum(x => x.Amt),
-                                   FirstName = g.First().FirstName,
-                                   Company = g.First().Company,
-                                   GenericName = g.First().GenericName,
-                                   Discount = g.Sum(x => x.Discount),
-                                   DiscountAmount = g.Sum(x => x.DiscountAmount),
-                               })
-                               .ToList();
+                        //summedList = toReturn
+                        //       .GroupBy(x => x.ItemDescription)
+                        //       .Select(g => new SalesReport
+                        //       {
+                        //           ItemDescription = g.Key,
+                        //           CategoryDescription = g.First().CategoryDescription,
+                        //           Quantity = g.Sum(x => x.Quantity),
+                        //           Price = g.First().Price,
+                        //           CTLNo = g.First().CTLNo,
+                        //           TransactionDate = g.First().TransactionDate,
+                        //           UnitDescription = g.First().UnitDescription,
+                        //           //Amount = g.Sum(x => x.Amount),
+                        //           Amount = g.First().Price * g.Sum(x => x.Quantity),
+                        //           Amt = g.Sum(x => x.Amt),
+                        //           FirstName = g.First().FirstName,
+                        //           Company = g.First().Company,
+                        //           GenericName = g.First().GenericName,
+                        //           Discount = g.Sum(x => x.Discount),
+                        //           DiscountAmount = g.Sum(x => x.DiscountAmount),
+                        //       })
+                        //       .ToList();
+
                     }
                 }
-                return summedList;
+                return toReturn;
 
             }
             catch (Exception ex)

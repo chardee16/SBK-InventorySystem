@@ -323,7 +323,7 @@ namespace InventoryProject.Repository
                 // log error if needed
             }
 
-            return productlist;
+            return productlist.Where(x => x.TransactionCode == 3).ToList();
 
         }
 

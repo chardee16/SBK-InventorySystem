@@ -231,7 +231,7 @@ namespace InventoryProject.Pages
                     this.dataCon.itemCategoriesSelectedReport = this.dataCon.itemCategories;
                 }
 
-
+                var summary = new List<SalesReport>();
                 this.dataCon.salesreport = repo.GetSalesReport(Convert.ToDateTime(this.dataCon.DateStartReport).ToString("MM/dd/yyyy"), Convert.ToDateTime(this.dataCon.DateEndReport).ToString("MM/dd/yyyy"), this.dataCon.NameSelectedReport, this.dataCon.itemCategoriesSelectedReport);
 
 
@@ -242,6 +242,31 @@ namespace InventoryProject.Pages
                 else if (chck_GroupByDelivery.IsChecked == true)
                 {
                     this.report = new Template.SalesReportGroupByDelivery();
+
+                    summary = this.dataCon.salesreport
+                           .GroupBy(x => new { x.FirstName,x.ItemGenericID, x.CategoryID ,x.ItemDescription })
+                           .Select(g => new SalesReport
+                           {
+                               FirstName = g.Key.FirstName,
+                               ItemGenericID = g.Key.ItemGenericID,
+                               CategoryID = g.Key.CategoryID,
+                               ItemDescription = g.Key.ItemDescription,
+                               GenericName = g.First().GenericName,
+                               Quantity = g.Sum(x => x.Quantity),
+                               Price = g.First().Price,
+                               CTLNo = g.First().CTLNo,
+                               TransactionDate = g.First().TransactionDate,
+                               UnitDescription = g.First().UnitDescription,
+                               //Amount = g.Sum(x => x.Amount),
+                               Amount = g.First().Price * g.Sum(x => x.Quantity),
+                               Amt = g.Sum(x => x.Amt),
+                               //FirstName = g.First().FirstName,
+                               Company = g.First().Company,
+                               CategoryDescription = g.First().CategoryDescription,
+                               Discount = g.Sum(x => x.Discount),
+                               DiscountAmount = g.Sum(x => x.DiscountAmount),
+                           })
+                           .ToList();
                 }
                 else if (chck_GroupByClient.IsChecked == true)
                 {
@@ -250,9 +275,34 @@ namespace InventoryProject.Pages
                 else
                 {
                     this.report = new Template.SalesReportCrystal();
+
+                    summary = this.dataCon.salesreport
+                          .GroupBy(x => new {x.ItemGenericID, x.CategoryID})
+                          .Select(g => new SalesReport
+                          {
+                              ItemGenericID = g.Key.ItemGenericID,
+                              CategoryID = g.Key.CategoryID,
+                              FirstName = g.First().FirstName,
+                              ItemDescription = g.First().ItemDescription,
+                              GenericName = g.First().GenericName,
+                              Quantity = g.Sum(x => x.Quantity),
+                              Price = g.First().Price,
+                              CTLNo = g.First().CTLNo,
+                              TransactionDate = g.First().TransactionDate,
+                              UnitDescription = g.First().UnitDescription,
+                               //Amount = g.Sum(x => x.Amount),
+                               Amount = g.First().Price * g.Sum(x => x.Quantity),
+                              Amt = g.Sum(x => x.Amt),
+                               //FirstName = g.First().FirstName,
+                               Company = g.First().Company,
+                              CategoryDescription = g.First().CategoryDescription,
+                              Discount = g.Sum(x => x.Discount),
+                              DiscountAmount = g.Sum(x => x.DiscountAmount),
+                          })
+                          .ToList();
                 }
 
-                this.report.SetDataSource(this.dataCon.salesreport);
+                this.report.SetDataSource(summary);
                 this.report.SetParameterValue("TodaysDate", DateTime.Now.ToString("MMMM dd, yyyy  hh:mm tt"));
               
                 Report Viewer = new Report();
