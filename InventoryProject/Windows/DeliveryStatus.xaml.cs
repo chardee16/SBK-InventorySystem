@@ -244,6 +244,10 @@ namespace InventoryProject.Windows
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Warning);
 
+
+                        this.dataCon.TotalDiscount = 0;
+                        this.dataCon.TotalSalesPrice = 0;
+                        this.dataCon.SubTotal = 0;
                     }
 
                 }
