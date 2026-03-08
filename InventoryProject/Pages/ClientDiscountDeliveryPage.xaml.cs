@@ -767,12 +767,14 @@ namespace InventoryProject.Pages
         {
             DeliveryStatus window = new DeliveryStatus();
             window.ShowDialog();
+            InitializeWorkers();
         }
 
         private void btn_Return_Click(object sender, RoutedEventArgs e)
         {
             ReturnListWindow window = new ReturnListWindow();
             window.ShowDialog();
+            InitializeWorkers();
         }
     }
 }

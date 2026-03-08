@@ -238,6 +238,31 @@ namespace InventoryProject.Pages
                 if (chck_GroupByDelivery.IsChecked == true && chck_GroupByClient.IsChecked == true)
                 {
                     this.report = new Template.SalesReportGroupAll();
+
+                    summary = this.dataCon.salesreport
+                     .GroupBy(x => new { x.Company, x.FirstName, x.ItemGenericID, x.CategoryID, x.ItemDescription })
+                     .Select(g => new SalesReport
+                     {
+                         Company = g.Key.Company,
+                         FirstName = g.Key.FirstName,
+                         ItemGenericID = g.Key.ItemGenericID,
+                         CategoryID = g.Key.CategoryID,
+                         ItemDescription = g.Key.ItemDescription,
+                         GenericName = g.First().GenericName,
+                         Quantity = g.Sum(x => x.Quantity),
+                         Price = g.First().Price,
+                         CTLNo = g.First().CTLNo,
+                         TransactionDate = g.First().TransactionDate,
+                         UnitDescription = g.First().UnitDescription,
+                         //Amount = g.Sum(x => x.Amount),
+                         Amount = g.First().Price * g.Sum(x => x.Quantity),
+                         Amt = g.Sum(x => x.Amt),
+                         //Company = g.First().Company,
+                         CategoryDescription = g.First().CategoryDescription,
+                         Discount = g.Sum(x => x.Discount),
+                         DiscountAmount = g.Sum(x => x.DiscountAmount),
+                     })
+                     .ToList();
                 }
                 else if (chck_GroupByDelivery.IsChecked == true)
                 {
@@ -271,19 +296,47 @@ namespace InventoryProject.Pages
                 else if (chck_GroupByClient.IsChecked == true)
                 {
                     this.report = new Template.SalesReportGroupByOutlet();
+
+
+                    summary = this.dataCon.salesreport
+                       .GroupBy(x => new { x.Company, x.ItemGenericID, x.CategoryID, x.ItemDescription })
+                       .Select(g => new SalesReport
+                       {
+                           Company = g.Key.Company,
+                           ItemGenericID = g.Key.ItemGenericID,
+                           CategoryID = g.Key.CategoryID,
+                           ItemDescription = g.Key.ItemDescription,
+                           GenericName = g.First().GenericName,
+                           Quantity = g.Sum(x => x.Quantity),
+                           Price = g.First().Price,
+                           CTLNo = g.First().CTLNo,
+                           TransactionDate = g.First().TransactionDate,
+                           UnitDescription = g.First().UnitDescription,
+                           //Amount = g.Sum(x => x.Amount),
+                           Amount = g.First().Price * g.Sum(x => x.Quantity),
+                           Amt = g.Sum(x => x.Amt),
+                           FirstName = g.First().FirstName,
+                           //Company = g.First().Company,
+                           CategoryDescription = g.First().CategoryDescription,
+                           Discount = g.Sum(x => x.Discount),
+                           DiscountAmount = g.Sum(x => x.DiscountAmount),
+                       })
+                       .ToList();
+
+
                 }
                 else
                 {
                     this.report = new Template.SalesReportCrystal();
 
                     summary = this.dataCon.salesreport
-                          .GroupBy(x => new {x.ItemGenericID, x.CategoryID})
+                          .GroupBy(x => new {x.ItemGenericID, x.CategoryID, x.ItemDescription })
                           .Select(g => new SalesReport
                           {
                               ItemGenericID = g.Key.ItemGenericID,
                               CategoryID = g.Key.CategoryID,
+                              ItemDescription = g.Key.ItemDescription,
                               FirstName = g.First().FirstName,
-                              ItemDescription = g.First().ItemDescription,
                               GenericName = g.First().GenericName,
                               Quantity = g.Sum(x => x.Quantity),
                               Price = g.First().Price,

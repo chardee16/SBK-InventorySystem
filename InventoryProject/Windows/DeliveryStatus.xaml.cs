@@ -115,6 +115,42 @@ namespace InventoryProject.Windows
                 }
             }
 
+            Decimal _TotalDiscount;
+            public Decimal TotalDiscount
+            {
+                get
+                {
+                    return _TotalDiscount;
+                }
+                set
+                {
+                    if (value != _TotalDiscount)
+                    {
+                        _TotalDiscount = value;
+                        NotifyPropertyChanged("TotalDiscount");
+                    }
+                }
+            }
+
+
+
+            Decimal _SubTotal;
+            public Decimal SubTotal
+            {
+                get
+                {
+                    return _SubTotal;
+                }
+                set
+                {
+                    if (value != _SubTotal)
+                    {
+                        _SubTotal = value;
+                        NotifyPropertyChanged("SubTotal");
+                    }
+                }
+            }
+
 
             String _Date;
             public String Date
@@ -192,8 +228,13 @@ namespace InventoryProject.Windows
                     foreach (var item in this.dataCon.deliverystatus)
                     {
                         item.TotalPriceDelivered = Math.Round(item.Price * item.Delivered, 2);
-                        this.dataCon.TotalSalesPrice += item.TotalPriceDelivered;
+                        this.dataCon.TotalDiscount += item.TotalDiscount;
+                        this.dataCon.SubTotal += item.TotalPriceDelivered;
+                       
                     }
+
+                    this.dataCon.TotalDiscount = this.dataCon.TotalDiscount * -1;
+                    this.dataCon.TotalSalesPrice = this.dataCon.SubTotal - this.dataCon.TotalDiscount;
 
                     if (this.dataCon.deliverystatus.Count == 0)
                     {
@@ -347,6 +388,10 @@ namespace InventoryProject.Windows
 
                 this.report.SetDataSource(this.dataCon.deliverystatus);
                 this.report.SetParameterValue("DeliveryName", item2.Firstname);
+                this.report.SetParameterValue("SubTotal", this.dataCon.SubTotal);
+                this.report.SetParameterValue("TotalDiscount", this.dataCon.TotalDiscount);
+                this.report.SetParameterValue("TotalSales", this.dataCon.TotalSalesPrice);
+
 
                 Report Viewer = new Report();
                 Viewer.cryRpt = this.report;

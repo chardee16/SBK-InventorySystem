@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Delivery Status"
-        Height="639"
+        Height="739"
         Width="1229"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -114,9 +114,9 @@
 
             <!-- DATA GRID -->
             <materialDesign:Card Grid.Row="2"
-                                 Margin="20,0,20,62"
+                                 Margin="20,0,20,0"
                                  Padding="10"
-                                 materialDesign:ElevationAssist.Elevation="Dp2">
+                                 materialDesign:ElevationAssist.Elevation="Dp2" Height="411" VerticalAlignment="Top">
 
                 <DataGrid x:Name="DG_DeliveryStatus"
                           ItemsSource="{Binding Path=deliverystatus,UpdateSourceTrigger=PropertyChanged}"
@@ -153,11 +153,16 @@
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Load Out"
-                                            Binding="{Binding Out_For_Delivery}"
+                                            Binding="{Binding OutForDelivery}"
                                             Width="180"/>
 
                         <DataGridTextColumn Header="Delivered"
                                             Binding="{Binding Delivered}"
+                                            Width="*"/>
+
+
+                        <DataGridTextColumn Header="Returned"
+                                            Binding="{Binding Returned}"
                                             Width="*"/>
 
                         <DataGridTextColumn Header="Remaining"
@@ -199,8 +204,12 @@
 
 
             </materialDesign:Card>
-            <Label Content="TOTAL SALES" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="851,419,197,18" Grid.Row="2"/>
-            <TextBlock Text="{Binding Path=TotalSalesPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1017,421,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
+            <Label Content="TOTAL SALES" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="851,506,197,0" Grid.Row="2" Height="38" VerticalAlignment="Top"/>
+            <TextBlock Text="{Binding Path=TotalSalesPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1017,509,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
+            <Label Content="Subtotal" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="873,416,175,0" Grid.Row="2" Height="38" VerticalAlignment="Top"/>
+            <Label Content="Total Discount" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="851,461,175,0" Grid.Row="2" Height="38" VerticalAlignment="Top"/>
+            <TextBlock Text="{Binding TotalDiscount, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1039,466,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
+            <TextBlock Text="{Binding SubTotal, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1045,421,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
         </Grid>
 
 

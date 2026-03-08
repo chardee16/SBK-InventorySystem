@@ -47,9 +47,26 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
             }
         }
 
-        [JsonProperty("Out for Delivery")]
+        //[JsonProperty("Out for Delivery")]
+        //Int32 _OutForDelivery;
+        //public Int32 Out_For_Delivery
+        //{
+        //    get
+        //    {
+        //        return _OutForDelivery;
+        //    }
+        //    set
+        //    {
+        //        if (value != _OutForDelivery)
+        //        {
+        //            _OutForDelivery = value;
+        //            NotifyPropertyChanged("Out_For_Delivery");
+        //        }
+        //    }
+        //}
+
         Int32 _OutForDelivery;
-        public Int32 Out_For_Delivery
+        public Int32 OutForDelivery
         {
             get
             {
@@ -60,7 +77,7 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
                 if (value != _OutForDelivery)
                 {
                     _OutForDelivery = value;
-                    NotifyPropertyChanged("Out_For_Delivery");
+                    NotifyPropertyChanged("OutForDelivery");
                 }
             }
         }
@@ -79,6 +96,23 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
                 {
                     _Delivered = value;
                     NotifyPropertyChanged("Delivered");
+                }
+            }
+        }
+
+        Int32 _Returned;
+        public Int32 Returned
+        {
+            get
+            {
+                return _Returned;
+            }
+            set
+            {
+                if (value != _Returned)
+                {
+                    _Returned = value;
+                    NotifyPropertyChanged("Returned");
                 }
             }
         }
@@ -150,6 +184,23 @@ namespace InventoryProject.Models.ClientDiscountDeliveryModule
                 {
                     _TotalSalesPrice = value;
                     NotifyPropertyChanged("TotalSalesPrice");
+                }
+            }
+        }
+
+        Decimal _TotalDiscount;
+        public Decimal TotalDiscount
+        {
+            get
+            {
+                return _TotalDiscount;
+            }
+            set
+            {
+                if (value != _TotalDiscount)
+                {
+                    _TotalDiscount = value;
+                    NotifyPropertyChanged("TotalDiscount");
                 }
             }
         }
