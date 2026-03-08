@@ -170,7 +170,7 @@
                                             Width="*"/>
 
                         <DataGridTextColumn Header="Total"
-                                            Binding="{Binding TotalPriceDelivered}"
+                                            Binding="{Binding TotalPriceDelivered, StringFormat=N2}"
                                             Width="140">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
