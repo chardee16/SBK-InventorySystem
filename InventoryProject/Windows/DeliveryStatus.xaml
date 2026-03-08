@@ -208,8 +208,8 @@
             <TextBlock Text="{Binding Path=TotalSalesPrice,UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:#,#.00;#(#,##0.00)}'}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1017,509,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
             <Label Content="Total Sales" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="851,416,175,0" Grid.Row="2" Height="38" VerticalAlignment="Top"/>
             <Label Content="Total Discount" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Right" Margin="851,461,175,0" Grid.Row="2" Height="38" VerticalAlignment="Top"/>
-            <TextBlock Text="{Binding TotalDiscount, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1039,466,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
-            <TextBlock Text="{Binding SubTotal, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" Margin="1045,421,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
+            <TextBlock Text="{Binding TotalDiscount, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="25" Margin="1039,466,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
+            <TextBlock Text="{Binding SubTotal, StringFormat=\{0:#\,#.00;#(#\,##0.00)\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="25" Margin="1045,421,26,0" TextAlignment="Right" Grid.Row="2" Height="36"/>
         </Grid>
 
 
