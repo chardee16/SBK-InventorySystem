@@ -343,7 +343,7 @@ namespace InventoryProject.Pages
             var value = (ItemClass)item;
             if (value == null || value.ItemCode <= 0)
                 return false;
-            return Convert.ToString(value.ItemCode).Contains(SearchText.ToLower()) || value.Barcode.ToLower().Contains(SearchText.ToLower()) || value.ItemDescription.ToLower().Contains(SearchText.ToLower()) || value.ItemName.ToLower().Contains(SearchText.ToLower());       
+            return Convert.ToString(value.ItemCode).Contains(SearchText.ToLower()) || value.ItemDescription.ToLower().Contains(SearchText.ToLower()) || value.ItemName.ToLower().Contains(SearchText.ToLower());       
         }
 
 
